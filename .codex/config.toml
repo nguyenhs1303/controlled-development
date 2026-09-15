@@ -1,0 +1,2 @@
+# Project-scoped Codex configuration is loaded only after the repository is trusted.
+# Keep credentials out of this file. Add MCP servers only with OAuth or environment-variable references.

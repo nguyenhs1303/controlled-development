@@ -1,0 +1,5 @@
+# Dùng khi team muốn commit instruction/template nhưng không commit state phát sinh theo từng lần làm việc.
+/.codex/workflows/
+/.codex/archive/
+/.codex/logs/
+/.codex/cache/

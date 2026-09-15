@@ -1,0 +1,4 @@
+interface:
+  display_name: "Implementation Planning"
+  short_description: "Lập kế hoạch triển khai theo task có thể xác minh."
+  default_prompt: "Dùng $implementation-planning để lập kế hoạch từ đặc tả đã được phê duyệt."

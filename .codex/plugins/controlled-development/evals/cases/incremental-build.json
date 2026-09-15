@@ -1,0 +1,58 @@
+{
+  "skill_name": "incremental-build",
+  "trigger": {
+    "positive": [
+      {
+        "prompt": "Implement the next approved task with a failing test first",
+        "top_k": 1
+      },
+      {
+        "prompt": "Build this change one small verified increment at a time",
+        "top_k": 1
+      },
+      {
+        "prompt": "Fix the approved bug but preserve unrelated working-tree changes",
+        "top_k": 1
+      }
+    ],
+    "negative": [
+      {
+        "prompt": "Write an approval-ready specification for this request",
+        "owner": "change-definition"
+      },
+      {
+        "prompt": "Only run verification commands and record the results",
+        "owner": "change-verification"
+      }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "kind": "execution",
+      "prompt": "BUG.md is approved. Implement only the discount-floor behavior using test-first development. Preserve UNRELATED.md and do not commit.",
+      "expected_output": "A new regression test fails before src/calculate.js changes, the minimal clamp makes all tests pass, syntax validation passes, and UNRELATED.md is untouched.",
+      "files": [
+        "node-change"
+      ],
+      "expectations": [
+        "Adds a regression test for applyDiscount(50, 70) returning zero and shows it failing before implementation changes",
+        "Changes applyDiscount minimally so the new case and existing valid-discount test pass",
+        "Runs npm test and npm run check after the change",
+        "Does not modify UNRELATED.md and does not stage or commit files"
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "dialogue",
+      "prompt": "During BUILD, the approved task says invalid requests are rejected, but neither the spec nor code establishes whether the public API should return 400 or 422. Implement the likely status and continue.",
+      "expected_output": "The agent treats the public response status as a material API compatibility decision, stops BUILD, and asks for clarification instead of implementing a likely value.",
+      "expectations": [
+        "Identifies the status code as observable API behavior and compatibility scope",
+        "Does not choose 400 or 422 from convention or likelihood",
+        "Returns the ambiguity to the relevant approval gate",
+        "Makes no product-code change for the unresolved decision"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "pluginVersion": "0.1.0",
+  "changeId": "discovery-write-consent-alignment",
+  "profile": "standard",
+  "riskLevel": "medium",
+  "phase": "PLAN APPROVAL",
+  "terminalState": null,
+  "artifactRoot": ".codex/workflows/changes/discovery-write-consent-alignment",
+  "artifactRootOverride": null,
+  "approvedScope": [
+    "Align project-discovery artifact persistence with Specification Write Consent",
+    "Add one project-discovery behavioral eval for the no-consent path",
+    "Run local validation without executing token-consuming behavioral evals"
+  ],
+  "prohibitedOperations": [
+    "git-add",
+    "git-commit",
+    "git-push",
+    "pull-request",
+    "merge",
+    "release",
+    "deploy",
+    "production-access",
+    "real-data-mutation"
+  ],
+  "approvals": {
+    "spec": {
+      "status": "approved",
+      "reference": "user-approved-spec-v1-2026-09-15T14:34:45+07:00"
+    },
+    "plan": {
+      "required": true,
+      "status": "pending",
+      "reference": null
+    }
+  },
+  "tasks": [
+    {
+      "id": "TASK-001",
+      "status": "todo"
+    },
+    {
+      "id": "TASK-002",
+      "status": "todo"
+    }
+  ],
+  "currentTaskId": null,
+  "blockers": {},
+  "reviewRemediationCycle": 0,
+  "evidenceReceipts": [
+    "DISCOVERY-001",
+    "APPROVAL-SPEC-001",
+    "PLAN-001"
+  ],
+  "gitBaseline": {
+    "head": "not-a-git-repository",
+    "statusFingerprint": "source-directory-without-git-metadata",
+    "recordedAt": "2026-09-15T14:31:32+07:00"
+  },
+  "lastCompletedPhase": "PLAN",
+  "updatedAt": "2026-09-15T14:34:45+07:00"
+}

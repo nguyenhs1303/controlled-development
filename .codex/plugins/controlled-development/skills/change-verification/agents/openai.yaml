@@ -1,0 +1,4 @@
+interface:
+  display_name: "Change Verification"
+  short_description: "Chạy kiểm tra và ghi bằng chứng xác minh trung thực."
+  default_prompt: "Dùng $change-verification để xác minh thay đổi và ghi trạng thái bằng chứng."

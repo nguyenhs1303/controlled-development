@@ -1,0 +1,4 @@
+interface:
+  display_name: "Incremental Build"
+  short_description: "Triển khai tăng dần theo test và phạm vi đã duyệt."
+  default_prompt: "Dùng $incremental-build để triển khai task đã duyệt theo từng bước nhỏ."

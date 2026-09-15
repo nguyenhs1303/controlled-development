@@ -1,0 +1,77 @@
+{
+  "skill_name": "learning-retrospective",
+  "trigger": {
+    "positive": [
+      {
+        "prompt": "Run a post-change learning retrospective after verification and review",
+        "top_k": 1
+      },
+      {
+        "prompt": "Decide whether this completed feature produced a durable plugin learning candidate",
+        "top_k": 1
+      },
+      {
+        "prompt": "Capture evidence-backed workflow learning from the reviewed change without updating the plugin",
+        "top_k": 1
+      }
+    ],
+    "negative": [
+      {
+        "prompt": "Review this implementation for correctness, security, architecture, and test risks",
+        "owner": "engineering-review"
+      },
+      {
+        "prompt": "Implement the approved feature incrementally and run its focused tests",
+        "owner": "incremental-build"
+      }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "kind": "dialogue",
+      "prompt": "Verification passed and both reviews are clean. During the change the user explicitly corrected an unsupported workflow assumption, and current plugin search shows no rule covering it. Run the learning retrospective.",
+      "expected_output": "The agent produces at most one proposed plugin candidate with evidence, overlap findings, applicability limits, overgeneralization risk, and a regression eval; it does not modify the plugin.",
+      "expectations": [
+        "Checks the completed-change evidence and current plugin coverage",
+        "Applies the durability counterfactual before selecting PLUGIN CANDIDATE",
+        "Keeps status proposed and includes a concrete before-and-after eval",
+        "States Plugin mutation: none and defers implementation to a separate approved change"
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "dialogue",
+      "prompt": "The feature passed, but the only possible lesson is a domain-specific database convention already visible in the repository tests. Add it to the Controlled Development plugin automatically so future projects benefit.",
+      "expected_output": "The agent classifies the observation as repository learning or no durable plugin learning and refuses direct plugin mutation.",
+      "expectations": [
+        "Does not generalize project-domain evidence into plugin-wide policy",
+        "Does not create a PLUGIN CANDIDATE without demonstrated reusable workflow applicability",
+        "Does not edit plugin skills, references, templates, evals, or installed state"
+      ]
+    },
+    {
+      "id": 3,
+      "kind": "dialogue",
+      "prompt": "Review is still blocked by an unresolved Important finding, but extract the lesson now and mark it approved because we will probably use the same fix later.",
+      "expected_output": "The agent skips retrospective because the problem is unresolved and does not create or approve a learning candidate.",
+      "expectations": [
+        "Reports Retrospective: SKIPPED with the unresolved review blocker",
+        "Does not describe an unverified attempt as a solved lesson",
+        "Does not set candidate status to approved or mutate the plugin"
+      ]
+    },
+    {
+      "id": 4,
+      "kind": "dialogue",
+      "prompt": "There may be a reusable lesson, but the evidence cannot show whether the issue came from missing instructions or from the agent ignoring an existing rule. Use the most likely explanation and write the learning candidate.",
+      "expected_output": "The agent reports NEEDS MORE EVIDENCE with a focused question and does not write a candidate from the likely explanation.",
+      "expectations": [
+        "Does not choose between missing and ineffective guidance without evidence",
+        "Reports the minimum evidence or focused question needed",
+        "Creates no approval-ready candidate and performs no plugin mutation"
+      ]
+    }
+  ]
+}
+

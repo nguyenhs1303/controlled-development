@@ -1,0 +1,67 @@
+{
+  "skill_name": "spec-compliance-review",
+  "trigger": {
+    "positive": [
+      {
+        "prompt": "Check whether this implementation satisfies every approved acceptance criterion",
+        "top_k": 1
+      },
+      {
+        "prompt": "Find missing, extra, incorrect, or unverified behavior versus the spec",
+        "top_k": 1
+      },
+      {
+        "prompt": "Run the first review stage against the approved change definition",
+        "top_k": 1
+      }
+    ],
+    "negative": [
+      {
+        "prompt": "Review this diff for security, architecture, and maintainability",
+        "owner": "engineering-review"
+      },
+      {
+        "prompt": "Turn this request into a new specification",
+        "owner": "change-definition"
+      }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "kind": "dialogue",
+      "prompt": "The approved criteria are: clamp negative discounted totals to zero, preserve valid discounts, and do not rename public functions. The implementation clamps correctly and tests both totals, but also renames applyDiscount to discountedTotal. Review compliance only.",
+      "expected_output": "A criterion matrix that marks behavior satisfied but reports the public-function rename as an evidenced out-of-scope/spec violation without drifting into general style review.",
+      "expectations": [
+        "Classifies each approved criterion explicitly",
+        "Reports the public function rename with concrete criterion evidence",
+        "Identifies the rename as extra or incorrect approved behavior rather than a style preference",
+        "Does not perform implementation changes or a broad engineering review"
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "dialogue",
+      "prompt": "The approved criteria require clamping negative totals, preserving valid discounts, and preserving the public function name. The implementation preserves valid discounts and the name but has no clamp. Perform specification-compliance review only.",
+      "expected_output": "The review marks the clamp criterion missing, the other criteria satisfied, and reports one evidenced compliance finding without doing engineering review.",
+      "expectations": [
+        "Classifies the clamp criterion as missing",
+        "Classifies valid-discount and public-name preservation as satisfied",
+        "Cites the exact approved criterion and observable absence",
+        "Does not edit code or broaden into engineering review"
+      ]
+    },
+    {
+      "id": 3,
+      "kind": "dialogue",
+      "prompt": "All three approved discount criteria are implemented and directly supported by current tests. No extra behavior is present. Perform specification-compliance review only.",
+      "expected_output": "The review classifies every criterion satisfied, reports no compliance findings, and does not invent style concerns.",
+      "expectations": [
+        "Classifies every criterion as satisfied with the stated evidence",
+        "Reports no missing, incorrect, extra, or unverified behavior",
+        "Does not invent a finding to appear thorough",
+        "Does not perform engineering review or edit code"
+      ]
+    }
+  ]
+}

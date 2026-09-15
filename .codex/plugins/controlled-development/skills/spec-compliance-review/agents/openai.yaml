@@ -1,0 +1,4 @@
+interface:
+  display_name: "Spec Compliance Review"
+  short_description: "Review mức độ triển khai tuân thủ đặc tả đã duyệt."
+  default_prompt: "Dùng $spec-compliance-review để review phần triển khai theo đặc tả đã duyệt."

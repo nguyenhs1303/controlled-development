@@ -1,0 +1,67 @@
+{
+  "skill_name": "engineering-review",
+  "trigger": {
+    "positive": [
+      {
+        "prompt": "Review this verified change for correctness, security, architecture, and maintainability",
+        "top_k": 1
+      },
+      {
+        "prompt": "Find evidenced engineering risks after the spec-compliance pass",
+        "top_k": 1
+      },
+      {
+        "prompt": "Re-review the remediated code and classify serious findings versus suggestions",
+        "top_k": 1
+      }
+    ],
+    "negative": [
+      {
+        "prompt": "Compare the implementation only with its approved acceptance criteria",
+        "owner": "spec-compliance-review"
+      },
+      {
+        "prompt": "Run the test, lint, type-check, and build commands",
+        "owner": "change-verification"
+      }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "kind": "dialogue",
+      "prompt": "Review these findings using the policy: an Important finding proves supported input produces a negative total; a Suggestion proposes a preferred function name. Decide severity and remediation eligibility.",
+      "expected_output": "The negative-total defect remains Important and eligible; the naming preference remains a Suggestion and is not eligible for automatic remediation.",
+      "expectations": [
+        "Keeps the supported negative-total defect Important with evidence and trigger",
+        "Keeps the naming preference a Suggestion",
+        "Marks only the Important finding eligible for automatic remediation",
+        "Does not edit code during review"
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "dialogue",
+      "prompt": "A reviewer suspects a remote timing race but has no reproduction, reachable call path, logs, or failing test. Review the concern under the evidence policy.",
+      "expected_output": "The concern is labeled UNVERIFIED, requests targeted evidence, and is not made remediation-eligible or automatically blocking without a plausible trigger.",
+      "expectations": [
+        "Labels the concern UNVERIFIED rather than Critical or Important",
+        "States the missing trigger and evidence needed",
+        "Does not make the concern automatically remediation-eligible",
+        "Does not edit code during review"
+      ]
+    },
+    {
+      "id": 3,
+      "kind": "dialogue",
+      "prompt": "The verified discount-floor change is minimal, handles its supported boundaries, follows project conventions, has focused regression coverage, and changes no interface. Perform engineering review.",
+      "expected_output": "The review reports no engineering findings and does not fabricate a nit or duplicate the already-clean specification review.",
+      "expectations": [
+        "Evaluates correctness, security, maintainability, performance, tests, and compatibility",
+        "Reports no Critical or Important findings",
+        "Does not duplicate specification-compliance findings",
+        "Does not invent Suggestions or edit code"
+      ]
+    }
+  ]
+}

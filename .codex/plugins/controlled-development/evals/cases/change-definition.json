@@ -1,0 +1,79 @@
+{
+  "skill_name": "change-definition",
+  "trigger": {
+    "positive": [
+      {
+        "prompt": "Turn this feature request into an approval-ready spec with acceptance criteria",
+        "top_k": 1
+      },
+      {
+        "prompt": "Clarify the scope, non-goals, assumptions, and success conditions before coding",
+        "top_k": 1
+      },
+      {
+        "prompt": "Define this bug fix and tell me what evidence will prove it is done",
+        "top_k": 1
+      }
+    ],
+    "negative": [
+      {
+        "prompt": "Break this approved spec into dependency-ordered tasks",
+        "owner": "implementation-planning"
+      },
+      {
+        "prompt": "Compare the finished implementation with its acceptance criteria",
+        "owner": "spec-compliance-review"
+      }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "kind": "dialogue",
+      "prompt": "Define a Standard change: discounts larger than a cart subtotal must produce zero, normal discounts must remain unchanged, and no other pricing behavior should change.",
+      "expected_output": "A bounded approval-ready specification with stable criteria, non-goals, risk, preservation behavior, verification intent, and an explicit approval stop.",
+      "expectations": [
+        "Defines a criterion for clamping negative totals to zero",
+        "Defines preservation criteria for normal discounts and other pricing behavior",
+        "Includes scope, non-goals, assumptions, risk, and verification intent",
+        "Requests explicit approval and does not start planning or implementation"
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "dialogue",
+      "prompt": "Make checkout smarter and faster. No current behavior, users, boundaries, or success measure have been provided. Define the change safely.",
+      "expected_output": "The agent does not invent product behavior; it records the ambiguity, asks the minimum blocking questions, and does not request approval for a fabricated specification.",
+      "expectations": [
+        "Identifies the missing observable behavior and success criteria",
+        "Asks focused questions about users, boundaries, compatibility, and verification",
+        "Does not invent acceptance criteria from vague adjectives",
+        "Does not plan or implement while the definition is unresolved"
+      ]
+    },
+    {
+      "id": 3,
+      "kind": "dialogue",
+      "prompt": "You asked several questions about my feature and I have just answered the final one. I am still reviewing the interpretation and have not told you to create or update any spec file.",
+      "expected_output": "The agent summarizes the now-resolved definition in conversation, leaves specification artifacts unchanged, and asks for explicit consent before creating or updating the spec; approval is requested only after a version is actually written and presented.",
+      "expectations": [
+        "Keeps the clarified definition in conversation instead of persisting it",
+        "Does not infer write consent from the absence of remaining questions",
+        "Asks explicitly whether to create or update the specification",
+        "Distinguishes write/update consent from approval of the resulting specification"
+      ]
+    },
+    {
+      "id": 4,
+      "kind": "dialogue",
+      "prompt": "Write an approval-ready spec for CSV export. Neither the request, docs, nor code says whether archived rows are included. A nearby report excludes them.",
+      "expected_output": "The agent treats the nearby report only as a lead, asks whether archived rows belong in this export, and does not write or request approval for a criterion based on inference.",
+      "expectations": [
+        "Does not treat neighboring behavior as desired-behavior evidence",
+        "Identifies archived-row inclusion as a material scope and acceptance decision",
+        "Asks a focused clarification question",
+        "Does not fabricate a criterion or approval-ready specification"
+      ]
+    }
+  ]
+}

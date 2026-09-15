@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "pluginVersion": "0.1.0",
+  "changeId": "unapproved-build",
+  "profile": "deep",
+  "riskLevel": "high",
+  "phase": "BUILD",
+  "terminalState": null,
+  "artifactRoot": ".codex/workflows/changes/unapproved-build",
+  "approvedScope": [],
+  "prohibitedOperations": [
+    "git-add",
+    "git-commit",
+    "git-push",
+    "pull-request",
+    "merge",
+    "release",
+    "deploy",
+    "production-access",
+    "real-data-mutation"
+  ],
+  "approvals": {
+    "spec": {
+      "status": "pending",
+      "reference": null
+    },
+    "plan": {
+      "required": true,
+      "status": "pending",
+      "reference": null
+    }
+  },
+  "tasks": [],
+  "currentTaskId": null,
+  "blockers": {},
+  "reviewRemediationCycle": 0,
+  "evidenceReceipts": [],
+  "gitBaseline": {
+    "head": null,
+    "statusFingerprint": null,
+    "recordedAt": null
+  },
+  "lastCompletedPhase": "DISCOVER",
+  "updatedAt": null
+}

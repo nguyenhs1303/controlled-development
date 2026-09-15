@@ -1,0 +1,4 @@
+interface:
+  display_name: "Controlled Development"
+  short_description: "Điều phối thay đổi từ đặc tả đến review an toàn."
+  default_prompt: "Dùng $controlled-development để phát triển thay đổi đến hết REVIEW với các cổng phê duyệt."

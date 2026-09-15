@@ -1,0 +1,59 @@
+{
+  "skill_name": "change-verification",
+  "trigger": {
+    "positive": [
+      {
+        "prompt": "Run the native checks and record evidence for every acceptance criterion",
+        "top_k": 1
+      },
+      {
+        "prompt": "Verify this implementation and distinguish PASS from NOT RUN",
+        "top_k": 1
+      },
+      {
+        "prompt": "Re-run focused and regression checks after remediation",
+        "top_k": 1
+      }
+    ],
+    "negative": [
+      {
+        "prompt": "Implement the failing behavior one task at a time",
+        "owner": "incremental-build"
+      },
+      {
+        "prompt": "Review the code for architecture and security risks",
+        "owner": "engineering-review"
+      }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "kind": "execution",
+      "prompt": "Verify this Python fixture using its declared commands. Do not install anything. Report exact evidence statuses.",
+      "expected_output": "Unit tests run and pass; mypy is unavailable and is reported NOT RUN, not PASS; no dependency is installed.",
+      "files": [
+        "python-verification"
+      ],
+      "expectations": [
+        "Discovers python -m unittest discover -s tests and mypy src from pyproject.toml",
+        "Runs the unit test command and records a PASS receipt with its real result",
+        "Reports mypy as NOT RUN when unavailable rather than claiming PASS",
+        "Does not install mypy or another dependency"
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "dialogue",
+      "prompt": "Classify these checks honestly: focused tests ran with exit 1; deployment validation was intentionally not run because deployment is prohibited; compatibility has only a reviewer guess and no command or observation; lint ran with exit 0.",
+      "expected_output": "The results are FAIL, NOT RUN, UNVERIFIED, and PASS respectively, each with the required evidence or limitation and no completion claim.",
+      "expectations": [
+        "Classifies the exit-1 focused test as FAIL",
+        "Classifies prohibited deployment validation as NOT RUN with a reason",
+        "Classifies unsupported compatibility as UNVERIFIED",
+        "Classifies exit-0 lint as PASS with a receipt",
+        "Does not claim REVIEW PASSED while required evidence is failing or missing"
+      ]
+    }
+  ]
+}

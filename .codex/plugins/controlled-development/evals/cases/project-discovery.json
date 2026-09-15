@@ -1,0 +1,73 @@
+{
+  "skill_name": "project-discovery",
+  "trigger": {
+    "positive": [
+      {
+        "prompt": "Find the project's real test and build commands before we plan this change",
+        "top_k": 1
+      },
+      {
+        "prompt": "Read the repository instructions and locate the modules relevant to this bug",
+        "top_k": 1
+      },
+      {
+        "prompt": "We are resuming after a week; verify the Git state and project conventions first",
+        "top_k": 1
+      }
+    ],
+    "negative": [
+      {
+        "prompt": "Turn these approved requirements into small implementation tasks",
+        "owner": "implementation-planning"
+      },
+      {
+        "prompt": "Run the project's checks and give me evidence receipts",
+        "owner": "change-verification"
+      }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "kind": "execution",
+      "prompt": "Discover the authoritative commands and relevant files for the discount-floor bug. Do not implement it.",
+      "expected_output": "A minimal discovery report citing package.json and BUG.md, with npm test and npm run check, relevant source/test paths, and no product edits.",
+      "files": [
+        "node-change"
+      ],
+      "expectations": [
+        "Finds npm test and npm run check from package.json rather than guessing commands",
+        "Identifies BUG.md, src/calculate.js, and test/calculate.test.js as task-relevant",
+        "Records UNRELATED.md as a file to preserve",
+        "Does not change implementation or tests"
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "execution",
+      "prompt": "Discover the authoritative verification commands and relevant modules in this Python fixture. Do not install tools and do not modify files.",
+      "expected_output": "A discovery report cites pyproject.toml, finds the unittest and mypy commands, locates source/tests, and records that tool availability must be checked rather than assumed.",
+      "files": [
+        "python-verification"
+      ],
+      "expectations": [
+        "Finds the unittest and mypy commands from pyproject.toml",
+        "Identifies src/calculator.py and tests/test_calculator.py",
+        "Does not assume mypy is installed or install it",
+        "Does not modify fixture files"
+      ]
+    },
+    {
+      "id": 3,
+      "kind": "dialogue",
+      "prompt": "The docs and code show an export path but never state whether archived records are included. Discover enough context to define the change.",
+      "expected_output": "The agent reports the observed export path, marks archived-record behavior as a material unknown, asks a focused question, and does not infer inclusion or exclusion from neighboring code.",
+      "expectations": [
+        "Separates observed facts from the missing product decision",
+        "Treats archived-record behavior as material to scope and acceptance",
+        "Asks the minimum focused question instead of choosing a likely default",
+        "Does not pass an inferred answer to specification or planning"
+      ]
+    }
+  ]
+}

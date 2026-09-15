@@ -1,0 +1,3 @@
+# Dùng khi toàn bộ cấu hình Codex chỉ tồn tại trên máy của từng developer.
+/AGENTS.md
+/.codex/

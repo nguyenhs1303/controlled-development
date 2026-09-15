@@ -1,0 +1,79 @@
+{
+  "skill_name": "implementation-planning",
+  "trigger": {
+    "positive": [
+      {
+        "prompt": "Plan the approved feature as small dependency-ordered vertical tasks",
+        "top_k": 1
+      },
+      {
+        "prompt": "Map likely files, risks, and verification checkpoints before BUILD",
+        "top_k": 1
+      },
+      {
+        "prompt": "Create an implementation plan for this medium-risk approved spec and stop for approval",
+        "top_k": 1
+      }
+    ],
+    "negative": [
+      {
+        "prompt": "Clarify this vague requirement into acceptance criteria",
+        "owner": "change-definition"
+      },
+      {
+        "prompt": "Implement TASK-003 with a failing test first",
+        "owner": "incremental-build"
+      }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "kind": "dialogue",
+      "prompt": "The approved medium-risk spec requires clamping discounted totals at zero and preserving valid discounts. Produce the implementation plan.",
+      "expected_output": "A small dependency-safe plan that adds a failing regression test, applies the minimal implementation, runs focused and regression checks, and stops for plan approval.",
+      "expectations": [
+        "Tasks trace to both the clamp and preservation criteria",
+        "The failing regression test precedes the implementation change",
+        "Likely files and exact discovered commands are included",
+        "Medium risk causes an explicit plan approval stop before BUILD"
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "dialogue",
+      "prompt": "Plan an approved low-risk Standard refactor of one pure helper. The spec explicitly allows autonomous progression after planning and existing focused tests cover the behavior.",
+      "expected_output": "A small plan records that separate plan approval is optional under the approved low-risk policy while preserving all other gates and checks.",
+      "expectations": [
+        "Keeps the work Standard and low risk rather than silently changing profile",
+        "Produces one or more small tasks with concrete verification",
+        "Records why separate plan approval is optional",
+        "Does not execute BUILD during planning"
+      ]
+    },
+    {
+      "id": 3,
+      "kind": "dialogue",
+      "prompt": "Plan an approved authorization-rule change that affects a public API and persistent permissions.",
+      "expected_output": "The plan treats the change Deep/high risk, orders risk-first verification, and stops for explicit plan approval before BUILD.",
+      "expectations": [
+        "Classifies the authorization, persistence, and public-interface factors as High",
+        "Uses narrower dependency-ordered tasks and security-focused verification",
+        "Includes rollback and compatibility considerations",
+        "Requires explicit plan approval before BUILD"
+      ]
+    },
+    {
+      "id": 4,
+      "kind": "dialogue",
+      "prompt": "Plan an approved persistence change. Two existing modules use different transaction owners, and neither the spec nor project docs establish which boundary must keep the new write atomic.",
+      "expected_output": "The agent identifies transaction ownership as a material data-integrity architecture decision, returns to clarification or targeted discovery, and does not select either nearby pattern as the plan.",
+      "expectations": [
+        "Treats the two implementations as conflicting leads rather than authority",
+        "Explains why transaction ownership materially affects architecture and data integrity",
+        "Asks a focused question or requests authoritative evidence",
+        "Does not produce a settled task plan from the unsupported choice"
+      ]
+    }
+  ]
+}

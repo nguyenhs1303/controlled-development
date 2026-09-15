@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "pluginVersion": "0.1.0",
+  "changeId": "artifact-cleanup-consent",
+  "profile": "deep",
+  "riskLevel": "high",
+  "phase": "SPEC APPROVAL",
+  "terminalState": null,
+  "artifactRoot": ".codex/workflows/changes/artifact-cleanup-consent",
+  "artifactRootOverride": null,
+  "approvedScope": [],
+  "prohibitedOperations": [
+    "git-add",
+    "git-commit",
+    "git-push",
+    "pull-request",
+    "merge",
+    "release",
+    "deploy",
+    "production-access",
+    "real-data-mutation"
+  ],
+  "approvals": {
+    "spec": {
+      "status": "pending",
+      "reference": null
+    },
+    "plan": {
+      "required": true,
+      "status": "pending",
+      "reference": null
+    }
+  },
+  "tasks": [],
+  "currentTaskId": null,
+  "blockers": {},
+  "reviewRemediationCycle": 0,
+  "evidenceReceipts": [
+    "DISCOVERY-001"
+  ],
+  "gitBaseline": {
+    "head": "not-a-git-repository",
+    "statusFingerprint": "source-directory-without-git-metadata",
+    "recordedAt": "2026-09-14T22:15:04+07:00"
+  },
+  "lastCompletedPhase": "DEFINE",
+  "updatedAt": "2026-09-14T22:15:04+07:00"
+}

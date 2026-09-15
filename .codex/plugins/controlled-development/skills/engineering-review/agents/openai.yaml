@@ -1,0 +1,4 @@
+interface:
+  display_name: "Engineering Review"
+  short_description: "Review rủi ro kỹ thuật dựa trên bằng chứng cụ thể."
+  default_prompt: "Dùng $engineering-review để review chất lượng kỹ thuật của thay đổi đã xác minh."

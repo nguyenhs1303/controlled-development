@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "pluginVersion": "0.1.0",
+  "changeId": "discount-floor",
+  "profile": "standard",
+  "riskLevel": "medium",
+  "phase": "BUILD",
+  "terminalState": null,
+  "artifactRoot": ".codex/workflows/changes/discount-floor",
+  "approvedScope": [
+    "Clamp discounted totals to zero",
+    "Add regression coverage"
+  ],
+  "prohibitedOperations": [
+    "git-add",
+    "git-commit",
+    "git-push",
+    "pull-request",
+    "merge",
+    "release",
+    "deploy",
+    "production-access",
+    "real-data-mutation"
+  ],
+  "approvals": {
+    "spec": {
+      "status": "approved",
+      "reference": "human-message-12"
+    },
+    "plan": {
+      "required": true,
+      "status": "approved",
+      "reference": "human-message-14"
+    }
+  },
+  "tasks": [
+    {
+      "id": "TASK-001",
+      "status": "todo"
+    }
+  ],
+  "currentTaskId": null,
+  "blockers": {},
+  "reviewRemediationCycle": 0,
+  "evidenceReceipts": [],
+  "gitBaseline": {
+    "head": "fixture-head",
+    "statusFingerprint": "clean",
+    "recordedAt": "2026-01-01T00:00:00Z"
+  },
+  "lastCompletedPhase": "PLAN APPROVAL",
+  "updatedAt": "2026-01-01T00:00:00Z"
+}

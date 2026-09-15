@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "pluginVersion": "0.1.0",
+  "changeId": "blocked-build",
+  "profile": "standard",
+  "riskLevel": "medium",
+  "phase": "FINAL REPORT",
+  "terminalState": "IMPLEMENTATION BLOCKED",
+  "artifactRoot": ".codex/workflows/changes/blocked-build",
+  "artifactRootOverride": null,
+  "approvedScope": [
+    "Implement the approved local change"
+  ],
+  "prohibitedOperations": [
+    "git-add",
+    "git-commit",
+    "git-push",
+    "pull-request",
+    "merge",
+    "release",
+    "deploy",
+    "production-access",
+    "real-data-mutation"
+  ],
+  "approvals": {
+    "spec": {
+      "status": "approved",
+      "reference": "human-message-20"
+    },
+    "plan": {
+      "required": true,
+      "status": "approved",
+      "reference": "human-message-22"
+    }
+  },
+  "tasks": [
+    {
+      "id": "TASK-001",
+      "status": "blocked"
+    }
+  ],
+  "currentTaskId": "TASK-001",
+  "blockers": {
+    "native-test-environment": {
+      "attempts": [
+        {
+          "number": 1,
+          "hypothesis": "wrong native command"
+        },
+        {
+          "number": 2,
+          "hypothesis": "wrong working directory"
+        },
+        {
+          "number": 3,
+          "hypothesis": "missing approved environment input"
+        }
+      ]
+    }
+  },
+  "reviewRemediationCycle": 0,
+  "evidenceReceipts": [
+    "BLOCK-001-A1",
+    "BLOCK-001-A2",
+    "BLOCK-001-A3"
+  ],
+  "gitBaseline": {
+    "head": "fixture-head",
+    "statusFingerprint": "blocked-change",
+    "recordedAt": "2026-01-01T00:00:00Z"
+  },
+  "lastCompletedPhase": "BUILD",
+  "updatedAt": "2026-01-01T00:00:00Z"
+}

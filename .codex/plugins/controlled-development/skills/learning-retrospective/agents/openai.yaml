@@ -1,0 +1,5 @@
+interface:
+  display_name: "Learning Retrospective"
+  short_description: "Rút bài học có bằng chứng sau thay đổi đã review."
+  default_prompt: "Dùng $learning-retrospective để đánh giá thay đổi đã hoàn tất và đề xuất learning candidate nếu đủ bằng chứng."
+

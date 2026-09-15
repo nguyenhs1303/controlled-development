@@ -1,0 +1,4 @@
+interface:
+  display_name: "Change Definition"
+  short_description: "Xác định phạm vi, tiêu chí và rủi ro của thay đổi."
+  default_prompt: "Dùng $change-definition để viết đặc tả có thể phê duyệt cho thay đổi này."

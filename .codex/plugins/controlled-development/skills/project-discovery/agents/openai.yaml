@@ -1,0 +1,4 @@
+interface:
+  display_name: "Project Discovery"
+  short_description: "Khám phá ngữ cảnh và lệnh gốc cần thiết của dự án."
+  default_prompt: "Dùng $project-discovery để khám phá ngữ cảnh cần thiết cho thay đổi này."

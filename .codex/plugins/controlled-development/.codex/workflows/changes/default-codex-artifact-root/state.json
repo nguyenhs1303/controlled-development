@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "pluginVersion": "0.1.0",
+  "changeId": "default-codex-artifact-root",
+  "profile": "standard",
+  "riskLevel": "medium",
+  "phase": "STOP",
+  "terminalState": "REVIEW PASSED",
+  "artifactRoot": ".codex/workflows/changes/default-codex-artifact-root",
+  "artifactRootOverride": null,
+  "authoritativeSpec": ".codex/workflows/changes/default-codex-artifact-root/spec.md",
+  "specVersion": "1.0",
+  "approvedScope": [
+    "Change controlled-development default artifact root to .codex/workflows/changes/<change-id>",
+    "Update tests, fixtures, docs and active plugin-source workflow state",
+    "Cachebuster and reinstall the personal plugin",
+    "Update the active sla-service-fe repository instruction"
+  ],
+  "prohibitedOperations": [
+    "git-add",
+    "git-commit",
+    "git-push",
+    "pull-request",
+    "merge",
+    "release",
+    "deploy",
+    "production-access",
+    "real-data-mutation"
+  ],
+  "approvals": {
+    "spec": {
+      "status": "approved",
+      "reference": "User message 'Làm theo recommendation' on 2026-09-15"
+    },
+    "plan": {
+      "required": true,
+      "status": "approved",
+      "reference": "User message 'Làm theo recommendation' on 2026-09-15"
+    }
+  },
+  "tasks": [
+    {"id": "TASK-001", "status": "done"},
+    {"id": "TASK-002", "status": "done"},
+    {"id": "TASK-003", "status": "done"},
+    {"id": "TASK-004", "status": "done"},
+    {"id": "TASK-005", "status": "done"}
+  ],
+  "currentTaskId": null,
+  "blockers": {},
+  "reviewRemediationCycle": 0,
+  "evidenceReceipts": [
+    "EVID-RED-001",
+    "EVID-GREEN-001",
+    "EVID-SOURCE-001",
+    "EVID-MIGRATION-001",
+    "EVID-INSTALL-001",
+    "EVID-INSTALLED-001",
+    "EVID-FRESH-001",
+    "EVID-REPO-001",
+    "EVID-PYTHON-001",
+    "EVID-REVIEW-SPEC-001",
+    "EVID-REVIEW-ENG-001"
+  ],
+  "gitBaseline": {
+    "head": "not-a-git-repository",
+    "statusFingerprint": "source-and-installed-version-inspected-before-change",
+    "recordedAt": "2026-09-15"
+  },
+  "lastCompletedPhase": "FINAL REPORT",
+  "updatedAt": "2026-09-15"
+}
