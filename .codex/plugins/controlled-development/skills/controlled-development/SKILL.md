@@ -14,11 +14,13 @@ Before acting, read:
 - [output language policy](../../references/output-language-policy.md)
 - [decision evidence policy](../../references/decision-evidence-policy.md)
 - [risk matrix](../../references/risk-matrix.md)
+- [solution design policy](../../references/solution-design-policy.md)
 - [permission policy](../../references/permission-policy.md)
 - [evidence policy](../../references/evidence-policy.md)
 - [review policy](../../references/review-policy.md)
 - [Definition of Done](../../references/definition-of-done.md)
 - [learning policy](../../references/learning-policy.md)
+- [workflow state schema](../../references/workflow-state-schema.md)
 
 ## When to Use
 
@@ -49,10 +51,13 @@ This workflow never stages, commits, pushes, creates/updates a pull request, mer
 BOOTSTRAP
   -> INTAKE
   -> DISCOVER
+  -> TRIAGE
   -> DEFINE
   -> SPEC APPROVAL
+  -> SOLUTION DESIGN
+  -> SOLUTION APPROVAL
   -> PLAN
-  -> PLAN APPROVAL (medium/high risk)
+  -> PLAN APPROVAL (Deep or sensitive execution)
   -> BUILD
   -> VERIFY
   -> REVIEW
@@ -68,11 +73,14 @@ AUTO-REMEDIATE, RE-VERIFY, and RE-REVIEW form a loop of at most three complete c
 
 ## Workflow Profiles
 
-Classify with the risk matrix:
+Classify with the risk matrix after focused discovery:
 
-- **Quick:** all factors Low; concise in-conversation definition/plan; normally no artifact directory.
-- **Standard:** any Medium factor; full artifact set; explicit spec approval; plan approval when required by risk.
-- **Deep:** any High factor; full artifacts; both approvals; narrower increments and stronger evidence.
+- **Quick:** all factors Low; no specification or solution artifact; proceed from evidenced triage to the bounded
+  change requested by the user, then verify and review. A small diff alone does not prove Quick.
+- **Standard:** any Medium factor; full artifact set; explicit specification approval; `SOLUTION LITE` and
+  explicit solution approval; separate plan approval only for sensitive execution or stricter project policy.
+- **Deep:** any High factor; full artifacts; explicit specification, `FULL SOLUTION`, solution, and plan
+  approvals; narrower increments and stronger evidence.
 
 Escalate when new risk appears. Never silently downgrade a human-selected level.
 
@@ -83,6 +91,7 @@ For Standard and Deep, create or resume:
 ```text
 .codex/workflows/changes/<change-id>/
 ├── spec.md
+├── solution.md
 ├── plan.md
 ├── tasks.md
 ├── state.json
@@ -93,7 +102,29 @@ For Standard and Deep, create or resume:
 
 Use the files in `../../templates/` as starting contracts. Project instructions may redirect the path or designate an external tracker. Never edit `.gitignore` merely to hide artifacts.
 
+New Standard/Deep changes use state schema version 3. Existing schema-version-1 and schema-version-2 changes may
+resume through their recorded semantics; do not silently migrate them or inject new phases into an approved
+legacy change.
+
 `change-id` is stable, lowercase, filesystem-safe, and unique in the project. Do not reuse an existing ID for a different outcome.
+
+## Controller Ownership
+
+After the initial schema-3 `state.json` is copied from the template, the controller exclusively owns
+`phase`, `lastCompletedPhase`, `terminalState`, `approvals`, `revision`, `lastEventSequence`, `lastEventHash`,
+and `updatedAt`. The agent must not edit them directly.
+
+Use `node ../../scripts/workflow-controller.mjs` from the plugin root, resolving the installed-plugin equivalent
+when invoked elsewhere:
+
+- read-only inspection: `status`, `validate-state`, `check-resume`, `hash-artifact`;
+- approval: `approve --gate <spec|solution|plan> --expected-revision <n> --reference <text>`;
+- phase change: `transition --to <PHASE> --expected-revision <n>`;
+- allowlisted task/evidence/baseline metadata: `record --patch-file <json> --expected-revision <n>`.
+
+Use the revision returned by the latest controller receipt for every mutation and save the JSON receipt in
+`evidence.md`. Never compensate for a controller failure by editing `state.json`, event files, lock files, or
+revision fields manually.
 
 ## Specification Write Consent
 
@@ -127,8 +158,9 @@ Non-material mechanical implementation details may be chosen autonomously when t
 ### 1. BOOTSTRAP
 
 1. Check for `AGENTS.md`, `CLAUDE.md`, and other applicable project instructions before repository exploration.
-2. Identify whether the request names an existing change ID or a compatible active state.
-3. If resuming, validate `state.json`:
+2. If repository instructions still contain starter placeholders, do not invoke `repository-bootstrap` automatically. Report that the user may explicitly run `$repository-bootstrap`; continue only when the current change has enough task-specific evidence, otherwise stop on the missing evidence.
+3. Identify whether the request names an existing change ID or a compatible active state.
+4. If resuming, run controller `check-resume` before any write, then validate that:
    - schema version is supported;
    - terminal state is null;
    - phase and `lastCompletedPhase` form a legal transition;
@@ -136,7 +168,7 @@ Non-material mechanical implementation details may be chosen autonomously when t
    - attempt and cycle counters are within bounds;
    - artifact paths are safe project-relative paths; non-default roots end with the change ID and carry an approved override reference;
    - recorded Git baseline differences are understood.
-4. Fail closed on malformed, future-version, ambiguous, or stale state. Report reconciliation needed; do not enter BUILD.
+5. Fail closed on malformed, future-version, ambiguous, or stale state. Report reconciliation needed; do not enter BUILD.
 
 Exit: instructions and a trustworthy state source are known.
 
@@ -154,9 +186,26 @@ Exit: the request is clear enough for task-relevant discovery.
 
 Follow `project-discovery`. Record applicable instructions, native commands, relevant patterns/modules, Git state, CI facts, and gaps.
 
-Exit: discovery evidence is sufficient to define behavior without broad repository ingestion, and no material unknown is being treated as an assumption.
+Exit: discovery evidence is sufficient to classify task-relevant risk and define behavior without broad repository ingestion, and no material unknown is being treated as an assumption.
 
-### 4. DEFINE
+### 4. TRIAGE
+
+1. Apply the risk matrix using evidence from DISCOVER, not diff-size intuition.
+2. Record the profile, highest risk factors, evidence excluding higher-risk triggers, solution mode, approval
+   gates, and escalation triggers.
+3. Select:
+   - Quick -> solution mode `none`; no separate specification or solution artifact/gate.
+   - Standard -> solution mode `lite`; specification and solution approvals required.
+   - Deep -> solution mode `full`; specification, solution, and plan approvals required.
+4. If material evidence needed for classification is missing, ask one focused question and stop. Do not claim
+   Quick merely because no risk was noticed.
+
+Quick exits directly to BUILD only when the implementation request is explicit, local, reversible, and all
+risk factors are evidenced Low. Standard and Deep continue to DEFINE.
+
+Exit: profile, solution mode, approval gates, and escalation triggers are evidence-backed.
+
+### 5. DEFINE
 
 Follow `change-definition`. Clarify testable criteria, scope, non-goals, risk, permissions, and verification
 intent. Persist them only after specification write consent.
@@ -166,43 +215,85 @@ authorized creating or updating the specification.
 
 Do not present an approval-ready specification while any material requirement, boundary, or verification expectation lacks evidence or explicit user confirmation.
 
-### 5. SPEC APPROVAL
+Quick skips DEFINE and SPEC APPROVAL as separate phases. Its approved scope is the user's explicit,
+unambiguous implementation request plus the triage boundary; any new material choice escalates before writing.
 
-Present the spec, important evidence, non-material implementation assumptions, resolved decision sources, risk, and permission-sensitive operations. Stop the current turn and require explicit human approval for every profile. Quick may use a concise inline spec; Standard/Deep persist the approval reference. Silence, lack of objection, or earlier approval of a different version is not approval.
+### 6. SPEC APPROVAL
 
-Record the approval reference before PLAN. Corrections update the spec and require approval of the new version.
+Present the spec, important evidence, non-material implementation assumptions, resolved decision sources, risk,
+and permission-sensitive operations. Stop the current turn and require explicit human approval for Standard and
+Deep. Persist the approval reference. Silence, lack of objection, or earlier approval of a different version is
+not approval.
+
+Record the approval with controller `approve` before SOLUTION DESIGN and save its receipt. Corrections update the
+spec and require approval of the new version.
 When corrections are still being discussed, collect them without editing the spec. Once no material question
 remains, ask whether to update the spec; only an explicit affirmative response authorizes the new version.
 
-### 6. PLAN
+### 7. SOLUTION DESIGN
 
-Follow `implementation-planning`. Produce dependency-ordered vertical tasks, likely files, checks, risks, and checkpoints.
+Follow `solution-design`:
 
-If a material architecture, compatibility, data, security, or verification decision lacks evidence, return to targeted discovery/DEFINE and ask instead of selecting a conventional-looking design.
+- Standard produces `SOLUTION LITE`.
+- Deep produces `FULL SOLUTION`.
+
+Decision drivers must precede options. Include measurable quality scenarios only when relevant; never invent
+targets. Compare realistic options, recommend one, describe architecture/pattern/technology consequences, and
+define verification plus revisit conditions.
+
+If missing evidence can change the recommendation, ask and stop instead of carrying a material assumption.
+
+Exit: the exact solution version is approval-ready with no material unknown presented as fact.
+
+### 8. SOLUTION APPROVAL
+
+Present decision drivers, material evidence, options and trade-offs, recommendation, proposed architecture,
+patterns, technology/dependency impact, performance and other quality implications, verification conditions,
+revisit conditions, and unresolved questions. Stop the current turn and require explicit human approval.
+
+Record the approved solution version/reference with controller `approve` before PLAN. Corrections that materially change the solution
+require approval of the new version. Solution approval does not itself authorize permission-gated dependency,
+migration, CI, infrastructure, public-interface, destructive, or external operations.
+
+### 9. PLAN
+
+Follow `implementation-planning`. Produce dependency-ordered vertical tasks, likely files, checks, risks, and
+checkpoints traced to the approved specification and solution.
+
+If planning discovers a material architecture, compatibility, data, security, dependency, performance, or
+verification decision not covered by the approved solution, return to SOLUTION DESIGN instead of selecting a
+conventional-looking design.
 
 Exit: each task traces to approved criteria and has verification.
 
-### 7. PLAN APPROVAL
+### 10. PLAN APPROVAL
 
-Require explicit approval for medium/high risk. Low-risk Standard work may proceed only when the risk policy says approval is optional and the spec approval clearly authorized autonomous implementation.
+Require explicit approval for Deep and for Standard plans with sensitive, destructive, difficult-to-reverse,
+permission-gated, or project-policy-gated execution. Standard may proceed without a separate plan approval when
+the approved solution fixed all material direction and the plan is bounded and reversible.
 
-Present architecture decisions, sensitive operations, dependencies, and verification gaps. Record the approved plan reference before BUILD.
+Present task order, sensitive operations, permission gates, and verification gaps. Do not reopen architecture
+in the plan packet. Record the approved plan reference with controller `approve` before BUILD when required.
 
-### 8. BUILD
+### 11. BUILD
 
 Follow `incremental-build` one task at a time.
 
-Before each write, enforce the permission policy and approved-file boundary. Update task/state artifacts after each increment. Preserve unrelated changes.
+Before each write, enforce the permission policy and approved-file boundary. Update task/evidence artifacts and
+use controller `record` for allowlisted state metadata after each increment. Preserve unrelated changes.
+
+For Quick, preserve the triage boundary and use concise conversational task/evidence tracking rather than
+creating a workflow directory solely for the change.
 
 For one blocker, allow at most three materially different recovery attempts. Each attempt records a changed hypothesis. On exhaustion, go to FINAL REPORT with `IMPLEMENTATION BLOCKED`.
 
-### 9. VERIFY
+### 12. VERIFY
 
 Follow `change-verification`. Run focused and proportional regression checks, record receipts, and map them to criteria. A missing or unsafe check is `NOT RUN`; insufficient indirect evidence is `UNVERIFIED`.
 
 If implementation cannot be verified because of a blocker and recovery is exhausted, choose `IMPLEMENTATION BLOCKED` and skip learning retrospective.
 
-### 10. REVIEW
+### 13. REVIEW
 
 Run both skills in this order:
 
@@ -211,15 +302,17 @@ Run both skills in this order:
 
 Use the review policy. Reconcile duplicates by finding ID/evidence; do not lose a finding through summarization.
 
-### 11. AUTO-REMEDIATE
+### 14. AUTO-REMEDIATE
 
-For each finding, evaluate all remediation eligibility rules. Automatically change code only for evidenced Critical/Important findings that are unambiguous, permitted, and inside the approved spec/plan.
+For each finding, evaluate all remediation eligibility rules. Automatically change code only for evidenced
+Critical/Important findings that are unambiguous, permitted, and inside the applicable Quick triage boundary or
+approved specification/solution/plan.
 
 Do not fix Suggestions. If a blocking fix needs new scope, dependency, product judgment, or permission, return to the relevant approval gate or produce `REVIEW BLOCKED` when the current run cannot proceed.
 
 Increment `reviewRemediationCycle` once per complete fix/re-verify/re-review cycle. Never start cycle 4.
 
-### 12. RE-VERIFY AND RE-REVIEW
+### 15. RE-VERIFY AND RE-REVIEW
 
 After a fix:
 
@@ -230,7 +323,7 @@ After a fix:
 
 If eligible findings remain and cycles are below three, repeat. If review becomes clean, continue to LEARNING RETROSPECTIVE. Otherwise continue to FINAL REPORT with the blocking evidence.
 
-### 13. LEARNING RETROSPECTIVE
+### 16. LEARNING RETROSPECTIVE
 
 Run `learning-retrospective` only after verification passed and both review stages have no unresolved Critical or Important findings.
 
@@ -240,7 +333,7 @@ The retrospective never edits plugin or product files. `REPOSITORY LEARNING`, `A
 
 Exit: exactly one retrospective classification is available for the final report, and any candidate passed its bundled validator.
 
-### 14. FINAL REPORT
+### 17. FINAL REPORT
 
 Use `../../templates/final-review.md`. Map every criterion and required check to current evidence. List changed files, approvals, cycle counts, remaining Suggestions, unresolved findings, the retrospective result, and human action if blocked.
 
@@ -254,7 +347,7 @@ Persist the final state for Standard/Deep.
 
 For `REVIEW PASSED`, FINAL REPORT must follow LEARNING RETROSPECTIVE, even when the result was `NO DURABLE LEARNING`. Blocked changes skip retrospective and may enter FINAL REPORT directly from BUILD, VERIFY, REVIEW, or RE-REVIEW.
 
-### 15. STOP
+### 18. STOP
 
 Stop immediately after the final report. Do not offer or perform a shipping action as part of this workflow.
 
@@ -264,9 +357,13 @@ Stop immediately after the final report. Do not offer or perform a shipping acti
 |---|---|---|
 | BOOTSTRAP | INTAKE | State source checked |
 | INTAKE | DISCOVER | Request discoverable |
-| DISCOVER | DEFINE | Context sufficient |
+| DISCOVER | TRIAGE | Task-relevant risk evidence sufficient |
+| TRIAGE | BUILD | Quick; every risk factor Low and scope unambiguous |
+| TRIAGE | DEFINE | Standard or Deep |
 | DEFINE | SPEC APPROVAL | Spec draft complete |
-| SPEC APPROVAL | PLAN | Explicit approval |
+| SPEC APPROVAL | SOLUTION DESIGN | Explicit specification approval |
+| SOLUTION DESIGN | SOLUTION APPROVAL | Solution version approval-ready |
+| SOLUTION APPROVAL | PLAN | Explicit solution approval |
 | PLAN | PLAN APPROVAL or BUILD | Risk rule applied |
 | PLAN APPROVAL | BUILD | Explicit approval |
 | BUILD | VERIFY | Tasks implemented |
@@ -295,6 +392,9 @@ Any transition not listed is forbidden.
 | "The user pasted a schema, so it belongs in the spec now." | Evidence supplied during clarification remains conversational until the user authorizes the spec write. |
 | "This new issue is close enough to scope." | New behavior returns to an approval gate. Similar is not approved. |
 | "The docs are silent, but the intended answer is probably obvious." | Material silence is an open question, not permission to infer. |
+| "The change is one line, so it is Quick." | Risk and blast radius determine the profile; line count does not. |
+| "The approved spec tells me which architecture to use." | Specification defines outcomes; the solution version selects material technical direction. |
+| "I can settle the pattern or dependency while planning." | Material solution changes return to SOLUTION DESIGN and approval. |
 | "The test probably passes from inspection." | Only an executed successful check is `PASS`. |
 | "One more retry might work." | Attempt 4 hides a blocker instead of resolving it. Stop with evidence. |
 | "A suggestion is easy, so I can include it." | Suggestions are reported, never auto-fixed. |
@@ -308,6 +408,10 @@ Any transition not listed is forbidden.
 - A spec or workflow artifact is created/updated while requirements are still being clarified or before explicit
   specification write consent.
 - A material conclusion in discovery, spec, plan, or BUILD lacks evidence or explicit user confirmation.
+- Quick is selected without evidence excluding every Medium/High trigger.
+- Standard or Deep reaches PLAN without an approved solution version.
+- Options are invented to meet a fixed count, or appear before decision drivers.
+- A performance claim is presented as fact without measurement/evidence classification.
 - BUILD begins without the required approval record.
 - Quick remains selected after a Medium/High factor appears.
 - A write target is not in approved scope.
@@ -328,7 +432,9 @@ Before STOP, confirm:
 - [ ] Project instructions were applied before discovery.
 - [ ] Specification artifacts were written only after explicit write/update consent.
 - [ ] Material decisions are traceable to evidence or user confirmation; proposals and unknowns were not promoted to facts.
-- [ ] Profile/risk has evidence and all escalations were honored.
+- [ ] Profile/risk, solution mode, and skipped gates have evidence; all escalations were honored.
+- [ ] Standard/Deep has an approved solution version with decision drivers, quality implications, verification, and revisit conditions.
+- [ ] Planning traces to the approved solution and introduced no material architecture decision.
 - [ ] Required approvals exist before BUILD.
 - [ ] Every task and criterion has a traceable outcome.
 - [ ] Verification statuses obey the evidence policy.

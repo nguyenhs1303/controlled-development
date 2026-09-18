@@ -144,13 +144,7 @@ function executeEvaluation(codex, definition, evaluation) {
       `=== CONTROLLED DEVELOPMENT INSTRUCTIONS START ===\n${buildInstructionBundle(definition.skill_name)}\n=== CONTROLLED DEVELOPMENT INSTRUCTIONS END ===`,
       `=== USER REQUEST START ===\n${evaluation.prompt}\n=== USER REQUEST END ===`,
     ].join('\n\n');
-    const executorArgs = [
-      'exec', '--ephemeral', '--skip-git-repo-check',
-      '--sandbox', evaluation.kind === 'dialogue' ? 'read-only' : 'workspace-write',
-      '--json', '--color', 'never',
-      '--output-last-message', lastMessagePath, '--cd', workspace, '-',
-    ];
-    if (evaluation.kind === 'execution') executorArgs.splice(7, 0, '--approve-for-me');
+    const executorArgs = buildExecutorArgs(evaluation.kind, workspace, lastMessagePath);
     const trace = runCodex(codex, executorArgs, executorPrompt, executorTimeoutMs);
     const after = snapshot(workspace);
     const lastMessage = fs.existsSync(lastMessagePath) ? fs.readFileSync(lastMessagePath, 'utf8') : '';
@@ -160,6 +154,16 @@ function executeEvaluation(codex, definition, evaluation) {
     fs.rmSync(scratch, { recursive: true, force: true });
     throw error;
   }
+}
+
+export function buildExecutorArgs(kind, workspace, lastMessagePath) {
+  const args = [
+      'exec', '--ephemeral', '--skip-git-repo-check',
+      '--sandbox', kind === 'dialogue' ? 'read-only' : 'workspace-write',
+      '--json', '--color', 'never',
+      '--output-last-message', lastMessagePath, '--cd', workspace, '-',
+    ];
+  return args;
 }
 
 function buildInstructionBundle(skillName) {
@@ -202,7 +206,7 @@ function gradeEvaluation(codex, definition, evaluation, execution) {
       `=== EXECUTOR FINAL MESSAGE ===\n${truncate(execution.lastMessage, 30000)}\n=== END FINAL MESSAGE ===`,
       `=== WORKSPACE CHANGES ===\n${truncate(JSON.stringify(changes, null, 2), 120000)}\n=== END WORKSPACE CHANGES ===`,
       `=== EXECUTION TRACE ===\n${truncate(execution.trace, 2_000_000)}\n=== END EXECUTION TRACE ===`,
-      'Return one result entry for every expectation, in the same order, copying each expectation text exactly. Set overallPass true only when every expectation passes.',
+      'Return one result entry for every expectation, in the same order. Set index to its one-based expectation number. Set overallPass true only when every expectation passes.',
     ].join('\n\n');
     runCodex(codex, [
       'exec', '--ephemeral', '--skip-git-repo-check',
@@ -210,18 +214,7 @@ function gradeEvaluation(codex, definition, evaluation, execution) {
       '--output-last-message', gradingPath, '--cd', graderRoot, '-',
     ], graderPrompt, graderTimeoutMs);
     const grading = JSON.parse(fs.readFileSync(gradingPath, 'utf8'));
-    if (!Array.isArray(grading.results) || grading.results.length !== evaluation.expectations.length) {
-      throw new Error('grader returned the wrong number of expectation results');
-    }
-    for (const [index, result] of grading.results.entries()) {
-      if (result.expectation !== evaluation.expectations[index] || !nonEmptyString(result.evidence)) {
-        throw new Error(`grader result ${index + 1} does not match its expectation or lacks evidence`);
-      }
-    }
-    const computedOverallPass = grading.results.every((result) => result.passed === true);
-    if (grading.overallPass !== computedOverallPass) {
-      throw new Error('grader overallPass contradicts its expectation results');
-    }
+    validateGrading(evaluation.expectations, grading);
     return grading;
   } finally {
     fs.rmSync(graderRoot, { recursive: true, force: true });
@@ -239,11 +232,11 @@ function gradingSchema() {
         items: {
           type: 'object',
           properties: {
-            expectation: { type: 'string' },
+            index: { type: 'integer', minimum: 1 },
             passed: { type: 'boolean' },
             evidence: { type: 'string' },
           },
-          required: ['expectation', 'passed', 'evidence'],
+          required: ['index', 'passed', 'evidence'],
           additionalProperties: false,
         },
       },
@@ -251,6 +244,21 @@ function gradingSchema() {
     required: ['overallPass', 'summary', 'results'],
     additionalProperties: false,
   };
+}
+
+export function validateGrading(expectations, grading) {
+  if (!Array.isArray(grading.results) || grading.results.length !== expectations.length) {
+    throw new Error('grader returned the wrong number of expectation results');
+  }
+  for (const [index, result] of grading.results.entries()) {
+    if (result.index !== index + 1 || !nonEmptyString(result.evidence)) {
+      throw new Error(`grader result ${index + 1} has the wrong index or lacks evidence`);
+    }
+  }
+  const computedOverallPass = grading.results.every((result) => result.passed === true);
+  if (grading.overallPass !== computedOverallPass) {
+    throw new Error('grader overallPass contradicts its expectation results');
+  }
 }
 
 function snapshot(root) {
@@ -355,4 +363,6 @@ function main(args = process.argv.slice(2)) {
   }
 }
 
-main();
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  main();
+}

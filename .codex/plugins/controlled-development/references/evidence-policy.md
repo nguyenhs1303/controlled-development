@@ -55,9 +55,18 @@ At specification approval, surface:
 
 At plan approval, surface:
 
-- architecture decisions and dependency order;
+- approved solution reference and dependency order;
 - sensitive or difficult-to-reverse steps;
 - proposed verification coverage and known gaps.
+
+At solution approval, surface:
+
+- decision drivers and their evidence;
+- realistic options, trade-offs, and recommendation;
+- architecture/pattern/technology/dependency impact;
+- quality scenarios and confidence of performance or reliability claims;
+- verification and revisit conditions;
+- material unknowns, which must be resolved before approval.
 
 ## Blocker evidence
 

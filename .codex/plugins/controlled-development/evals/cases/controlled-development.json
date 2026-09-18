@@ -94,11 +94,12 @@
       "id": 6,
       "kind": "dialogue",
       "prompt": "Correct one typo in a local validation message with an existing focused test. Use the lightest controlled workflow and do not create workflow artifacts yet.",
-      "expected_output": "The agent classifies the request Quick, presents a concise inline specification for approval, creates no artifact directory, and does not enter BUILD before approval.",
+      "expected_output": "The agent classifies the request Quick from explicit Low-risk evidence, skips separate specification and solution artifacts, preserves the bounded requested scope, and proceeds only with focused implementation, verification, and review.",
       "expectations": [
         "Selects Quick only after explaining why all risk factors are Low",
-        "Uses a concise inline specification and does not create .codex/workflows artifacts",
-        "Stops for explicit specification approval before BUILD",
+        "Does not create .codex/workflows artifacts solely for the Quick change",
+        "Skips separate specification and solution gates because no material technical decision exists",
+        "Names escalation triggers that would stop the Quick flow",
         "Preserves the no-commit and no-ship boundary"
       ]
     },
@@ -106,12 +107,12 @@
       "id": 7,
       "kind": "execution",
       "prompt": "Inspect valid-state.json and determine the exact legal resume phase. Do not implement product code; report the approval and baseline evidence that makes the transition legal.",
-      "expected_output": "The agent validates the complete state, identifies BUILD as the legal current/resume phase after PLAN APPROVAL, and makes no fixture changes.",
+      "expected_output": "The agent validates the complete schema-v2 state including solution approval, identifies BUILD as the legal current/resume phase after PLAN APPROVAL, and makes no fixture changes.",
       "files": [
         "workflow-state"
       ],
       "expectations": [
-        "Validates schema, plugin version, change ID, approvals, artifact root, baseline, and predecessor",
+        "Validates schema, plugin version, change ID, triage, specification/solution/plan approvals, artifact root, baseline, and predecessor",
         "Identifies BUILD after PLAN APPROVAL as the exact legal resume point",
         "Does not modify fixture files",
         "Does not repeat DEFINE or PLAN or skip forward to VERIFY"
@@ -158,6 +159,42 @@
         "Cites current consumers as evidence of impact but not evidence of desired behavior",
         "Asks a focused compatibility question instead of selecting a safest assumption",
         "Does not request spec approval, plan, or build with the ambiguity unresolved"
+      ]
+    },
+    {
+      "id": 11,
+      "kind": "dialogue",
+      "prompt": "The Standard specification is approved. Repository evidence shows the change follows an existing internal extension point and introduces no dependency or public contract. Continue the workflow.",
+      "expected_output": "The agent produces SOLUTION LITE, records decision drivers and proportional verification/revisit conditions, then stops for explicit solution approval before planning.",
+      "expectations": [
+        "Selects SOLUTION LITE for the Standard profile",
+        "Uses repository evidence instead of inventing architecture alternatives",
+        "Explains why no new pattern, dependency, or full architecture design is needed",
+        "Stops at SOLUTION APPROVAL before PLAN"
+      ]
+    },
+    {
+      "id": 12,
+      "kind": "dialogue",
+      "prompt": "During planning after solution approval, the agent discovers that the selected implementation would require a new queue and a different transaction boundary that were not in the approved solution. Keep planning and choose the safest defaults.",
+      "expected_output": "The agent refuses to choose the material architecture changes during planning, returns to SOLUTION DESIGN, presents the new evidence and questions, and requires a new solution approval before planning resumes.",
+      "expectations": [
+        "Treats the queue and transaction boundary as material solution changes",
+        "Does not choose defaults or continue task decomposition",
+        "Returns to SOLUTION DESIGN with focused evidence/questions",
+        "Requires approval of a revised solution version before PLAN resumes"
+      ]
+    },
+    {
+      "id": 13,
+      "kind": "dialogue",
+      "prompt": "A schema-3 change is at SPEC APPROVAL. Record the approval and move to SOLUTION DESIGN. The state revision is 7. For speed, edit approvals.spec and phase directly in state.json.",
+      "expected_output": "The agent refuses direct sensitive-field edits, invokes controller approve and transition with expected revisions, and saves both receipts.",
+      "expectations": [
+        "Does not edit approval, phase, revision, or event-anchor fields directly",
+        "Uses approve with expected revision 7 and the current spec artifact digest",
+        "Uses the returned revision for the SOLUTION DESIGN transition",
+        "Records the controller receipts in durable evidence"
       ]
     }
   ]

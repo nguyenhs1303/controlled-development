@@ -1,9 +1,19 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 3,
+  "revision": 0,
+  "lastEventSequence": 0,
+  "lastEventHash": null,
   "pluginVersion": "0.1.0",
   "changeId": "blocked-review",
   "profile": "standard",
   "riskLevel": "medium",
+  "triage": {
+    "highestFactors": ["verification"],
+    "reason": "The change requires bounded review remediation",
+    "solutionMode": "lite",
+    "solutionReason": "The approved solution remains unchanged through remediation",
+    "escalationTriggers": ["material redesign required"]
+  },
   "phase": "FINAL REPORT",
   "terminalState": "REVIEW BLOCKED",
   "artifactRoot": ".codex/workflows/changes/blocked-review",
@@ -25,12 +35,30 @@
   "approvals": {
     "spec": {
       "status": "approved",
-      "reference": "human-message-30"
+      "reference": "human-message-30",
+      "artifactPath": "spec.md",
+      "digestAlgorithm": "sha256-text-v1",
+      "artifactDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "approvedAt": "2026-01-01T00:00:00Z"
+    },
+    "solution": {
+      "required": true,
+      "mode": "lite",
+      "status": "approved",
+      "reference": "human-message-31",
+      "artifactPath": "solution.md",
+      "digestAlgorithm": "sha256-text-v1",
+      "artifactDigest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "approvedAt": "2026-01-01T00:00:00Z"
     },
     "plan": {
       "required": true,
       "status": "approved",
-      "reference": "human-message-32"
+      "reference": "human-message-32",
+      "artifactPath": "plan.md",
+      "digestAlgorithm": "sha256-text-v1",
+      "artifactDigest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "approvedAt": "2026-01-01T00:00:00Z"
     }
   },
   "tasks": [

@@ -1,9 +1,19 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 3,
+  "revision": 0,
+  "lastEventSequence": 0,
+  "lastEventHash": null,
   "pluginVersion": "0.1.0",
   "changeId": "discount-floor",
   "profile": "standard",
   "riskLevel": "medium",
+  "triage": {
+    "highestFactors": ["scope"],
+    "reason": "One bounded feature slice affects multiple files",
+    "solutionMode": "lite",
+    "solutionReason": "The change follows the existing architecture",
+    "escalationTriggers": ["new public contract", "new dependency"]
+  },
   "phase": "BUILD",
   "terminalState": null,
   "artifactRoot": ".codex/workflows/changes/discount-floor",
@@ -25,12 +35,30 @@
   "approvals": {
     "spec": {
       "status": "approved",
-      "reference": "human-message-12"
+      "reference": "human-message-12",
+      "artifactPath": "spec.md",
+      "digestAlgorithm": "sha256-text-v1",
+      "artifactDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "approvedAt": "2026-01-01T00:00:00Z"
+    },
+    "solution": {
+      "required": true,
+      "mode": "lite",
+      "status": "approved",
+      "reference": "human-message-13",
+      "artifactPath": "solution.md",
+      "digestAlgorithm": "sha256-text-v1",
+      "artifactDigest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "approvedAt": "2026-01-01T00:00:00Z"
     },
     "plan": {
       "required": true,
       "status": "approved",
-      "reference": "human-message-14"
+      "reference": "human-message-14",
+      "artifactPath": "plan.md",
+      "digestAlgorithm": "sha256-text-v1",
+      "artifactDigest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "approvedAt": "2026-01-01T00:00:00Z"
     }
   },
   "tasks": [

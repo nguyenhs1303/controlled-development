@@ -1,19 +1,20 @@
 ---
 name: implementation-planning
-description: Turns an approved change specification into dependency-ordered, verifiable implementation tasks. Use when a controlled change needs architecture decisions, vertical slices, likely files, checkpoints, risk-first ordering, or a medium/high-risk plan approval. Do not use before specification approval or to execute the tasks.
+description: Turns an approved specification and technical solution into dependency-ordered, verifiable implementation tasks. Use when a controlled change needs vertical slices, likely files, checkpoints, risk-first ordering, or a Deep/sensitive plan approval. Do not use before required solution approval, to choose material architecture, or to execute the tasks.
 ---
 
 # Implementation Planning
 
 ## Overview
 
-Translate the approved behavior contract into small, dependency-safe implementation increments. Planning is read-only with respect to product code.
+Translate the approved behavior contract and technical solution into small, dependency-safe implementation increments. Planning is read-only with respect to product code and does not reopen approved architecture.
 
 Use [plan.md](../../templates/plan.md), [tasks.md](../../templates/tasks.md), the [output language policy](../../references/output-language-policy.md), the [decision evidence policy](../../references/decision-evidence-policy.md), the [evidence policy](../../references/evidence-policy.md), and the [risk matrix](../../references/risk-matrix.md).
 
 ## Preconditions
 
 - The specification version is explicitly approved.
+- The required solution version is explicitly approved (`SOLUTION LITE` for Standard, `FULL SOLUTION` for Deep).
 - Discovery evidence is current enough for planning.
 - Any unresolved question that materially changes behavior, scope, data/API compatibility, architecture, security, risk, permissions, or verification is returned to DEFINE or targeted discovery.
 
@@ -21,7 +22,7 @@ Use [plan.md](../../templates/plan.md), [tasks.md](../../templates/tasks.md), th
 
 ### 1. Map criteria to components
 
-For every acceptance criterion, identify the existing modules, interfaces, tests, configuration, and boundaries likely involved. Prefer existing project patterns.
+For every acceptance criterion, identify the approved solution sections, modules, interfaces, tests, configuration, and boundaries involved. Prefer existing project patterns already selected by the solution.
 
 Record the evidence for each material mapping. Similar names, neighboring files, or a common architectural pattern are leads to investigate, not authority to select a boundary.
 
@@ -31,7 +32,9 @@ Record what must exist before each outcome can be implemented and tested. Detect
 
 Place high-risk unknowns early enough to fail fast, without creating unused horizontal infrastructure.
 
-If choosing a dependency, owner, transaction boundary, compatibility strategy, or verification substitute requires an unsupported material assumption, stop and ask the minimum focused question. Do not encode the guess as an architecture decision or task.
+If planning exposes a new dependency, owner, transaction boundary, compatibility strategy, quality trade-off, or
+verification substitute not settled by the approved solution, return to `SOLUTION DESIGN`. Do not encode the
+guess as an architecture decision or task.
 
 ### 3. Slice vertically
 
@@ -60,19 +63,22 @@ After each small dependency group, require checks that leave the project in a wo
 
 ### 6. Decide plan approval
 
-Require human approval for medium/high risk. Present architecture decisions, dependencies, sensitive operations, verification coverage, and known gaps, then stop the current turn.
+Require human approval for Deep changes and for Standard plans containing sensitive, destructive,
+difficult-to-reverse, permission-gated, or project-policy-gated execution. Present task order, sensitive
+operations, verification coverage, and known gaps, then stop the current turn.
 
-Low-risk Standard may skip a separate plan approval only when the risk policy permits it and the approved spec explicitly authorizes autonomous progression.
+Standard may skip a separate plan approval when the approved solution fixed the material technical direction
+and the plan contains only bounded, reversible execution steps.
 
 ## Plan Quality Rules
 
-- Every task traces to at least one approved criterion or necessary verification/artifact duty.
+- Every task traces to at least one approved criterion, approved solution section, or necessary verification/artifact duty.
 - Every material plan decision cites an approved requirement, project evidence, or explicit user confirmation.
 - Every criterion is covered by one or more tasks.
 - Dependencies point backward in execution order.
 - Product code remains untouched during planning.
 - Parallel work is proposed only for genuinely independent files/contracts.
-- New dependencies, migrations, CI, or public-interface changes remain permission-gated.
+- New dependencies, migrations, CI, public-interface changes, or architecture changes not already approved return to solution design and remain permission-gated.
 
 ## Exit Criteria
 
@@ -85,26 +91,26 @@ The plan is executable without inventing behavior, tasks are dependency-ordered 
 | "I'll choose files while coding." | Likely file scope is a control boundary and must be reviewable first. |
 | "One large task is easier to track." | Large tasks hide dependency mistakes and prevent incremental verification. |
 | "Tests can be a final task." | Each behavioral slice needs its own proof path. |
-| "The spec approval also approves any plan." | Medium/high-risk architecture choices require their own gate. |
+| "The approved solution lets the plan change architecture." | Planning decomposes the approved direction; material redesign returns to solution approval. |
 | "This is the usual architecture for this stack." | General practice is not project evidence; investigate the project or ask when the choice is material. |
 
 ## Red Flags
 
-- Planning begins from an unapproved spec.
+- Planning begins from an unapproved spec or required solution.
 - Tasks are horizontal layers with no working behavior.
 - A task touches more than five files without split rationale.
 - Acceptance criteria or verification are absent.
-- A material architecture or compatibility choice has no traceable source.
+- A material architecture or compatibility choice is introduced during planning instead of returning to solution design.
 - A proposal or likely pattern is presented as a settled plan decision.
 - A dependency points to a later task.
 - BUILD starts in the plan-approval turn.
 
 ## Verification
 
-- [ ] All criteria map to tasks and all tasks map to approved criteria/duties.
+- [ ] All criteria and approved solution sections map to tasks and all tasks map back to approved inputs/duties.
 - [ ] Dependency graph is acyclic and order is risk-aware.
 - [ ] Tasks are small, vertical, and independently verifiable.
 - [ ] Likely files and native checks are named.
-- [ ] Material decisions trace to evidence or user confirmation; none depend on a hidden inference.
+- [ ] No material architecture decision was reopened or invented during planning.
 - [ ] Checkpoints and permission-sensitive actions are visible.
 - [ ] Required plan approval exists before BUILD.

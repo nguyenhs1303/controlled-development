@@ -10,9 +10,14 @@ $requiredFiles = @(
     "AGENTS.md",
     ".codex\README.md",
     ".codex\config.toml",
+    ".codex\templates\repository-bootstrap-state.json",
+    ".codex\scripts\validate-repository-bootstrap.ps1",
     ".codex\instructions\common\working-rules.md",
     ".codex\instructions\common\security.md",
     ".codex\instructions\repository\overview.md",
+    ".codex\instructions\repository\architecture.md",
+    ".codex\instructions\repository\code-conventions.md",
+    ".codex\instructions\repository\local-development.md",
     ".codex\instructions\repository\performance.md"
 )
 

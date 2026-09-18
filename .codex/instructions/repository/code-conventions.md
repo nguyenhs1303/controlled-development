@@ -1,5 +1,7 @@
 # Convention code
 
+<!-- REPOSITORY-BOOTSTRAP-PENDING -->
+
 Hiệu chỉnh file này từ formatter, linter, code hiện có và quy định của đội dự án.
 
 - Nêu naming, layering, dependency direction và pattern bắt buộc.

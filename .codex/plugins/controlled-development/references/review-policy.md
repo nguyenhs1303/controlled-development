@@ -4,7 +4,7 @@ Review runs in two ordered stages. Specification compliance comes first so engin
 
 ## Stage 1: Specification compliance
 
-For every approved acceptance criterion, classify the implementation as:
+For every applicable Quick outcome or approved Standard/Deep acceptance criterion, classify the implementation as:
 
 - satisfied;
 - missing;
@@ -68,7 +68,7 @@ A finding is eligible only when all are true:
 
 1. Severity is Critical or Important.
 2. Evidence meets the blocking threshold.
-3. The fix is inside the approved specification and plan.
+3. The fix is inside the applicable Quick triage boundary or approved specification, solution, and plan.
 4. The operation is allowed by the permission policy.
 5. The expected correction is unambiguous.
 6. The review-remediation cycle limit has not been reached.

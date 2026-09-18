@@ -47,6 +47,10 @@ Before editing, confirm:
 
 If any condition is false or unknown, do not write.
 
+Specification, solution, or plan approval records agreement with the presented direction. They do not replace
+the separate permission required immediately before adding/upgrading dependencies, creating migrations,
+changing CI/infrastructure/public contracts, or running destructive/external operations.
+
 ## Command checks
 
 Before running a command, classify it as read-only, local mutation, or external/destructive. Inspect scripts when their effects are unclear. Names such as `test`, `build`, or `validate` are not proof that a command is safe.

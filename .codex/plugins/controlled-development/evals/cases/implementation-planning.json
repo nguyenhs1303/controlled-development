@@ -30,19 +30,19 @@
     {
       "id": 1,
       "kind": "dialogue",
-      "prompt": "The approved medium-risk spec requires clamping discounted totals at zero and preserving valid discounts. Produce the implementation plan.",
-      "expected_output": "A small dependency-safe plan that adds a failing regression test, applies the minimal implementation, runs focused and regression checks, and stops for plan approval.",
+      "prompt": "The approved Standard spec and SOLUTION LITE require clamping discounted totals at zero using the existing pricing helper and preserving valid discounts. Produce the implementation plan.",
+      "expected_output": "A small dependency-safe plan traced to the approved solution that adds a failing regression test, applies the minimal implementation, and runs focused and regression checks without inventing architecture work.",
       "expectations": [
         "Tasks trace to both the clamp and preservation criteria",
         "The failing regression test precedes the implementation change",
         "Likely files and exact discovered commands are included",
-        "Medium risk causes an explicit plan approval stop before BUILD"
+        "Records whether separate plan approval is needed from execution sensitivity rather than Medium risk alone"
       ]
     },
     {
       "id": 2,
       "kind": "dialogue",
-      "prompt": "Plan an approved low-risk Standard refactor of one pure helper. The spec explicitly allows autonomous progression after planning and existing focused tests cover the behavior.",
+      "prompt": "Plan an approved low-risk Standard refactor of one pure helper. The specification and SOLUTION LITE are approved, the solution preserves the existing boundary, and focused tests cover the behavior.",
       "expected_output": "A small plan records that separate plan approval is optional under the approved low-risk policy while preserving all other gates and checks.",
       "expectations": [
         "Keeps the work Standard and low risk rather than silently changing profile",
@@ -54,7 +54,7 @@
     {
       "id": 3,
       "kind": "dialogue",
-      "prompt": "Plan an approved authorization-rule change that affects a public API and persistent permissions.",
+      "prompt": "Plan an approved authorization-rule change whose FULL SOLUTION affects a public API and persistent permissions.",
       "expected_output": "The plan treats the change Deep/high risk, orders risk-first verification, and stops for explicit plan approval before BUILD.",
       "expectations": [
         "Classifies the authorization, persistence, and public-interface factors as High",
@@ -66,12 +66,12 @@
     {
       "id": 4,
       "kind": "dialogue",
-      "prompt": "Plan an approved persistence change. Two existing modules use different transaction owners, and neither the spec nor project docs establish which boundary must keep the new write atomic.",
-      "expected_output": "The agent identifies transaction ownership as a material data-integrity architecture decision, returns to clarification or targeted discovery, and does not select either nearby pattern as the plan.",
+      "prompt": "Plan an approved persistence change. Two existing modules use different transaction owners, and the approved solution did not establish which boundary must keep the new write atomic.",
+      "expected_output": "The agent identifies transaction ownership as a material data-integrity architecture decision, returns to SOLUTION DESIGN, and does not select either nearby pattern as the plan.",
       "expectations": [
         "Treats the two implementations as conflicting leads rather than authority",
         "Explains why transaction ownership materially affects architecture and data integrity",
-        "Asks a focused question or requests authoritative evidence",
+        "Returns to SOLUTION DESIGN and asks a focused question or requests authoritative evidence",
         "Does not produce a settled task plan from the unsupported choice"
       ]
     }

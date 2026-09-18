@@ -7,14 +7,104 @@ import test from 'node:test';
 import { fileURLToPath } from 'node:url';
 
 import { runTriggerEvals } from './run-trigger-evals.mjs';
+import { buildExecutorArgs, validateGrading } from './run-behavioral-evals.mjs';
 import { validateLearningRetrospective } from './validate-learning-retrospective.mjs';
 import { validatePlugin, validateWorkflowState } from './validate.mjs';
 
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const pluginRoot = path.resolve(scriptDirectory, '..');
+const approvalArtifacts = {
+  spec: 'spec.md',
+  solution: 'solution.md',
+  plan: 'plan.md',
+};
+
+function asSchema3(state) {
+  const result = structuredClone(state);
+  result.schemaVersion = 3;
+  result.revision = 0;
+  result.lastEventSequence = 0;
+  result.lastEventHash = null;
+  for (const [gate, artifactPath] of Object.entries(approvalArtifacts)) {
+    const approval = result.approvals[gate];
+    const approved = approval.status === 'approved';
+    approval.artifactPath = approved ? artifactPath : null;
+    approval.digestAlgorithm = approved ? 'sha256-text-v1' : null;
+    approval.artifactDigest = approved ? `sha256:${'a'.repeat(64)}` : null;
+    approval.approvedAt = approved ? '2026-01-01T00:00:00Z' : null;
+  }
+  return result;
+}
+
+function setPendingApproval(approval) {
+  approval.status = 'pending';
+  approval.reference = null;
+  approval.artifactPath = null;
+  approval.digestAlgorithm = null;
+  approval.artifactDigest = null;
+  approval.approvedAt = null;
+}
+
+function removeSchema3Fields(state) {
+  delete state.revision;
+  delete state.lastEventSequence;
+  delete state.lastEventHash;
+  for (const approval of Object.values(state.approvals)) {
+    delete approval.artifactPath;
+    delete approval.digestAlgorithm;
+    delete approval.artifactDigest;
+    delete approval.approvedAt;
+  }
+}
 
 test('the checked-in plugin satisfies structural contracts', () => {
   assert.deepEqual(validatePlugin(pluginRoot), []);
+});
+
+test('workflow state schema reference defines sha256-text-v1 canonicalization', () => {
+  const referencePath = path.join(pluginRoot, 'references', 'workflow-state-schema.md');
+  const contents = fs.readFileSync(referencePath, 'utf8');
+  for (const marker of [
+    'schemaVersion: 1',
+    'schemaVersion: 2',
+    'schemaVersion: 3',
+    'sha256-text-v1',
+    'UTF-8 BOM',
+    'CRLF',
+    'lone CR',
+    'trailing newline',
+    'Unicode normalization',
+    'invalid UTF-8',
+    'sha256:<64-lowercase-hex>',
+  ]) {
+    assert.ok(contents.includes(marker), `workflow state schema reference missing ${marker}`);
+  }
+});
+
+test('behavioral grading uses stable expectation indexes instead of copied prose', () => {
+  const expectations = ['First long expectation', 'Second long expectation'];
+  const grading = {
+    overallPass: true,
+    summary: 'Both pass',
+    results: [
+      { index: 1, passed: true, evidence: 'Observed first behavior' },
+      { index: 2, passed: true, evidence: 'Observed second behavior' },
+    ],
+  };
+
+  assert.doesNotThrow(() => validateGrading(expectations, grading));
+  grading.results[1].index = 1;
+  assert.throws(() => validateGrading(expectations, grading), /wrong index/);
+});
+
+test('execution eval arguments preserve option-value pairs', () => {
+  const args = buildExecutorArgs('execution', 'workspace', 'last-message.txt');
+  const colorIndex = args.indexOf('--color');
+  const sandboxIndex = args.indexOf('--sandbox');
+
+  assert.equal(args[colorIndex + 1], 'never');
+  assert.equal(args[sandboxIndex + 1], 'workspace-write');
+  assert.equal(args.includes('--approve-for-me'), false);
 });
 
 test('the base plugin version remains valid without a cachebuster', (context) => {
@@ -70,6 +160,32 @@ test('every skill must apply the decision evidence policy', (context) => {
   assert.ok(errors.some((error) => error.includes('must apply the decision evidence policy')));
 });
 
+test('repository bootstrap must remain explicit-only', (context) => {
+  const temporaryRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'controlled-development-'));
+  context.after(() => fs.rmSync(temporaryRoot, { recursive: true, force: true }));
+  fs.cpSync(pluginRoot, temporaryRoot, { recursive: true });
+
+  const agentPath = path.join(temporaryRoot, 'skills', 'repository-bootstrap', 'agents', 'openai.yaml');
+  const contents = fs.readFileSync(agentPath, 'utf8');
+  fs.writeFileSync(agentPath, contents.replace('allow_implicit_invocation: false', 'allow_implicit_invocation: true'));
+
+  const errors = validatePlugin(temporaryRoot);
+  assert.ok(errors.some((error) => error.includes('must disable implicit invocation')));
+});
+
+test('repository bootstrap must continue after an answer without same-task re-invocation', (context) => {
+  const temporaryRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'controlled-development-'));
+  context.after(() => fs.rmSync(temporaryRoot, { recursive: true, force: true }));
+  fs.cpSync(pluginRoot, temporaryRoot, { recursive: true });
+
+  const skillPath = path.join(temporaryRoot, 'skills', 'repository-bootstrap', 'SKILL.md');
+  const contents = fs.readFileSync(skillPath, 'utf8');
+  fs.writeFileSync(skillPath, contents.replace('## One-Invocation Continuation', '## Continuation'));
+
+  const errors = validatePlugin(temporaryRoot);
+  assert.ok(errors.some((error) => error.includes('must define one-invocation continuation')));
+});
+
 test('an execution eval with a missing fixture is rejected', (context) => {
   const temporaryRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'controlled-development-'));
   context.after(() => fs.rmSync(temporaryRoot, { recursive: true, force: true }));
@@ -123,6 +239,7 @@ test('the intentionally invalid resume fixture fails closed', () => {
   const state = JSON.parse(fs.readFileSync(statePath, 'utf8'));
   const errors = validateWorkflowState(state, 'invalid-state.json');
   assert.ok(errors.some((error) => error.includes('BUILD requires approved spec')));
+  assert.ok(errors.some((error) => error.includes('BUILD requires approved solution')));
   assert.ok(errors.some((error) => error.includes('BUILD requires approved plan')));
   assert.ok(errors.some((error) => error.includes('BUILD must follow PLAN APPROVAL')));
 });
@@ -132,8 +249,7 @@ test('low-risk BUILD may follow PLAN when plan approval is optional', () => {
   const state = JSON.parse(fs.readFileSync(statePath, 'utf8'));
   state.riskLevel = 'low';
   state.approvals.plan.required = false;
-  state.approvals.plan.status = 'pending';
-  state.approvals.plan.reference = null;
+  setPendingApproval(state.approvals.plan);
   state.lastCompletedPhase = 'PLAN';
   assert.deepEqual(validateWorkflowState(state, 'optional-plan-state'), []);
 });
@@ -217,6 +333,219 @@ test('missing required workflow-state fields fail closed without throwing', () =
   }
 });
 
+test('schema version 2 requires triage evidence', () => {
+  const statePath = path.join(pluginRoot, 'evals', 'fixtures', 'workflow-state', 'valid-state.json');
+  const state = JSON.parse(fs.readFileSync(statePath, 'utf8'));
+  delete state.triage;
+
+  const errors = validateWorkflowState(state, 'missing-triage-state');
+  assert.ok(errors.some((error) => error.includes('missing required field: triage')));
+});
+
+test('schema version 1 remains valid for legacy in-progress changes', () => {
+  const statePath = path.join(pluginRoot, 'evals', 'fixtures', 'workflow-state', 'valid-state.json');
+  const state = JSON.parse(fs.readFileSync(statePath, 'utf8'));
+  state.schemaVersion = 1;
+  delete state.triage;
+  delete state.approvals.solution;
+  removeSchema3Fields(state);
+  const before = structuredClone(state);
+
+  assert.deepEqual(validateWorkflowState(state, 'legacy-state'), []);
+  assert.deepEqual(state, before);
+});
+
+test('schema version 2 remains valid and validation does not mutate it', () => {
+  const statePath = path.join(pluginRoot, 'evals', 'fixtures', 'workflow-state', 'valid-state.json');
+  const state = JSON.parse(fs.readFileSync(statePath, 'utf8'));
+  state.schemaVersion = 2;
+  removeSchema3Fields(state);
+  const before = structuredClone(state);
+
+  assert.deepEqual(validateWorkflowState(state, 'schema-two-state'), []);
+  assert.deepEqual(state, before);
+});
+
+test('schema version 3 accepts valid integrity fields without mutating input', () => {
+  const statePath = path.join(pluginRoot, 'evals', 'fixtures', 'workflow-state', 'valid-state.json');
+  const state = asSchema3(JSON.parse(fs.readFileSync(statePath, 'utf8')));
+  const before = structuredClone(state);
+
+  assert.deepEqual(validateWorkflowState(state, 'schema-three-state'), []);
+  assert.deepEqual(state, before);
+});
+
+test('schema version 3 rejects invalid revision and event anchors', () => {
+  const statePath = path.join(pluginRoot, 'evals', 'fixtures', 'workflow-state', 'valid-state.json');
+  const base = asSchema3(JSON.parse(fs.readFileSync(statePath, 'utf8')));
+  const cases = [
+    ['missing revision', (state) => delete state.revision, 'missing required field: revision'],
+    ['negative revision', (state) => { state.revision = -1; }, 'revision must be a non-negative integer'],
+    ['fractional sequence', (state) => { state.lastEventSequence = 1.5; }, 'lastEventSequence must be a non-negative integer'],
+    ['hash with zero sequence', (state) => { state.lastEventHash = `sha256:${'b'.repeat(64)}`; }, 'lastEventHash must be null'],
+    ['missing hash after event', (state) => { state.lastEventSequence = 1; }, 'lastEventHash must match'],
+    ['uppercase event hash', (state) => {
+      state.lastEventSequence = 1;
+      state.lastEventHash = `sha256:${'A'.repeat(64)}`;
+    }, 'lastEventHash must match'],
+  ];
+
+  for (const [name, mutate, expected] of cases) {
+    const state = structuredClone(base);
+    mutate(state);
+    const errors = validateWorkflowState(state, name);
+    assert.ok(errors.some((error) => error.includes(expected)), `${name}: ${errors.join('; ')}`);
+  }
+});
+
+test('future workflow state schema versions fail closed without mutation', () => {
+  const statePath = path.join(pluginRoot, 'evals', 'fixtures', 'workflow-state', 'valid-state.json');
+  const state = asSchema3(JSON.parse(fs.readFileSync(statePath, 'utf8')));
+  state.schemaVersion = 4;
+  const before = structuredClone(state);
+
+  const errors = validateWorkflowState(state, 'future-state');
+  assert.ok(errors.some((error) => error.includes('schemaVersion must be 1, 2, or 3')));
+  assert.deepEqual(state, before);
+});
+
+test('schema version 3 requires complete approval binding metadata', () => {
+  const statePath = path.join(pluginRoot, 'evals', 'fixtures', 'workflow-state', 'valid-state.json');
+  const base = asSchema3(JSON.parse(fs.readFileSync(statePath, 'utf8')));
+  const cases = [
+    ['wrong artifact', (state) => { state.approvals.spec.artifactPath = 'plan.md'; }, 'approvals.spec.artifactPath must be spec.md'],
+    ['wrong algorithm', (state) => { state.approvals.solution.digestAlgorithm = 'sha256'; }, 'digestAlgorithm must be sha256-text-v1'],
+    ['malformed digest', (state) => { state.approvals.plan.artifactDigest = 'sha256:ABC'; }, 'artifactDigest must match'],
+    ['invalid timestamp', (state) => { state.approvals.plan.approvedAt = 'yesterday'; }, 'approvedAt must be an ISO timestamp'],
+    ['date-only timestamp', (state) => { state.approvals.plan.approvedAt = '2026-01-01'; }, 'approvedAt must be an ISO timestamp'],
+    ['missing path', (state) => { state.approvals.spec.artifactPath = null; }, 'approvals.spec.artifactPath must be spec.md'],
+  ];
+
+  for (const [name, mutate, expected] of cases) {
+    const state = structuredClone(base);
+    mutate(state);
+    const errors = validateWorkflowState(state, name);
+    assert.ok(errors.some((error) => error.includes(expected)), `${name}: ${errors.join('; ')}`);
+  }
+});
+
+test('schema version 3 pending approvals reject stale binding metadata', () => {
+  const statePath = path.join(pluginRoot, 'evals', 'fixtures', 'workflow-state', 'valid-state.json');
+  const state = asSchema3(JSON.parse(fs.readFileSync(statePath, 'utf8')));
+  state.phase = 'SOLUTION APPROVAL';
+  state.lastCompletedPhase = 'SOLUTION DESIGN';
+  state.approvals.solution.status = 'pending';
+  state.approvals.solution.reference = null;
+  state.approvals.solution.artifactPath = 'solution.md';
+  state.approvals.solution.digestAlgorithm = null;
+  state.approvals.solution.artifactDigest = null;
+  state.approvals.solution.approvedAt = null;
+
+  const errors = validateWorkflowState(state, 'stale-pending-approval');
+  assert.ok(errors.some((error) => error.includes('pending solution approval binding fields must be null')));
+});
+
+test('the state template and primary workflow fixtures use schema version 3', () => {
+  for (const relativePath of [
+    'templates/state.json',
+    'evals/fixtures/workflow-state/valid-state.json',
+    'evals/fixtures/workflow-state/invalid-state.json',
+  ]) {
+    const state = JSON.parse(fs.readFileSync(path.join(pluginRoot, relativePath), 'utf8'));
+    assert.equal(state.schemaVersion, 3, relativePath);
+    assert.equal(state.revision, 0, relativePath);
+    assert.equal(state.lastEventSequence, 0, relativePath);
+    assert.equal(state.lastEventHash, null, relativePath);
+    for (const approval of Object.values(state.approvals)) {
+      for (const field of ['artifactPath', 'digestAlgorithm', 'artifactDigest', 'approvedAt']) {
+        assert.ok(Object.hasOwn(approval, field), `${relativePath} missing ${field}`);
+      }
+    }
+  }
+});
+
+test('supplemental workflow fixtures use schema version 3', () => {
+  for (const filename of [
+    'blocker-limit-state.json',
+    'remediation-state.json',
+    'remediation-limit-state.json',
+    'learning-retrospective-state.json',
+  ]) {
+    const statePath = path.join(pluginRoot, 'evals', 'fixtures', 'workflow-state', filename);
+    const state = JSON.parse(fs.readFileSync(statePath, 'utf8'));
+    assert.equal(state.schemaVersion, 3, filename);
+    assert.equal(state.revision, 0, filename);
+    assert.equal(state.lastEventSequence, 0, filename);
+    assert.equal(state.lastEventHash, null, filename);
+    assert.deepEqual(validateWorkflowState(state, filename), []);
+  }
+});
+
+test('Standard PLAN and BUILD require an approved solution', () => {
+  const statePath = path.join(pluginRoot, 'evals', 'fixtures', 'workflow-state', 'valid-state.json');
+  const state = JSON.parse(fs.readFileSync(statePath, 'utf8'));
+  state.approvals.solution.status = 'pending';
+  state.approvals.solution.reference = null;
+
+  let errors = validateWorkflowState(state, 'unapproved-solution-build');
+  assert.ok(errors.some((error) => error.includes('BUILD requires approved solution')));
+
+  state.phase = 'PLAN';
+  state.lastCompletedPhase = 'SOLUTION APPROVAL';
+  errors = validateWorkflowState(state, 'unapproved-solution-plan');
+  assert.ok(errors.some((error) => error.includes('PLAN requires approved solution')));
+});
+
+test('solution mode must match the selected profile', () => {
+  const statePath = path.join(pluginRoot, 'evals', 'fixtures', 'workflow-state', 'valid-state.json');
+  const state = JSON.parse(fs.readFileSync(statePath, 'utf8'));
+  state.triage.solutionMode = 'full';
+  state.approvals.solution.mode = 'full';
+
+  const errors = validateWorkflowState(state, 'wrong-solution-mode');
+  assert.ok(errors.some((error) => error.includes('standard profile requires triage.solutionMode lite')));
+  assert.ok(errors.some((error) => error.includes('approvals.solution.mode must be lite')));
+});
+
+test('Quick BUILD may follow TRIAGE without specification or solution approval', () => {
+  const statePath = path.join(pluginRoot, 'evals', 'fixtures', 'workflow-state', 'valid-state.json');
+  const state = JSON.parse(fs.readFileSync(statePath, 'utf8'));
+  state.profile = 'quick';
+  state.riskLevel = 'low';
+  state.triage = {
+    highestFactors: ['scope', 'behavior', 'security/data', 'interface', 'runtime', 'dependencies/config', 'verification', 'clarity'],
+    reason: 'All task-relevant factors are evidenced Low',
+    solutionMode: 'none',
+    solutionReason: 'No material technical decision exists',
+    escalationTriggers: ['shared interface impact'],
+  };
+  state.approvals.spec = {
+    status: 'pending', reference: null, artifactPath: null, digestAlgorithm: null,
+    artifactDigest: null, approvedAt: null,
+  };
+  state.approvals.solution = {
+    required: false, mode: 'none', status: 'pending', reference: null, artifactPath: null,
+    digestAlgorithm: null, artifactDigest: null, approvedAt: null,
+  };
+  state.approvals.plan = {
+    required: false, status: 'pending', reference: null, artifactPath: null, digestAlgorithm: null,
+    artifactDigest: null, approvedAt: null,
+  };
+  state.lastCompletedPhase = 'TRIAGE';
+
+  assert.deepEqual(validateWorkflowState(state, 'quick-build-state'), []);
+});
+
+test('Standard plan approval may be optional after solution approval', () => {
+  const statePath = path.join(pluginRoot, 'evals', 'fixtures', 'workflow-state', 'valid-state.json');
+  const state = JSON.parse(fs.readFileSync(statePath, 'utf8'));
+  state.approvals.plan.required = false;
+  setPendingApproval(state.approvals.plan);
+  state.lastCompletedPhase = 'PLAN';
+
+  assert.deepEqual(validateWorkflowState(state, 'standard-optional-plan-state'), []);
+});
+
 test('malformed task, evidence, timestamp, and blocker records fail closed', () => {
   const statePath = path.join(pluginRoot, 'evals', 'fixtures', 'workflow-state', 'valid-state.json');
   const state = JSON.parse(fs.readFileSync(statePath, 'utf8'));
@@ -293,9 +622,12 @@ test('the legal predecessor table accepts every phase and rejects an unrelated p
     ['BOOTSTRAP', null],
     ['INTAKE', 'BOOTSTRAP'],
     ['DISCOVER', 'INTAKE'],
-    ['DEFINE', 'DISCOVER'],
+    ['TRIAGE', 'DISCOVER'],
+    ['DEFINE', 'TRIAGE'],
     ['SPEC APPROVAL', 'DEFINE'],
-    ['PLAN', 'SPEC APPROVAL'],
+    ['SOLUTION DESIGN', 'SPEC APPROVAL'],
+    ['SOLUTION APPROVAL', 'SOLUTION DESIGN'],
+    ['PLAN', 'SOLUTION APPROVAL'],
     ['PLAN APPROVAL', 'PLAN'],
     ['BUILD', 'PLAN APPROVAL'],
     ['VERIFY', 'BUILD'],
@@ -478,6 +810,9 @@ test('the Node fixture supports a real red-green sequence and preserves unrelate
   context.after(() => fs.rmSync(temporaryRoot, { recursive: true, force: true }));
   const sourceFixture = path.join(pluginRoot, 'evals', 'fixtures', 'node-change');
   fs.cpSync(sourceFixture, temporaryRoot, { recursive: true });
+  const childEnvironment = { ...process.env };
+  // A nested Node test runner skips files when it inherits the parent's internal test context.
+  delete childEnvironment.NODE_TEST_CONTEXT;
   const unrelatedPath = path.join(temporaryRoot, 'UNRELATED.md');
   const unrelatedBefore = fs.readFileSync(unrelatedPath, 'utf8');
 
@@ -490,7 +825,11 @@ test('the Node fixture supports a real red-green sequence and preserves unrelate
     '',
   ].join('\n'));
 
-  const red = spawnSync(process.execPath, ['--test'], { cwd: temporaryRoot, encoding: 'utf8' });
+  const red = spawnSync(process.execPath, ['--test'], {
+    cwd: temporaryRoot,
+    encoding: 'utf8',
+    env: childEnvironment,
+  });
   assert.notEqual(red.status, 0);
   assert.match(`${red.stdout}${red.stderr}`, /-20 !== 0|Expected values to be strictly equal/);
 
@@ -498,7 +837,11 @@ test('the Node fixture supports a real red-green sequence and preserves unrelate
   const source = fs.readFileSync(sourcePath, 'utf8');
   fs.writeFileSync(sourcePath, source.replace('return subtotal - discount;', 'return Math.max(0, subtotal - discount);'));
 
-  const green = spawnSync(process.execPath, ['--test'], { cwd: temporaryRoot, encoding: 'utf8' });
+  const green = spawnSync(process.execPath, ['--test'], {
+    cwd: temporaryRoot,
+    encoding: 'utf8',
+    env: childEnvironment,
+  });
   assert.equal(green.status, 0, `${green.stdout}${green.stderr}`);
   const syntax = spawnSync(process.execPath, ['--check', sourcePath], { cwd: temporaryRoot, encoding: 'utf8' });
   assert.equal(syntax.status, 0, `${syntax.stdout}${syntax.stderr}`);

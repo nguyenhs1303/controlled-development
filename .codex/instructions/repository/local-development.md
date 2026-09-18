@@ -1,5 +1,7 @@
 # Phát triển local
 
+<!-- REPOSITORY-BOOTSTRAP-PENDING -->
+
 Hiệu chỉnh file này theo repository:
 
 - Prerequisite và phiên bản runtime/toolchain.

@@ -1,0 +1,7 @@
+interface:
+  display_name: "Repository Bootstrap"
+  short_description: "Khởi tạo instruction repository từ bằng chứng."
+  default_prompt: "Dùng $repository-bootstrap để khởi tạo instruction cho repository này."
+
+policy:
+  allow_implicit_invocation: false

@@ -1,5 +1,7 @@
 # Tổng quan repository
 
+<!-- REPOSITORY-BOOTSTRAP-PENDING -->
+
 File này phải được hiệu chỉnh sau khi cài starter kit vào repository mới.
 
 ## Nội dung cần mô tả

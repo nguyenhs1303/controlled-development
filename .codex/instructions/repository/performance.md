@@ -1,5 +1,7 @@
 # Hiệu năng và khả năng mở rộng
 
+<!-- REPOSITORY-BOOTSTRAP-PENDING -->
+
 Trước thay đổi có ảnh hưởng runtime, đánh giá:
 
 - Quy mô dữ liệu, lưu lượng, độ đồng thời và phân bố tải.

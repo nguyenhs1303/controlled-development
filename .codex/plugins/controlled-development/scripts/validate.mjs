@@ -4,21 +4,31 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import {
+  effectivePlanApprovalRequired,
+  expectedPredecessorsForState,
+  planApprovalRequired,
+  usesSolutionWorkflow,
+} from './workflow-rules.mjs';
+
 const EXPECTED_SKILLS = [
   'controlled-development',
   'project-discovery',
   'change-definition',
+  'solution-design',
   'implementation-planning',
   'incremental-build',
   'change-verification',
   'spec-compliance-review',
   'engineering-review',
   'learning-retrospective',
+  'repository-bootstrap',
 ];
 const DECISION_EVIDENCE_POLICY = '../../references/decision-evidence-policy.md';
 
 const REQUIRED_TEMPLATES = [
   'spec.md',
+  'solution.md',
   'plan.md',
   'tasks.md',
   'state.json',
@@ -29,6 +39,14 @@ const REQUIRED_TEMPLATES = [
 const REQUIRED_SCRIPTS = [
   'validate.mjs',
   'validate.test.mjs',
+  'workflow-controller.mjs',
+  'workflow-controller-core.mjs',
+  'workflow-controller.test.mjs',
+  'workflow-crypto.mjs',
+  'workflow-ledger.mjs',
+  'workflow-rules.mjs',
+  'workflow-rules.test.mjs',
+  'workflow-state-store.mjs',
   'run-trigger-evals.mjs',
   'run-behavioral-evals.mjs',
   'validate-learning-retrospective.mjs',
@@ -36,9 +54,17 @@ const REQUIRED_SCRIPTS = [
 
 const BASE_PLUGIN_VERSION = '0.1.0';
 const PLUGIN_VERSION_PATTERN = /^0\.1\.0(?:\+codex\.[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?$/;
+const SUPPORTED_SCHEMA_VERSIONS = new Set([1, 2, 3]);
+const SHA256_DIGEST_PATTERN = /^sha256:[0-9a-f]{64}$/;
+const APPROVAL_ARTIFACTS = {
+  spec: 'spec.md',
+  solution: 'solution.md',
+  plan: 'plan.md',
+};
 const PHASES = new Set([
-  'BOOTSTRAP', 'INTAKE', 'DISCOVER', 'DEFINE', 'SPEC APPROVAL', 'PLAN',
-  'PLAN APPROVAL', 'BUILD', 'VERIFY', 'REVIEW', 'AUTO-REMEDIATE',
+  'BOOTSTRAP', 'INTAKE', 'DISCOVER', 'TRIAGE', 'DEFINE', 'SPEC APPROVAL',
+  'SOLUTION DESIGN', 'SOLUTION APPROVAL', 'PLAN', 'PLAN APPROVAL',
+  'BUILD', 'VERIFY', 'REVIEW', 'AUTO-REMEDIATE',
   'RE-VERIFY', 'RE-REVIEW', 'LEARNING RETROSPECTIVE', 'FINAL REPORT', 'STOP',
 ]);
 const TERMINAL_STATES = new Set(['REVIEW PASSED', 'REVIEW BLOCKED', 'IMPLEMENTATION BLOCKED']);
@@ -48,6 +74,9 @@ const WRITE_PHASES = new Set([
   'LEARNING RETROSPECTIVE', 'FINAL REPORT', 'STOP',
 ]);
 const POST_SPEC_APPROVAL_PHASES = new Set([
+  'SOLUTION DESIGN', 'SOLUTION APPROVAL', 'PLAN', 'PLAN APPROVAL', ...WRITE_PHASES,
+]);
+const POST_SOLUTION_APPROVAL_PHASES = new Set([
   'PLAN', 'PLAN APPROVAL', ...WRITE_PHASES,
 ]);
 const ABSOLUTE_PROHIBITIONS = [
@@ -61,23 +90,6 @@ const ABSOLUTE_PROHIBITIONS = [
   'production-access',
   'real-data-mutation',
 ];
-const LEGAL_PREDECESSORS = new Map([
-  ['BOOTSTRAP', [null]],
-  ['INTAKE', ['BOOTSTRAP']],
-  ['DISCOVER', ['INTAKE']],
-  ['DEFINE', ['DISCOVER']],
-  ['SPEC APPROVAL', ['DEFINE']],
-  ['PLAN', ['SPEC APPROVAL']],
-  ['PLAN APPROVAL', ['PLAN']],
-  ['VERIFY', ['BUILD']],
-  ['REVIEW', ['VERIFY']],
-  ['AUTO-REMEDIATE', ['REVIEW', 'RE-REVIEW']],
-  ['RE-VERIFY', ['AUTO-REMEDIATE']],
-  ['RE-REVIEW', ['RE-VERIFY']],
-  ['LEARNING RETROSPECTIVE', ['REVIEW', 'RE-REVIEW']],
-  ['FINAL REPORT', ['BUILD', 'VERIFY', 'REVIEW', 'RE-REVIEW', 'LEARNING RETROSPECTIVE']],
-  ['STOP', ['FINAL REPORT']],
-]);
 
 function readJson(filePath, errors) {
   try {
@@ -157,6 +169,8 @@ function validateSkills(root, errors) {
   for (const skillName of EXPECTED_SKILLS) {
     const skillPath = path.join(skillsRoot, skillName, 'SKILL.md');
     if (!requiredFile(skillPath, errors)) continue;
+    const agentPath = path.join(skillsRoot, skillName, 'agents', 'openai.yaml');
+    requiredFile(agentPath, errors);
     const contents = fs.readFileSync(skillPath, 'utf8');
     const frontmatter = parseFrontmatter(contents, skillPath, errors);
     if (!frontmatter) continue;
@@ -182,6 +196,25 @@ function validateSkills(root, errors) {
     }
     if (contents.split(/\r?\n/).length > 500) {
       errors.push(`${relative(skillPath)} exceeds 500 lines`);
+    }
+    if (skillName === 'repository-bootstrap' && fs.existsSync(agentPath)) {
+      const agentContents = fs.readFileSync(agentPath, 'utf8');
+      if (!/allow_implicit_invocation:\s*false/.test(agentContents)) {
+        errors.push('skills/repository-bootstrap/agents/openai.yaml must disable implicit invocation');
+      }
+      if (!contents.includes('## One-Invocation Continuation')) {
+        errors.push('skills/repository-bootstrap/SKILL.md must define one-invocation continuation');
+      }
+      if (!contents.includes('do not ask the user to invoke `$repository-bootstrap` again')) {
+        errors.push('skills/repository-bootstrap/SKILL.md must forbid same-task re-invocation prompts');
+      }
+    }
+    if (skillName === 'controlled-development') {
+      for (const marker of ['workflow-controller.mjs', '--expected-revision', 'must not edit them directly']) {
+        if (!contents.includes(marker)) {
+          errors.push(`skills/controlled-development/SKILL.md missing controller ownership marker: ${marker}`);
+        }
+      }
     }
     validateMarkdownLinks(skillPath, contents, root, errors);
   }
@@ -252,6 +285,23 @@ function validateTemplates(root, errors) {
     ]) {
       if (!contents.includes(marker)) {
         errors.push(`templates/learning-retrospective.md missing required marker: ${marker}`);
+      }
+    }
+  }
+  const solutionTemplatePath = path.join(root, 'templates', 'solution.md');
+  if (fs.existsSync(solutionTemplatePath)) {
+    const contents = fs.readFileSync(solutionTemplatePath, 'utf8');
+    for (const marker of [
+      '## Decision drivers',
+      '## Quality scenarios',
+      '## Các giải pháp được xem xét',
+      '## Giải pháp khuyến nghị',
+      '## Verification conditions',
+      '## Revisit conditions',
+      '## Phê duyệt giải pháp',
+    ]) {
+      if (!contents.includes(marker)) {
+        errors.push(`templates/solution.md missing required marker: ${marker}`);
       }
     }
   }
@@ -333,12 +383,24 @@ export function validateWorkflowState(state, label = 'state', context = {}) {
     'approvals', 'tasks', 'currentTaskId', 'blockers', 'reviewRemediationCycle',
     'evidenceReceipts', 'gitBaseline', 'lastCompletedPhase', 'updatedAt',
   ];
+  if ([2, 3].includes(state.schemaVersion)) requiredFields.push('triage');
+  if (state.schemaVersion === 3) {
+    requiredFields.push('revision', 'lastEventSequence', 'lastEventHash');
+  }
   for (const field of requiredFields) {
     if (!Object.hasOwn(state, field)) errors.push(`${label} missing required field: ${field}`);
   }
 
-  if (Object.hasOwn(state, 'schemaVersion') && state.schemaVersion !== 1) {
-    errors.push(`${label} schemaVersion must be 1`);
+  if (Object.hasOwn(state, 'schemaVersion') && !SUPPORTED_SCHEMA_VERSIONS.has(state.schemaVersion)) {
+    errors.push(`${label} schemaVersion must be 1, 2, or 3`);
+  }
+  if (state.schemaVersion === 1 &&
+      ['TRIAGE', 'SOLUTION DESIGN', 'SOLUTION APPROVAL'].includes(state.phase)) {
+    errors.push(`${label} schemaVersion 1 cannot use solution-workflow phases`);
+  }
+  if (state.schemaVersion === 1 &&
+      ['TRIAGE', 'SOLUTION DESIGN', 'SOLUTION APPROVAL'].includes(state.lastCompletedPhase)) {
+    errors.push(`${label} schemaVersion 1 cannot record solution-workflow predecessors`);
   }
   if (Object.hasOwn(state, 'pluginVersion') && state.pluginVersion !== BASE_PLUGIN_VERSION) {
     errors.push(`${label} pluginVersion must be ${BASE_PLUGIN_VERSION}`);
@@ -364,6 +426,12 @@ export function validateWorkflowState(state, label = 'state', context = {}) {
       errors.push(`${label} high riskLevel requires deep profile`);
     }
   }
+  const hasSolutionWorkflow = usesSolutionWorkflow(state.schemaVersion);
+  if (hasSolutionWorkflow && state.profile === 'quick' &&
+      ['DEFINE', 'SPEC APPROVAL', 'SOLUTION DESIGN', 'SOLUTION APPROVAL', 'PLAN', 'PLAN APPROVAL'].includes(state.phase)) {
+    errors.push(`${label} Quick must skip specification, solution, and plan phases or escalate profile`);
+  }
+  if (hasSolutionWorkflow) validateTriage(state.triage, state.profile, label, errors);
 
   const validPhase = PHASES.has(state.phase);
   if (Object.hasOwn(state, 'phase') && !validPhase) errors.push(`${label} has unknown phase`);
@@ -395,12 +463,20 @@ export function validateWorkflowState(state, label = 'state', context = {}) {
     }
   }
 
-  const planApprovalRequired = validProfile && validRisk
-    ? state.profile === 'deep' || state.riskLevel !== 'low'
-    : null;
-  validateApprovals(state.approvals, planApprovalRequired, label, errors);
-  const effectivePlanApprovalRequired = planApprovalRequired === true ||
-    state.approvals?.plan?.required === true;
+  const requiredPlanApproval = validProfile && validRisk ? planApprovalRequired(state) : null;
+  const solutionApprovalRequired = hasSolutionWorkflow && validProfile
+    ? state.profile !== 'quick'
+    : false;
+  validateApprovals(
+    state.approvals,
+    requiredPlanApproval,
+    solutionApprovalRequired,
+    hasSolutionWorkflow ? state.profile : null,
+    state.schemaVersion === 3,
+    label,
+    errors,
+  );
+  const needsPlanApproval = effectivePlanApprovalRequired(state);
 
   if (!Array.isArray(state.tasks)) {
     if (Object.hasOwn(state, 'tasks')) errors.push(`${label} tasks must be an array`);
@@ -439,18 +515,17 @@ export function validateWorkflowState(state, label = 'state', context = {}) {
   if (Object.hasOwn(state, 'updatedAt') && state.updatedAt !== null && !isIsoTimestamp(state.updatedAt)) {
     errors.push(`${label} updatedAt must be null or an ISO timestamp string`);
   }
+  if (state.schemaVersion === 3) validateSchema3Integrity(state, label, errors);
 
   if (validPhase) {
-    const expectedPredecessors = state.phase === 'BUILD'
-      ? [effectivePlanApprovalRequired ? 'PLAN APPROVAL' : 'PLAN']
-      : LEGAL_PREDECESSORS.get(state.phase);
+    const expectedPredecessors = expectedPredecessorsForState(state);
     if (expectedPredecessors && !expectedPredecessors.includes(state.lastCompletedPhase)) {
       errors.push(`${label} ${state.phase} must follow ${formatChoices(expectedPredecessors)}`);
     }
   }
 
   if (validPhase && WRITE_PHASES.has(state.phase)) {
-    if (effectivePlanApprovalRequired && state.approvals?.plan?.status !== 'approved') {
+    if (needsPlanApproval && state.approvals?.plan?.status !== 'approved') {
       errors.push(`${label} ${state.phase} requires approved plan`);
     }
     if (Array.isArray(state.approvedScope) && state.approvedScope.length === 0) {
@@ -464,8 +539,13 @@ export function validateWorkflowState(state, label = 'state', context = {}) {
     }
   }
   if (validPhase && POST_SPEC_APPROVAL_PHASES.has(state.phase) &&
+      !(hasSolutionWorkflow && state.profile === 'quick') &&
       state.approvals?.spec?.status !== 'approved') {
     errors.push(`${label} ${state.phase} requires approved spec`);
+  }
+  if (hasSolutionWorkflow && validPhase && POST_SOLUTION_APPROVAL_PHASES.has(state.phase) &&
+      state.profile !== 'quick' && state.approvals?.solution?.status !== 'approved') {
+    errors.push(`${label} ${state.phase} requires approved solution`);
   }
 
   if (state.phase === 'FINAL REPORT' && ['BUILD', 'VERIFY'].includes(state.lastCompletedPhase) &&
@@ -539,12 +619,43 @@ function isSafeProjectRelativePath(value) {
   return segments.length > 0 && segments.every((segment) => segment && segment !== '.' && segment !== '..');
 }
 
-function validateApprovals(approvals, planApprovalRequired, label, errors) {
+function validateTriage(triage, profile, label, errors) {
+  if (!isPlainObject(triage)) {
+    if (triage !== undefined) errors.push(`${label} triage must be an object`);
+    return;
+  }
+  validateStringArray(triage.highestFactors, 'triage.highestFactors', label, errors);
+  validateStringArray(triage.escalationTriggers, 'triage.escalationTriggers', label, errors);
+  if (!nonEmptyString(triage.reason)) errors.push(`${label} triage.reason must be a non-empty string`);
+  if (!nonEmptyString(triage.solutionReason)) {
+    errors.push(`${label} triage.solutionReason must be a non-empty string`);
+  }
+  const expectedMode = profile === 'quick' ? 'none' : profile === 'standard' ? 'lite' : profile === 'deep' ? 'full' : null;
+  if (!['none', 'lite', 'full'].includes(triage.solutionMode)) {
+    errors.push(`${label} triage.solutionMode must be none, lite, or full`);
+  } else if (expectedMode && triage.solutionMode !== expectedMode) {
+    errors.push(`${label} ${profile} profile requires triage.solutionMode ${expectedMode}`);
+  }
+  if (Array.isArray(triage.highestFactors) && triage.highestFactors.length === 0) {
+    errors.push(`${label} triage.highestFactors must record at least one evidence-backed factor`);
+  }
+}
+
+function validateApprovals(
+  approvals,
+  planApprovalRequired,
+  solutionApprovalRequired,
+  profile,
+  requireArtifactBinding,
+  label,
+  errors,
+) {
   if (!isPlainObject(approvals)) {
     if (approvals !== undefined) errors.push(`${label} approvals must be an object`);
     return;
   }
-  for (const gate of ['spec', 'plan']) {
+  const gates = profile === null ? ['spec', 'plan'] : ['spec', 'solution', 'plan'];
+  for (const gate of gates) {
     const approval = approvals[gate];
     if (!isPlainObject(approval)) {
       errors.push(`${label} approvals.${gate} must be an object`);
@@ -559,6 +670,21 @@ function validateApprovals(approvals, planApprovalRequired, label, errors) {
     if (approval.status === 'approved' && !nonEmptyString(approval.reference)) {
       errors.push(`${label} approved ${gate} requires a reference`);
     }
+    if (requireArtifactBinding) validateApprovalBinding(approval, gate, label, errors);
+  }
+  if (profile !== null && isPlainObject(approvals.solution)) {
+    if (typeof approvals.solution.required !== 'boolean') {
+      errors.push(`${label} approvals.solution.required must be boolean`);
+    } else if (approvals.solution.required !== solutionApprovalRequired) {
+      errors.push(`${label} solution approval requirement does not match the selected profile`);
+    }
+    const expectedMode = profile === 'quick' ? 'none' : profile === 'standard' ? 'lite' : 'full';
+    if (approvals.solution.mode !== expectedMode) {
+      errors.push(`${label} approvals.solution.mode must be ${expectedMode} for ${profile}`);
+    }
+    if (!solutionApprovalRequired && approvals.solution.status === 'approved') {
+      errors.push(`${label} Quick must escalate instead of approving a solution under the Quick profile`);
+    }
   }
   if (isPlainObject(approvals.plan)) {
     if (typeof approvals.plan.required !== 'boolean') {
@@ -566,6 +692,49 @@ function validateApprovals(approvals, planApprovalRequired, label, errors) {
     } else if (planApprovalRequired === true && approvals.plan.required !== true) {
       errors.push(`${label} plan approval requirement must be true for the selected profile and risk`);
     }
+  }
+}
+
+function validateSchema3Integrity(state, label, errors) {
+  if (!Number.isInteger(state.revision) || state.revision < 0) {
+    errors.push(`${label} revision must be a non-negative integer`);
+  }
+  if (!Number.isInteger(state.lastEventSequence) || state.lastEventSequence < 0) {
+    errors.push(`${label} lastEventSequence must be a non-negative integer`);
+    return;
+  }
+  if (state.lastEventSequence === 0) {
+    if (state.lastEventHash !== null) {
+      errors.push(`${label} lastEventHash must be null when lastEventSequence is 0`);
+    }
+    return;
+  }
+  if (typeof state.lastEventHash !== 'string' || !SHA256_DIGEST_PATTERN.test(state.lastEventHash)) {
+    errors.push(`${label} lastEventHash must match sha256:<64-lowercase-hex> when events exist`);
+  }
+}
+
+function validateApprovalBinding(approval, gate, label, errors) {
+  const fields = ['artifactPath', 'digestAlgorithm', 'artifactDigest', 'approvedAt'];
+  if (approval.status === 'pending') {
+    if (fields.some((field) => approval[field] !== null)) {
+      errors.push(`${label} pending ${gate} approval binding fields must be null`);
+    }
+    return;
+  }
+  if (approval.status !== 'approved') return;
+
+  if (approval.artifactPath !== APPROVAL_ARTIFACTS[gate]) {
+    errors.push(`${label} approvals.${gate}.artifactPath must be ${APPROVAL_ARTIFACTS[gate]}`);
+  }
+  if (approval.digestAlgorithm !== 'sha256-text-v1') {
+    errors.push(`${label} approvals.${gate}.digestAlgorithm must be sha256-text-v1`);
+  }
+  if (typeof approval.artifactDigest !== 'string' || !SHA256_DIGEST_PATTERN.test(approval.artifactDigest)) {
+    errors.push(`${label} approvals.${gate}.artifactDigest must match sha256:<64-lowercase-hex>`);
+  }
+  if (!isIsoDateTime(approval.approvedAt)) {
+    errors.push(`${label} approvals.${gate}.approvedAt must be an ISO timestamp`);
   }
 }
 
@@ -618,6 +787,12 @@ function validateGitBaseline(baseline, label, errors) {
 
 function isIsoTimestamp(value) {
   return nonEmptyString(value) && !Number.isNaN(Date.parse(value));
+}
+
+function isIsoDateTime(value) {
+  return nonEmptyString(value) &&
+    /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/.test(value) &&
+    !Number.isNaN(Date.parse(value));
 }
 
 function isRecordedGitBaseline(baseline) {

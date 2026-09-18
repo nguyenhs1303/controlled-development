@@ -11,3 +11,6 @@ test, resource runtime và migration chính thức vẫn nằm đúng cấu trú
 
 Workflow Standard/Deep mới dùng `.codex/workflows/changes/<change-id>/` và
 `artifactRootOverride=null` khi sử dụng đường dẫn mặc định.
+
+Sau khi copy starter kit vào repository mới, chỉ chạy bootstrap khi người dùng gọi rõ
+`$repository-bootstrap` hoặc yêu cầu chạy repository bootstrap. Không tự bootstrap trong công việc thông thường.

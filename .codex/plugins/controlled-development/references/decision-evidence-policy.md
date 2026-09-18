@@ -36,7 +36,11 @@ Use an evidenced project convention when one exists. If none exists, choose the 
 
 - **DISCOVER:** report observations and unknowns separately. Do not close discovery if a material unknown prevents a trustworthy specification.
 - **DEFINE:** every material requirement and acceptance criterion must trace to evidence or a user-confirmed decision. An approval-ready specification cannot contain unresolved material assumptions.
-- **PLAN:** every material architecture, compatibility, data, security, and verification decision must trace to the approved specification and project evidence. Otherwise return to clarification.
+- **SOLUTION DESIGN:** decision drivers, options, recommendation, architecture, patterns, quality claims, and
+  technology impact must trace to the approved specification, project evidence, or explicit human confirmation.
+  Material unknowns block solution approval.
+- **PLAN:** tasks must trace to the approved specification and solution. A new material architecture,
+  compatibility, data, security, dependency, quality, or verification decision returns to solution design.
 - **BUILD:** implement only resolved decisions. New material uncertainty is scope drift and returns to the relevant approval gate.
 - **VERIFY/REVIEW:** state only what current evidence proves. Unsupported concerns or conclusions remain `UNVERIFIED` and must not be converted into facts or automatic remediation.
 

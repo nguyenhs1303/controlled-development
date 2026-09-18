@@ -4,6 +4,7 @@
 
 - Change ID: `{{change-id}}`
 - Tham chiếu phê duyệt đặc tả: {{spec approval}}
+- Tham chiếu phê duyệt giải pháp: {{solution approval}}
 - Mức rủi ro: `{{low|medium|high}}`
 - Bắt buộc phê duyệt kế hoạch: `{{yes|no}}`
 
@@ -11,13 +12,15 @@
 
 {{Chiến lược triển khai ngắn gọn}}
 
-## Quyết định kiến trúc
+## Truy vết giải pháp đã duyệt
 
-| Quyết định | Phân loại | Lý do | Bằng chứng/nguồn |
+| Task/Quyết định | Solution section | Acceptance criterion | Bằng chứng/nguồn |
 |---|---|---|---|
-| {{quyết định}} | `EVIDENCED` / `USER CONFIRMED` / `INTERNAL CHOICE` | {{lý do}} | {{criterion, path, contract, convention hoặc tham chiếu phiên}} |
+| {{task hoặc quyết định cơ học}} | {{mục trong solution.md}} | {{AC-ID}} | {{path, contract hoặc tham chiếu phiên}} |
 
-`INTERNAL CHOICE` chỉ dùng cho chi tiết cơ học, cục bộ, có thể hoàn tác và không ảnh hưởng behavior, scope, data/API, compatibility, architecture ownership, security, risk, permission hoặc verification. Nếu thiếu căn cứ cho một quyết định có ảnh hưởng đáng kể, dừng lập kế hoạch và hỏi lại.
+Plan không được chọn lại kiến trúc. `INTERNAL CHOICE` chỉ dùng cho chi tiết cơ học, cục bộ, có thể hoàn tác
+và không ảnh hưởng behavior, scope, data/API, compatibility, architecture ownership, security, risk,
+permission hoặc verification. Quyết định material mới phải quay lại `SOLUTION DESIGN`.
 
 ## Sơ đồ phụ thuộc
 

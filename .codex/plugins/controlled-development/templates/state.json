@@ -1,9 +1,21 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 3,
+  "revision": 0,
+  "lastEventSequence": 0,
+  "lastEventHash": null,
   "pluginVersion": "0.1.0",
   "changeId": "change-id",
   "profile": "standard",
   "riskLevel": "medium",
+  "triage": {
+    "highestFactors": [
+      "scope"
+    ],
+    "reason": "Replace with evidence-backed profile reasoning",
+    "solutionMode": "lite",
+    "solutionReason": "Standard changes require SOLUTION LITE",
+    "escalationTriggers": []
+  },
   "phase": "DEFINE",
   "terminalState": null,
   "artifactRoot": ".codex/workflows/changes/change-id",
@@ -23,12 +35,30 @@
   "approvals": {
     "spec": {
       "status": "pending",
-      "reference": null
+      "reference": null,
+      "artifactPath": null,
+      "digestAlgorithm": null,
+      "artifactDigest": null,
+      "approvedAt": null
+    },
+    "solution": {
+      "required": true,
+      "mode": "lite",
+      "status": "pending",
+      "reference": null,
+      "artifactPath": null,
+      "digestAlgorithm": null,
+      "artifactDigest": null,
+      "approvedAt": null
     },
     "plan": {
-      "required": true,
+      "required": false,
       "status": "pending",
-      "reference": null
+      "reference": null,
+      "artifactPath": null,
+      "digestAlgorithm": null,
+      "artifactDigest": null,
+      "approvedAt": null
     }
   },
   "tasks": [],
@@ -41,6 +71,6 @@
     "statusFingerprint": null,
     "recordedAt": null
   },
-  "lastCompletedPhase": "DISCOVER",
+  "lastCompletedPhase": "TRIAGE",
   "updatedAt": null
 }

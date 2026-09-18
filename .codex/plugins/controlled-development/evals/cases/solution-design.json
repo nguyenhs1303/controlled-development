@@ -1,0 +1,77 @@
+{
+  "skill_name": "solution-design",
+  "trigger": {
+    "positive": [
+      {
+        "prompt": "Compare technical solution options for this approved specification before implementation planning",
+        "top_k": 1
+      },
+      {
+        "prompt": "Produce a solution-lite recommendation with architecture and verification conditions",
+        "top_k": 1
+      },
+      {
+        "prompt": "Evaluate architecture patterns, dependency impact, and performance trade-offs, then stop for solution approval",
+        "top_k": 1
+      }
+    ],
+    "negative": [
+      {
+        "prompt": "Turn this vague request into acceptance criteria",
+        "owner": "change-definition"
+      },
+      {
+        "prompt": "Break the approved solution into implementation tasks and file checkpoints",
+        "owner": "implementation-planning"
+      }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "kind": "execution",
+      "prompt": "Inspect the provided approved validation fixture, then produce the solution stage. Do not edit files.",
+      "expected_output": "The agent produces a concise SOLUTION LITE using the existing extension point, does not invent alternatives or new patterns, defines proportional verification/revisit conditions, and stops for explicit solution approval.",
+      "expectations": [
+        "Uses SOLUTION LITE because the change is Standard",
+        "States decision drivers before the recommended approach",
+        "Uses the evidenced existing extension point without inventing extra options",
+        "Explains that no new dependency or architecture pattern is needed",
+        "Stops for explicit solution approval before planning",
+        "Leaves the fixture workspace unchanged"
+      ],
+      "files": [
+        "solution-design-standard"
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "dialogue",
+      "prompt": "Design a Deep ingestion change where batch processing and streaming are both viable. Performance is a decision driver, but no workload size, arrival rate, latency target, or recovery objective is documented.",
+      "expected_output": "The agent compares only what current evidence supports, labels performance claims as hypotheses or unknowns, asks for the missing measurable quality scenario, and does not recommend or request approval yet.",
+      "expectations": [
+        "Identifies the missing workload and quality targets as material decision inputs",
+        "Does not claim either option is faster or more scalable without evidence",
+        "Classifies unsupported performance claims as HYPOTHESIS or UNKNOWN",
+        "Asks a focused question and stops before recommendation or solution approval"
+      ]
+    },
+    {
+      "id": 3,
+      "kind": "execution",
+      "prompt": "Inspect the provided approved pricing fixture. Produce the full solution recommendation while addressing a stakeholder request to use as many design patterns as possible and an optional rules-engine proposal. Do not edit files.",
+      "expected_output": "The agent recommends only patterns justified by the problem and existing interface, calls out the new dependency as permission-gated, rejects pattern accumulation, and presents consequences and verification before approval.",
+      "expectations": [
+        "Explains the problem each recommended pattern solves",
+        "Does not add patterns merely to satisfy pattern quantity",
+        "Treats the rules-engine dependency as a separate material and permission-gated decision",
+        "Includes architecture consequences, verification conditions, and revisit conditions",
+        "Stops for explicit solution approval",
+        "Leaves the fixture workspace unchanged"
+      ],
+      "files": [
+        "solution-design-patterns"
+      ]
+    }
+  ]
+}

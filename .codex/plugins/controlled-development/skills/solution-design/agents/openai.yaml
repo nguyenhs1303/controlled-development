@@ -1,0 +1,4 @@
+interface:
+  display_name: "Solution Design"
+  short_description: "So sánh giải pháp và trình kiến trúc để phê duyệt."
+  default_prompt: "Dùng $solution-design để đề xuất, so sánh và xin duyệt giải pháp kỹ thuật cho đặc tả đã duyệt."

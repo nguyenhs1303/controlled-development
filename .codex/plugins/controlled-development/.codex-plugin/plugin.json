@@ -1,7 +1,7 @@
 {
   "name": "controlled-development",
-  "version": "0.1.0+codex.20260915140157",
-  "description": "Workflow ph\u00e1t tri\u1ec3n c\u00f3 c\u1ed5ng ph\u00ea duy\u1ec7t, b\u1eb1ng ch\u1ee9ng, review v\u00e0 learning retrospective kh\u00f4ng t\u1ef1 s\u1eeda plugin.",
+  "version": "0.1.0+codex.20260917160239",
+  "description": "Workflow ph\u00e1t tri\u1ec3n c\u00f3 triage, ph\u00ea duy\u1ec7t gi\u1ea3i ph\u00e1p, repository bootstrap v\u00e0 learning retrospective d\u1ef1a tr\u00ean b\u1eb1ng ch\u1ee9ng.",
   "author": {
     "name": "Controlled Development Contributors"
   },
@@ -9,7 +9,7 @@
   "interface": {
     "displayName": "Controlled Development",
     "shortDescription": "Ph\u00e1t tri\u1ec3n thay \u0111\u1ed5i qua c\u00e1c c\u1ed5ng ph\u00ea duy\u1ec7t v\u00e0 b\u1eb1ng ch\u1ee9ng r\u00f5 r\u00e0ng.",
-    "longDescription": "H\u01b0\u1edbng d\u1eabn thay \u0111\u1ed5i ph\u1ea7n m\u1ec1m t\u1eeb ti\u1ebfp nh\u1eadn, \u0111\u1eb7c t\u1ea3, l\u1eadp k\u1ebf ho\u1ea1ch, tri\u1ec3n khai t\u0103ng d\u1ea7n, x\u00e1c minh, review, kh\u1eafc ph\u1ee5c c\u00f3 gi\u1edbi h\u1ea1n v\u00e0 retrospective d\u1ef1a tr\u00ean b\u1eb1ng ch\u1ee9ng, sau \u0111\u00f3 d\u1eebng tr\u01b0\u1edbc khi ph\u00e1t h\u00e0nh.",
+    "longDescription": "Kh\u1edfi t\u1ea1o instruction repository khi \u0111\u01b0\u1ee3c g\u1ecdi, ph\u00e2n lo\u1ea1i Quick/Standard/Deep, thi\u1ebft k\u1ebf v\u00e0 ph\u00ea duy\u1ec7t gi\u1ea3i ph\u00e1p k\u1ef9 thu\u1eadt tr\u01b0\u1edbc plan, sau \u0111\u00f3 tri\u1ec3n khai, x\u00e1c minh, review v\u00e0 retrospective d\u1ef1a tr\u00ean b\u1eb1ng ch\u1ee9ng.",
     "developerName": "Controlled Development Contributors",
     "category": "Productivity",
     "capabilities": [
@@ -19,9 +19,11 @@
     ],
     "defaultPrompt": [
       "Ph\u00e1t tri\u1ec3n thay \u0111\u1ed5i n\u00e0y v\u1edbi c\u00e1c c\u1ed5ng ph\u00ea duy\u1ec7t \u0111\u01b0\u1ee3c ki\u1ec3m so\u00e1t",
+      "So s\u00e1nh gi\u1ea3i ph\u00e1p, \u0111\u1ec1 xu\u1ea5t ki\u1ebfn tr\u00fac v\u00e0 d\u1eebng \u0111\u1ec3 t\u00f4i duy\u1ec7t tr\u01b0\u1edbc khi l\u00ean plan",
       "Ti\u1ebfp t\u1ee5c thay \u0111\u1ed5i controlled development \u0111ang ho\u1ea1t \u0111\u1ed9ng",
       "Review ph\u1ea7n tri\u1ec3n khai n\u00e0y theo \u0111\u1eb7c t\u1ea3 \u0111\u00e3 \u0111\u01b0\u1ee3c ph\u00ea duy\u1ec7t",
-      "Ch\u1ea1y learning retrospective cho thay \u0111\u1ed5i \u0111\u00e3 x\u00e1c minh v\u00e0 review"
+      "Ch\u1ea1y learning retrospective cho thay \u0111\u1ed5i \u0111\u00e3 x\u00e1c minh v\u00e0 review",
+      "D\u00f9ng repository bootstrap \u0111\u1ec3 kh\u1edfi t\u1ea1o instruction cho repository m\u1edbi"
     ]
   }
 }

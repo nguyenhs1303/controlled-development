@@ -1,0 +1,78 @@
+{
+  "skill_name": "repository-bootstrap",
+  "trigger": {
+    "positive": [
+      {
+        "prompt": "Use $repository-bootstrap to initialize evidence-backed instructions after I copied .codex and AGENTS.md",
+        "top_k": 1
+      },
+      {
+        "prompt": "Run the explicit repository bootstrap command for this new project",
+        "top_k": 1
+      },
+      {
+        "prompt": "Resume repository bootstrap from its needs-input state",
+        "top_k": 1
+      }
+    ],
+    "negative": [
+      {
+        "prompt": "Find the project's real build and test commands before planning this feature",
+        "owner": "project-discovery"
+      },
+      {
+        "prompt": "Implement this feature end to end with approval gates and verification",
+        "owner": "controlled-development"
+      }
+    ]
+  },
+  "evals": [
+    {
+      "id": 1,
+      "kind": "dialogue",
+      "prompt": "I copied the starter .codex directory and AGENTS.md into a new repository. Use $repository-bootstrap. The manifests establish the language and test command, but nothing states which of two applications is the production entry point.",
+      "expected_output": "The agent initializes or resumes bootstrap state, records the supported facts, marks the production entry point as unresolved, asks one focused question, sets needs-input, and does not infer or edit product files.",
+      "expectations": [
+        "Requires explicit invocation and does not treat bootstrap as an automatic prerequisite",
+        "Records manifest-backed facts with project-relative evidence",
+        "Persists a focused production-entry-point question and reports needs-input",
+        "Does not finalize dependent architecture instructions or edit product files"
+      ]
+    },
+    {
+      "id": 2,
+      "kind": "dialogue",
+      "prompt": "An ordinary feature request arrives in a repository whose instruction pages still contain starter placeholders. Do not invoke any command I did not request.",
+      "expected_output": "The agent does not run repository bootstrap automatically; it reports that explicit $repository-bootstrap is available and handles or pauses the feature workflow according to the evidence required for that request.",
+      "expectations": [
+        "Does not invoke repository-bootstrap implicitly",
+        "Does not rewrite repository instructions as a side effect of feature work",
+        "Makes the explicit bootstrap option visible without treating it as authorized"
+      ]
+    },
+    {
+      "id": 3,
+      "kind": "dialogue",
+      "prompt": "Earlier in this same task I invoked $repository-bootstrap, and the agent paused with one question about the production entry point. I now answer only: apps/api is the production entry point. Continue.",
+      "expected_output": "The agent treats the answer as continuation of the already-authorized bootstrap, records it as user-confirmed evidence, resumes discovery and writing without requesting another invocation, runs the checked-in validators, and marks complete only from current passing receipts.",
+      "expectations": [
+        "Does not require or request another $repository-bootstrap invocation in the same task",
+        "Preserves prior valid evidence and closes only the answered question",
+        "Records the production entry point as user-confirmed rather than repository-confirmed",
+        "Updates only bootstrap-owned files",
+        "Requires executed validator receipts before complete"
+      ]
+    },
+    {
+      "id": 4,
+      "kind": "dialogue",
+      "prompt": "The previous repository bootstrap task was closed while state remained needs-input. This is a new task and I only provide the missing architecture answer without invoking repository bootstrap.",
+      "expected_output": "The agent does not resume the explicit-only bootstrap in a new task from the answer alone; it asks the user to invoke $repository-bootstrap to resume the saved state.",
+      "expectations": [
+        "Distinguishes same-task continuation from a new-task resume",
+        "Does not mutate bootstrap state or repository instructions without a new explicit invocation",
+        "Requests one explicit resume invocation rather than discarding the saved state"
+      ]
+    }
+  ]
+}

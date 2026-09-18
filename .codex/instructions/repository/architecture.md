@@ -1,5 +1,7 @@
 # Kiến trúc repository
 
+<!-- REPOSITORY-BOOTSTRAP-PENDING -->
+
 Hiệu chỉnh file này theo code thực tế của repository:
 
 - Module và dependency direction.

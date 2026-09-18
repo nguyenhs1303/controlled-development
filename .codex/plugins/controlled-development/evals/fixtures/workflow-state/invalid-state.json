@@ -1,9 +1,19 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 3,
+  "revision": 0,
+  "lastEventSequence": 0,
+  "lastEventHash": null,
   "pluginVersion": "0.1.0",
   "changeId": "unapproved-build",
   "profile": "deep",
   "riskLevel": "high",
+  "triage": {
+    "highestFactors": ["security"],
+    "reason": "The fixture represents an unapproved high-risk build",
+    "solutionMode": "full",
+    "solutionReason": "Deep changes require FULL SOLUTION",
+    "escalationTriggers": []
+  },
   "phase": "BUILD",
   "terminalState": null,
   "artifactRoot": ".codex/workflows/changes/unapproved-build",
@@ -22,12 +32,30 @@
   "approvals": {
     "spec": {
       "status": "pending",
-      "reference": null
+      "reference": null,
+      "artifactPath": null,
+      "digestAlgorithm": null,
+      "artifactDigest": null,
+      "approvedAt": null
+    },
+    "solution": {
+      "required": true,
+      "mode": "full",
+      "status": "pending",
+      "reference": null,
+      "artifactPath": null,
+      "digestAlgorithm": null,
+      "artifactDigest": null,
+      "approvedAt": null
     },
     "plan": {
       "required": true,
       "status": "pending",
-      "reference": null
+      "reference": null,
+      "artifactPath": null,
+      "digestAlgorithm": null,
+      "artifactDigest": null,
+      "approvedAt": null
     }
   },
   "tasks": [],
@@ -40,6 +68,6 @@
     "statusFingerprint": null,
     "recordedAt": null
   },
-  "lastCompletedPhase": "DISCOVER",
+  "lastCompletedPhase": "TRIAGE",
   "updatedAt": null
 }

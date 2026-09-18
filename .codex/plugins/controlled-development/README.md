@@ -11,8 +11,11 @@ Phần lõi của plugin, gồm chỉ dẫn skill, policy, phase, trạng thái,
 ## Plugin làm gì
 
 ```text
-BOOTSTRAP -> INTAKE -> DISCOVER -> DEFINE -> SPEC APPROVAL
-          -> PLAN -> PLAN APPROVAL (medium/high risk)
+BOOTSTRAP -> INTAKE -> DISCOVER -> TRIAGE
+          -> Quick: skip DEFINE/SOLUTION/PLAN
+          -> Standard/Deep: DEFINE -> SPEC APPROVAL
+                            -> SOLUTION DESIGN -> SOLUTION APPROVAL
+                            -> PLAN -> PLAN APPROVAL (Deep hoặc execution nhạy cảm)
           -> BUILD -> VERIFY -> REVIEW
           -> [AUTO-REMEDIATE -> RE-VERIFY -> RE-REVIEW] x3 maximum
           -> LEARNING RETROSPECTIVE
@@ -53,9 +56,29 @@ Resume the controlled development change account-lockout.
 Review this implementation against the approved spec and remediate serious in-scope findings.
 ```
 
-Skill `controlled-development` điều phối toàn bộ vòng đời. Bạn cũng có thể dùng trực tiếp các skill chuyên biệt cho từng giai đoạn như khám phá dự án, xác định thay đổi, lập kế hoạch, xây dựng, xác minh hoặc review.
+Skill `controlled-development` điều phối toàn bộ vòng đời. Bạn cũng có thể dùng trực tiếp các skill chuyên biệt
+cho từng giai đoạn như khám phá dự án, xác định thay đổi, thiết kế giải pháp, lập kế hoạch, xây dựng, xác minh
+hoặc review.
+
+Skill `solution-design` chạy sau khi đặc tả Standard/Deep được duyệt và trước implementation planning. Skill
+xác định decision drivers, quality scenario đo được, các option thực sự khả thi, trade-off, recommendation,
+kiến trúc, design/architectural pattern, công nghệ/dependency, performance, verification và revisit condition,
+sau đó dừng để người dùng duyệt giải pháp.
 
 Skill `learning-retrospective` có thể dùng trực tiếp khi một thay đổi đã được xác minh và review. Nó phân biệt learning dành cho plugin, learning chỉ dành cho repository, nội dung đã được bao phủ, trường hợp thiếu bằng chứng và trường hợp không có bài học bền vững.
+
+Skill explicit-only `repository-bootstrap` dùng sau khi copy starter kit `.codex/` và `AGENTS.md` vào một
+repository mới. Gọi `$repository-bootstrap` để tạo trạng thái resumable, khám phá manifest/CI/code bằng bằng
+chứng, hỏi lại các dữ kiện quan trọng còn thiếu, cập nhật repository instruction và chạy validator. Skill này
+không tự chạy trong feature workflow và không sửa product source.
+
+Trong cùng một task, chỉ cần gọi một lần. Nếu Codex hỏi thêm dữ kiện, trả lời trực tiếp; câu trả lời tự tiếp tục
+bootstrap đang hoạt động. Chỉ gọi lại khi chuyển sang task mới, task trước bị gián đoạn/mất context, hoặc muốn
+audit một bootstrap đã hoàn tất.
+
+```text
+$repository-bootstrap
+```
 
 Ví dụ theo từng profile:
 
@@ -81,23 +104,34 @@ Resume change authorization-rules. If the same blocker exhausts three distinct a
 
 ### Quick
 
-Dành cho những thay đổi cục bộ, rõ ràng, rủi ro thấp và có phạm vi ảnh hưởng nhỏ. Phần định nghĩa và kế hoạch có thể ngắn gọn, đồng thời chỉ tồn tại trong cuộc hội thoại hiện tại. Quick vẫn phải xác minh và review thay đổi; nếu quá trình khám phá phát hiện thêm rủi ro hoặc điểm chưa chắc chắn, workflow sẽ nâng lên Standard.
+Dành cho những thay đổi cục bộ, rõ ràng, rủi ro thấp và có phạm vi ảnh hưởng nhỏ. Quick bỏ qua spec/solution
+artifact và đi từ triage có bằng chứng vào triển khai trong phạm vi yêu cầu rõ ràng của người dùng. Quick vẫn
+phải xác minh và review; nếu phát hiện thêm rủi ro hoặc quyết định material, workflow nâng lên Standard/Deep.
+Số dòng code không quyết định profile.
 
 ### Standard
 
-Dành cho các tính năng, bản sửa lỗi và hoạt động refactor thông thường cần duy trì ngữ cảnh lâu dài. Standard tạo một bộ hồ sơ thay đổi đầy đủ và yêu cầu phê duyệt đặc tả rõ ràng. Công việc có rủi ro trung bình cũng phải được phê duyệt kế hoạch.
+Dành cho các tính năng, bản sửa lỗi và hoạt động refactor thông thường cần duy trì ngữ cảnh lâu dài. Standard
+tạo bộ artifact đầy đủ, yêu cầu phê duyệt đặc tả và `SOLUTION LITE`. Plan approval chỉ tách riêng khi execution
+nhạy cảm, khó hoàn tác, permission-gated hoặc project policy yêu cầu.
 
 ### Deep
 
-Dành cho những thay đổi liên quan đến bảo mật, ảnh hưởng xuyên nhiều thành phần, migration, giao diện công khai, xử lý đồng thời, tài chính hoặc khó hoàn tác. Deep yêu cầu cả hai cổng phê duyệt, chia bước xây dựng nhỏ hơn và cung cấp bằng chứng xác minh chặt chẽ hơn.
+Dành cho những thay đổi liên quan đến bảo mật, ảnh hưởng xuyên nhiều thành phần, migration, giao diện công khai,
+xử lý đồng thời, tài chính hoặc khó hoàn tác. Deep yêu cầu phê duyệt đặc tả, `FULL SOLUTION` và plan, chia bước
+xây dựng nhỏ hơn và cung cấp bằng chứng xác minh chặt chẽ hơn.
 
 Xem [risk-matrix.md](references/risk-matrix.md) để biết các quy tắc định tuyến.
 
 ## Các cổng phê duyệt
 
-Mọi profile đều bắt buộc phải được phê duyệt đặc tả. Quick sử dụng một đặc tả ngắn gọn ngay trong cuộc hội thoại; Standard và Deep lưu đặc tả vào bộ artifact của thay đổi. Cổng phê duyệt là điểm kết thúc của lượt làm việc hiện tại: im lặng hoặc tiếp tục trò chuyện không được xem là đã phê duyệt.
+Quick không có cổng spec/solution riêng khi triage chứng minh mọi yếu tố đều Low. Standard và Deep lưu đặc tả
+và solution vào bộ artifact, đồng thời yêu cầu phê duyệt riêng cho đúng version. Cổng phê duyệt là điểm kết thúc
+của lượt làm việc hiện tại: im lặng hoặc tiếp tục trò chuyện không được xem là đã phê duyệt.
 
-Các thay đổi có rủi ro trung bình và cao bắt buộc phải được phê duyệt kế hoạch. Việc phê duyệt chỉ cho phép các thao tác trên working tree cục bộ đã mô tả trong kế hoạch. Nó không cho phép thêm dependency, chạy lệnh có tính phá hủy, tạo tác động bên ngoài hoặc thực hiện phát hành.
+Deep và các plan có execution nhạy cảm bắt buộc được phê duyệt kế hoạch. Việc phê duyệt solution hoặc plan chỉ
+cho phép các thao tác working tree cục bộ đã trình bày; không tự cho phép thêm dependency, migration, chạy lệnh
+phá hủy, tạo tác động bên ngoài hoặc phát hành.
 
 Nếu trong lúc triển khai phát hiện phạm vi mới, workflow sẽ quay lại cổng phê duyệt phù hợp.
 
@@ -114,6 +148,7 @@ Workflow Standard và Deep tạo các file thông thường, chưa commit trong 
 ```text
 .codex/workflows/changes/<change-id>/
 ├── spec.md
+├── solution.md
 ├── plan.md
 ├── tasks.md
 ├── state.json
@@ -143,6 +178,11 @@ Mỗi change tạo tối đa một `PLUGIN CANDIDATE`. Candidate luôn có trạ
 ## Cơ chế tiếp tục công việc
 
 Để tiếp tục, hãy yêu cầu Codex resume một change ID cụ thể. BOOTSTRAP đọc chỉ dẫn của dự án, xác thực `state.json` đã lưu, kiểm tra Git baseline được ghi nhận và chỉ tiếp tục từ một bước chuyển trạng thái hợp lệ.
+
+Từ state schema 3, mọi approval và phase transition đi qua `scripts/workflow-controller.mjs`. Các lệnh đọc-only
+gồm `status`, `validate-state`, `check-resume`, `hash-artifact`; các lệnh ghi gồm `approve`, `transition` và
+`record`, đều yêu cầu `--expected-revision`. Controller dùng lock file, atomic replace và immutable event hash
+chain; agent không tự sửa phase, approval, revision hoặc event anchor trong `state.json`.
 
 Trạng thái sai định dạng, phiên bản schema thuộc tương lai, thiếu phê duyệt bắt buộc hoặc baseline bị thay đổi mà không có giải thích đều bị từ chối theo nguyên tắc fail closed. Thay vì tự suy đoán và chuyển sang BUILD, agent sẽ báo cáo những nội dung cần được đối chiếu và xử lý.
 

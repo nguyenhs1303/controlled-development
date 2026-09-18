@@ -20,8 +20,10 @@ Use the highest applicable factor. When uncertain between two levels, choose the
 1. If any factor is High, select Deep and require both approval gates.
 2. Otherwise, if any factor is Medium, select Standard.
 3. Quick is allowed only when every factor is Low and the change remains local and reversible.
-4. A Standard change classified Medium requires plan approval. A stricter project policy may also require plan approval for Low risk.
-5. Project instructions may require a stricter profile or approval gate.
+4. Standard and Deep require solution approval. Standard uses `SOLUTION LITE`; Deep uses `FULL SOLUTION`.
+5. Deep requires plan approval. Standard requires a separate plan approval only when execution is sensitive,
+   destructive, difficult to reverse, permission-gated, or a stricter project policy requires it.
+6. Project instructions may require a stricter profile or approval gate.
 
 ## Automatic escalation triggers
 
@@ -34,6 +36,20 @@ Escalate Quick to Standard or Deep when discovery or BUILD reveals:
 - insufficient rollback or meaningful verification for the current impact.
 
 Stop at the relevant approval gate after escalation. Do not keep editing under the old profile.
+
+## Triage evidence
+
+Triage occurs after enough focused discovery to establish the task-relevant risk factors. Record:
+
+- selected profile and highest applicable factors;
+- evidence that excludes Medium/High triggers before selecting Quick;
+- solution mode: `none`, `lite`, or `full`;
+- required approval gates;
+- escalation triggers.
+
+Quick skips specification and solution artifacts only when every factor is Low. A small diff is not sufficient
+evidence: one line affecting authorization, compatibility, data integrity, concurrency, or a public contract is
+not Quick.
 
 ## Examples
 

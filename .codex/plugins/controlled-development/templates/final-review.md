@@ -5,6 +5,7 @@
 - Trạng thái cuối: `{{REVIEW PASSED|REVIEW BLOCKED|IMPLEMENTATION BLOCKED}}`
 - Change ID: `{{change-id}}`
 - Workflow profile/risk: `{{profile}} / {{risk}}`
+- Solution mode/approval: `{{none|lite|full}} / {{reference hoặc not applicable}}`
 - Số chu kỳ review-khắc phục: {{0-3}}
 
 ## Phạm vi đã hoàn thành

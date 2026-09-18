@@ -9,6 +9,7 @@ The retrospective evaluates learning. It never edits plugin instructions, refere
 Use only current, inspectable evidence from:
 
 - the approved specification and plan;
+- the approved solution and its decision/quality evidence;
 - task outcomes and changed-file diff;
 - executed verification receipts;
 - specification-compliance and engineering-review findings;
@@ -83,4 +84,3 @@ Retrospective output is advisory. Creating a candidate does not approve or imple
 Approval must identify the candidate and the presented version or artifact. Silence, approval of the completed feature, or a request to finish the current change is not learning approval.
 
 After explicit approval, start a separate Controlled Development change against the plugin source. That change must rediscover the current plugin state, define the exact behavior, obtain the normal approvals, implement the smallest supported update, add or update evals, run plugin validation, and stop after review. Never mutate the plugin inside the retrospective phase.
-

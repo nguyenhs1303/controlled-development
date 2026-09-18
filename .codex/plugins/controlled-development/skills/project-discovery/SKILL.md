@@ -69,7 +69,10 @@ Separate observed facts from interpretations. A nearby implementation may be evi
 
 ### 5. Resolve material unknowns
 
-Classify missing or conflicting information with the decision evidence policy. If it could change behavior, scope, acceptance, data/API compatibility, architecture, security, risk, permissions, or verification, ask the minimum focused question and do not pass an inferred answer to DEFINE or PLAN.
+Classify missing or conflicting information with the decision evidence policy. If it could change behavior,
+scope, acceptance, data/API compatibility, architecture, security, risk, permissions, solution selection, or
+verification, ask the minimum focused question and do not pass an inferred answer to TRIAGE, DEFINE,
+SOLUTION DESIGN, or PLAN.
 
 Non-material mechanical choices may remain for implementation when their impact is demonstrably local and reversible.
 
@@ -81,7 +84,8 @@ Do not decide risk from file count alone.
 
 ### 7. Record the discovery result
 
-For Standard/Deep, update `spec.md` project context and `state.json` baseline. Record:
+For Standard/Deep, update `spec.md` project context and `state.json` baseline after the applicable artifact
+write gate permits it. Record:
 
 - instruction paths and key constraints;
 - stack/manifests;
@@ -111,7 +115,7 @@ If conflicting instructions, unexplained state drift, or an unsafe command block
 
 - Source files opened before applicable instruction files.
 - Commands guessed from language recognition.
-- A material unknown is recorded as an assumption and passed to DEFINE or PLAN.
+- A material unknown is recorded as an assumption and passed to TRIAGE, DEFINE, SOLUTION DESIGN, or PLAN.
 - Large directories read without a task question.
 - Unrelated working-tree changes omitted from discovery.
 - Risk-sensitive paths such as auth or migrations treated as ordinary local edits.

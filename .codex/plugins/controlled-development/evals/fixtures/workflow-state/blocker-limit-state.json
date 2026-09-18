@@ -1,9 +1,19 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 3,
+  "revision": 0,
+  "lastEventSequence": 0,
+  "lastEventHash": null,
   "pluginVersion": "0.1.0",
   "changeId": "blocked-build",
   "profile": "standard",
   "riskLevel": "medium",
+  "triage": {
+    "highestFactors": ["verification"],
+    "reason": "The change has a bounded verification dependency",
+    "solutionMode": "lite",
+    "solutionReason": "The approved solution keeps existing boundaries",
+    "escalationTriggers": ["external verification system required"]
+  },
   "phase": "FINAL REPORT",
   "terminalState": "IMPLEMENTATION BLOCKED",
   "artifactRoot": ".codex/workflows/changes/blocked-build",
@@ -25,12 +35,30 @@
   "approvals": {
     "spec": {
       "status": "approved",
-      "reference": "human-message-20"
+      "reference": "human-message-20",
+      "artifactPath": "spec.md",
+      "digestAlgorithm": "sha256-text-v1",
+      "artifactDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "approvedAt": "2026-01-01T00:00:00Z"
+    },
+    "solution": {
+      "required": true,
+      "mode": "lite",
+      "status": "approved",
+      "reference": "human-message-21",
+      "artifactPath": "solution.md",
+      "digestAlgorithm": "sha256-text-v1",
+      "artifactDigest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "approvedAt": "2026-01-01T00:00:00Z"
     },
     "plan": {
       "required": true,
       "status": "approved",
-      "reference": "human-message-22"
+      "reference": "human-message-22",
+      "artifactPath": "plan.md",
+      "digestAlgorithm": "sha256-text-v1",
+      "artifactDigest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "approvedAt": "2026-01-01T00:00:00Z"
     }
   },
   "tasks": [

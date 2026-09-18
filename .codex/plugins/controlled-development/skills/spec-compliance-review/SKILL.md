@@ -1,6 +1,6 @@
 ---
 name: spec-compliance-review
-description: Reviews an implementation against its approved change specification before general code-quality review. Use when checking whether acceptance criteria are satisfied, missing, incorrectly implemented, unverified, or exceeded by out-of-scope behavior. Do not use as a general engineering review or when no approved specification exists.
+description: Reviews an implementation against its approved change contract before general code-quality review. Use when checking whether Quick triage scope or approved Standard/Deep acceptance criteria are satisfied, missing, incorrectly implemented, unverified, or exceeded by out-of-scope behavior. Do not use as a general engineering review.
 ---
 
 # Specification Compliance Review
@@ -9,15 +9,19 @@ description: Reviews an implementation against its approved change specification
 
 Determine whether the implementation is the approved change. Review criteria and tests before judging code style or architecture.
 
-Read the approved spec, current plan/tasks, evidence artifact, changed-file diff, the [output language policy](../../references/output-language-policy.md), [decision evidence policy](../../references/decision-evidence-policy.md), and the [review policy](../../references/review-policy.md).
+Read the Quick triage/request contract or approved Standard/Deep spec, approved solution when present, current
+plan/tasks, evidence artifact, changed-file diff, the [output language policy](../../references/output-language-policy.md),
+[decision evidence policy](../../references/decision-evidence-policy.md), and the [review policy](../../references/review-policy.md).
 
 ## Preconditions
 
-- The exact approved specification version is available.
+- Quick has an evidenced triage boundary and explicit implementation request, or the exact approved
+  Standard/Deep specification version is available.
 - Current changed files and verification receipts are known.
 - BUILD is complete or has a clearly documented partial outcome.
 
-Without an approved spec, report that compliance cannot be established; do not invent requirements.
+Without either valid Quick triage evidence or an approved Standard/Deep spec, report that compliance cannot be
+established; do not invent requirements.
 
 ## Process
 
@@ -38,7 +42,9 @@ Compare specified error paths, edge cases, compatibility, and unchanged behavior
 
 ### 3. Check scope additions
 
-Identify behavior, files, interfaces, configuration, or cleanup not authorized by the approved spec/plan. Useful extra behavior is still a scope finding.
+Identify behavior, files, interfaces, configuration, architecture, dependency, or cleanup not authorized by the
+applicable Quick triage boundary or approved specification/solution/plan. Useful extra behavior is still a scope
+finding.
 
 ### 4. Write evidenced findings
 
@@ -77,7 +83,7 @@ Pass the complete findings directly to the orchestrator without dropping or para
 
 ## Red Flags
 
-- Review starts without the approved spec version.
+- Review starts without the applicable Quick triage/request contract or approved Standard/Deep spec version.
 - Criteria are checked from memory.
 - Extra behavior is ignored because it is useful.
 - Passing tests substitute for criterion-by-criterion mapping.

@@ -4,11 +4,12 @@ A change is done only when the selected terminal-state conditions are supported 
 
 ## Common requirements
 
-- An approved specification exists; Standard and Deep persist it in the change artifacts.
-- Required plan approval exists for medium/high-risk work.
+- Quick has recorded triage evidence and an unambiguous user-authorized scope; Standard and Deep have an approved specification.
+- Standard and Deep have an approved solution version with the required mode.
+- Required plan approval exists for Deep or sensitive execution work.
 - Implementation remains inside approved scope and permission boundaries.
 - Every task has a terminal task status and evidence reference.
-- Every acceptance criterion has an explicit outcome.
+- Every applicable Quick outcome or approved Standard/Deep acceptance criterion has an explicit outcome.
 - Required project-native checks have current evidence or an honest non-pass status.
 - Specification compliance review completed before engineering review.
 - No unresolved evidenced Critical or Important finding is hidden.

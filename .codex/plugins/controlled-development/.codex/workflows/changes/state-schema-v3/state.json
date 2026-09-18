@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 2,
+  "pluginVersion": "0.1.0",
+  "changeId": "state-schema-v3",
+  "profile": "deep",
+  "riskLevel": "high",
+  "triage": {
+    "highestFactors": [
+      "security/data",
+      "interface"
+    ],
+    "reason": "The change defines a persisted workflow-state schema and compatibility contract used for resume and approval integrity.",
+    "solutionMode": "full",
+    "solutionReason": "Schema compatibility, approval integrity, and future controller ownership require FULL SOLUTION before implementation.",
+    "escalationTriggers": [
+      "automatic legacy-state migration",
+      "new dependency",
+      "filesystem mutation runtime",
+      "changed legacy phase semantics"
+    ]
+  },
+  "phase": "STOP",
+  "terminalState": "REVIEW PASSED",
+  "artifactRoot": ".codex/workflows/changes/state-schema-v3",
+  "artifactRootOverride": null,
+  "approvedScope": [
+    "Define and validate workflow state schema version 3",
+    "Preserve schema version 1 and 2 validation compatibility",
+    "Add deterministic schema contract tests"
+  ],
+  "prohibitedOperations": [
+    "git-add",
+    "git-commit",
+    "git-push",
+    "pull-request",
+    "merge",
+    "release",
+    "deploy",
+    "production-access",
+    "real-data-mutation"
+  ],
+  "approvals": {
+    "spec": {
+      "status": "approved",
+      "reference": "Duyệt spec state-schema-v3 version 1 — 2026-09-18"
+    },
+    "solution": {
+      "required": true,
+      "mode": "full",
+      "status": "approved",
+      "reference": "duyệt — solution state-schema-v3 version 1 — 2026-09-18"
+    },
+    "plan": {
+      "required": true,
+      "status": "approved",
+      "reference": "blanket approval to run through item 10 — 2026-09-18"
+    }
+  },
+  "tasks": [
+    {
+      "id": "TASK-001",
+      "status": "done"
+    },
+    {
+      "id": "TASK-002",
+      "status": "done"
+    },
+    {
+      "id": "TASK-003",
+      "status": "done"
+    },
+    {
+      "id": "TASK-004",
+      "status": "done"
+    },
+    {
+      "id": "TASK-005",
+      "status": "done"
+    },
+    {
+      "id": "TASK-006",
+      "status": "done"
+    }
+  ],
+  "currentTaskId": null,
+  "blockers": {},
+  "reviewRemediationCycle": 0,
+  "evidenceReceipts": [
+    "RED-001",
+    "GREEN-001",
+    "RED-002",
+    "GREEN-002",
+    "RED-003",
+    "GREEN-003",
+    "RED-004",
+    "GREEN-004",
+    "VERIFY-001",
+    "VERIFY-002",
+    "VERIFY-003",
+    "VERIFY-004",
+    "VERIFY-005",
+    "SPEC-REVIEW-001",
+    "ENG-REVIEW-001"
+  ],
+  "gitBaseline": {
+    "head": "a69b02c60ac50f3b0176ef153cc355b621100659",
+    "statusFingerprint": "a1a8f73568de816fd378ad54a546e3529fbc7c74f19c6074fc5581f1ed8b2328",
+    "recordedAt": "2026-09-18T15:52:36.3130546Z"
+  },
+  "lastCompletedPhase": "FINAL REPORT",
+  "updatedAt": "2026-09-18T16:28:55.1210971Z"
+}

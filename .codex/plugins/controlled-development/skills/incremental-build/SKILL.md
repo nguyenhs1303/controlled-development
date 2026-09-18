@@ -14,7 +14,7 @@ Read the [output language policy](../../references/output-language-policy.md), [
 ## Preconditions
 
 - Current phase is BUILD.
-- Specification approval exists.
+- Required specification and solution approvals exist, or Quick triage evidence authorizes the bounded change.
 - Required plan approval exists.
 - One next-ready task is selected and its dependencies are complete.
 - Approved files, criteria, and native checks are known.
@@ -26,7 +26,9 @@ If a precondition fails, return to the orchestrator; do not edit product code.
 
 ### 1. Claim one task
 
-Set exactly one task to `IN_PROGRESS` in durable state. Re-read its acceptance criteria, file boundary, dependencies, and permission notes.
+Set exactly one task to `IN_PROGRESS` using controller `record --expected-revision ...` and save the receipt in
+`evidence.md`. Re-read its acceptance criteria, file boundary, dependencies, and permission notes. Never edit
+`state.json` directly.
 
 ### 2. Establish RED when behavior changes
 
@@ -56,7 +58,7 @@ Run the checks assigned to the task/checkpoint. Do not repeat unchanged successf
 
 ### 7. Close the task
 
-Update `tasks.md`, `state.json`, and `evidence.md` with:
+Update `tasks.md` and `evidence.md`, then use controller `record` for allowlisted state metadata:
 
 - task status;
 - changed files;
@@ -92,6 +94,7 @@ Stop and return to the relevant approval gate when BUILD discovers:
 - a new dependency, migration, public interface, CI/infrastructure change, or risky permission;
 - additional files/subsystems that materially change blast radius;
 - an ambiguous product decision;
+- a material change to the approved solution, architecture, pattern, dependency, compatibility, quality strategy, or revisit boundary;
 - any other material decision unsupported by project evidence or explicit user confirmation;
 - a risk escalation.
 
@@ -104,7 +107,7 @@ Stop and return to the relevant approval gate when BUILD discovers:
 | "Committing each slice is best practice." | This plugin explicitly forbids staging and commits. Durable artifacts track progress instead. |
 | "I'll start the next task while this check is failing." | Dependencies and evidence become ambiguous; resolve or block one task first. |
 | "A fourth attempt is harmless." | The cap is a control boundary, not a suggestion. |
-| "The likely interpretation is safe enough to implement." | A material ambiguity returns to clarification; only non-material mechanical choices remain autonomous. |
+| "The likely interpretation is safe enough to implement." | A material ambiguity returns to clarification or solution approval; only non-material mechanical choices remain autonomous. |
 
 ## Red Flags
 
