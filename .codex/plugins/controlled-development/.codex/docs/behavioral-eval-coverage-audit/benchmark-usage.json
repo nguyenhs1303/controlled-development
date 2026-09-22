@@ -1,0 +1,1049 @@
+{
+  "runs": [
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 21674,
+        "cached_input_tokens": 2304,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1300,
+        "reasoning_output_tokens": 676
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 16991,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 339,
+        "reasoning_output_tokens": 100
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 21671,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 991,
+        "reasoning_output_tokens": 441
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 16879,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 354,
+        "reasoning_output_tokens": 126
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 21682,
+        "cached_input_tokens": 2304,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 208,
+        "reasoning_output_tokens": 112
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 16498,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 475,
+        "reasoning_output_tokens": 249
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 21677,
+        "cached_input_tokens": 15232,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 352,
+        "reasoning_output_tokens": 188
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 16557,
+        "cached_input_tokens": 15360,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 264,
+        "reasoning_output_tokens": 56
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 255202,
+        "cached_input_tokens": 222848,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3314,
+        "reasoning_output_tokens": 1691
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 17822,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 265,
+        "reasoning_output_tokens": 90
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 20147,
+        "cached_input_tokens": 2304,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 141,
+        "reasoning_output_tokens": 49
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 20133,
+        "cached_input_tokens": 2304,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 397,
+        "reasoning_output_tokens": 260
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 16528,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 333,
+        "reasoning_output_tokens": 135
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 24332,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 339,
+        "reasoning_output_tokens": 122
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 16616,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 244,
+        "reasoning_output_tokens": 44
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 271503,
+        "cached_input_tokens": 212480,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3078,
+        "reasoning_output_tokens": 1550
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 27678,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 305,
+        "reasoning_output_tokens": 104
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 23444,
+        "cached_input_tokens": 15232,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 403,
+        "reasoning_output_tokens": 206
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 16541,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 407,
+        "reasoning_output_tokens": 174
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 23298,
+        "cached_input_tokens": 15232,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 316,
+        "reasoning_output_tokens": 119
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 16577,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 287,
+        "reasoning_output_tokens": 109
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 24149,
+        "cached_input_tokens": 2304,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 429,
+        "reasoning_output_tokens": 260
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 16606,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 392,
+        "reasoning_output_tokens": 128
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 22999,
+        "cached_input_tokens": 2304,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 307,
+        "reasoning_output_tokens": 235
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 16487,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 452,
+        "reasoning_output_tokens": 197
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 202948,
+        "cached_input_tokens": 172800,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2467,
+        "reasoning_output_tokens": 1397
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 16677,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 316,
+        "reasoning_output_tokens": 92
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 272942,
+        "cached_input_tokens": 242176,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2934,
+        "reasoning_output_tokens": 1645
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 16721,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 483,
+        "reasoning_output_tokens": 178
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 23793,
+        "cached_input_tokens": 15232,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 282,
+        "reasoning_output_tokens": 169
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 16513,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 231,
+        "reasoning_output_tokens": 46
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 24661,
+        "cached_input_tokens": 2304,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 453,
+        "reasoning_output_tokens": 203
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 16603,
+        "cached_input_tokens": 15360,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 464,
+        "reasoning_output_tokens": 228
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 25111,
+        "cached_input_tokens": 2304,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 546,
+        "reasoning_output_tokens": 415
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 16518,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 359,
+        "reasoning_output_tokens": 138
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 24607,
+        "cached_input_tokens": 15232,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 293,
+        "reasoning_output_tokens": 163
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 16518,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 371,
+        "reasoning_output_tokens": 166
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 22906,
+        "cached_input_tokens": 11904,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 402,
+        "reasoning_output_tokens": 232
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 16563,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 303,
+        "reasoning_output_tokens": 89
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 19738,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 337,
+        "reasoning_output_tokens": 147
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 16562,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 283,
+        "reasoning_output_tokens": 75
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 19729,
+        "cached_input_tokens": 15232,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 465,
+        "reasoning_output_tokens": 239
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 16611,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 228,
+        "reasoning_output_tokens": 35
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 19732,
+        "cached_input_tokens": 15232,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 568,
+        "reasoning_output_tokens": 310
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 16588,
+        "cached_input_tokens": 15360,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 320,
+        "reasoning_output_tokens": 124
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 19756,
+        "cached_input_tokens": 2304,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 845,
+        "reasoning_output_tokens": 516
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 16743,
+        "cached_input_tokens": 15360,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 304,
+        "reasoning_output_tokens": 101
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 20879,
+        "cached_input_tokens": 15232,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 483,
+        "reasoning_output_tokens": 258
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 16621,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 269,
+        "reasoning_output_tokens": 73
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 20883,
+        "cached_input_tokens": 15232,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 816,
+        "reasoning_output_tokens": 527
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 16635,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 368,
+        "reasoning_output_tokens": 141
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 20864,
+        "cached_input_tokens": 2304,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 635,
+        "reasoning_output_tokens": 359
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 16577,
+        "cached_input_tokens": 15360,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 352,
+        "reasoning_output_tokens": 147
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 21998,
+        "cached_input_tokens": 2304,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 319,
+        "reasoning_output_tokens": 135
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 16534,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 336,
+        "reasoning_output_tokens": 115
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 272614,
+        "cached_input_tokens": 245248,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3467,
+        "reasoning_output_tokens": 1719
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 18229,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 201,
+        "reasoning_output_tokens": 28
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 20049,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 184,
+        "reasoning_output_tokens": 80
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 16488,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 248,
+        "reasoning_output_tokens": 53
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 20685,
+        "cached_input_tokens": 15232,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 496,
+        "reasoning_output_tokens": 224
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 34834,
+        "cached_input_tokens": 31872,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1112,
+        "reasoning_output_tokens": 618
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 20381,
+        "cached_input_tokens": 15232,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 419,
+        "reasoning_output_tokens": 251
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 16551,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 232,
+        "reasoning_output_tokens": 59
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 20377,
+        "cached_input_tokens": 15232,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 270,
+        "reasoning_output_tokens": 96
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 16543,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 195,
+        "reasoning_output_tokens": 29
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 20385,
+        "cached_input_tokens": 15232,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 360,
+        "reasoning_output_tokens": 135
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 16598,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 218,
+        "reasoning_output_tokens": 53
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 174846,
+        "cached_input_tokens": 157696,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1740,
+        "reasoning_output_tokens": 847
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 16619,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 244,
+        "reasoning_output_tokens": 28
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 201267,
+        "cached_input_tokens": 134272,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2656,
+        "reasoning_output_tokens": 1446
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 20452,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 310,
+        "reasoning_output_tokens": 123
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 19912,
+        "cached_input_tokens": 15232,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 826,
+        "reasoning_output_tokens": 595
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 16576,
+        "cached_input_tokens": 15360,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 548,
+        "reasoning_output_tokens": 290
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 20967,
+        "cached_input_tokens": 15232,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 352,
+        "reasoning_output_tokens": 258
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 16429,
+        "cached_input_tokens": 15360,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 387,
+        "reasoning_output_tokens": 174
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 20951,
+        "cached_input_tokens": 15232,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 101,
+        "reasoning_output_tokens": 43
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 16427,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 203,
+        "reasoning_output_tokens": 55
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 20962,
+        "cached_input_tokens": 15232,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 342,
+        "reasoning_output_tokens": 232
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 16532,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 645,
+        "reasoning_output_tokens": 387
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 20954,
+        "cached_input_tokens": 11904,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 142,
+        "reasoning_output_tokens": 68
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 16451,
+        "cached_input_tokens": 15360,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 270,
+        "reasoning_output_tokens": 99
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 228371,
+        "cached_input_tokens": 196864,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1697,
+        "reasoning_output_tokens": 713
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 16660,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 272,
+        "reasoning_output_tokens": 67
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 23289,
+        "cached_input_tokens": 15232,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 577,
+        "reasoning_output_tokens": 305
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 16683,
+        "cached_input_tokens": 15360,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 331,
+        "reasoning_output_tokens": 101
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 259870,
+        "cached_input_tokens": 226560,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2541,
+        "reasoning_output_tokens": 1197
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 16784,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 477,
+        "reasoning_output_tokens": 191
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 19595,
+        "cached_input_tokens": 2304,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 807,
+        "reasoning_output_tokens": 497
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 16711,
+        "cached_input_tokens": 15360,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 300,
+        "reasoning_output_tokens": 85
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 19591,
+        "cached_input_tokens": 15232,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 754,
+        "reasoning_output_tokens": 393
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 16755,
+        "cached_input_tokens": 15360,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 367,
+        "reasoning_output_tokens": 138
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 19576,
+        "cached_input_tokens": 11904,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 463,
+        "reasoning_output_tokens": 206
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 16643,
+        "cached_input_tokens": 15360,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 290,
+        "reasoning_output_tokens": 78
+      }
+    },
+    {
+      "role": "executor",
+      "model": null,
+      "usage": {
+        "input_tokens": 19594,
+        "cached_input_tokens": 15232,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 518,
+        "reasoning_output_tokens": 175
+      }
+    },
+    {
+      "role": "grader",
+      "model": null,
+      "usage": {
+        "input_tokens": 16761,
+        "cached_input_tokens": 15360,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 341,
+        "reasoning_output_tokens": 135
+      }
+    }
+  ]
+}

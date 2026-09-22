@@ -1,0 +1,39 @@
+{
+  "sequence": 9,
+  "previousHash": "sha256:6a7bfe56c229d90931d9fe096b5b78ec76b593c4ea5fa22de82c3cb86fb72ad4",
+  "type": "STATE_METADATA_RECORDED",
+  "at": "2026-09-21T02:52:50.405Z",
+  "expectedRevision": 8,
+  "resultingRevision": 9,
+  "patch": {
+    "tasks": [
+      {
+        "id": "TASK-001",
+        "status": "done"
+      },
+      {
+        "id": "TASK-002",
+        "status": "in-progress"
+      },
+      {
+        "id": "TASK-003",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-004",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-005",
+        "status": "todo"
+      }
+    ],
+    "currentTaskId": "TASK-002",
+    "evidenceReceipts": [
+      "PREFLIGHT-001",
+      "PREFLIGHT-002"
+    ]
+  },
+  "stateDigest": "sha256:980e4bd30dea3372b250dc9ef92b7a1dadb331d02032c292cdc101716e145a76",
+  "eventHash": "sha256:392f9cfa73aa2a7cf6230252f7f84eea7067c1e500e58c67fb704475ed124e4c"
+}

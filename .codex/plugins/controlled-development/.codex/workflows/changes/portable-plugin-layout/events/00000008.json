@@ -1,0 +1,67 @@
+{
+  "sequence": 8,
+  "previousHash": "sha256:73f906b59e5fe26d9adb599282c99a81a8854d1d338c3a7535bfd4fbf4c5fc44",
+  "type": "STATE_METADATA_RECORDED",
+  "at": "2026-09-18T22:10:02.970Z",
+  "expectedRevision": 7,
+  "resultingRevision": 8,
+  "patch": {
+    "approvedScope": [
+      "plugin.json",
+      ".codex-plugin/plugin.json",
+      "README.md",
+      "skills/",
+      "references/",
+      "assets/",
+      "scripts/",
+      "tests/",
+      "evals/",
+      ".codex/workflows/changes/portable-plugin-layout/"
+    ],
+    "tasks": [
+      {
+        "id": "TASK-001",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-002",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-003",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-004",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-005",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-006",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-007",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-008",
+        "status": "todo"
+      }
+    ],
+    "currentTaskId": null,
+    "evidenceReceipts": [
+      "EVID-001"
+    ],
+    "gitBaseline": {
+      "head": "f8d010d222c1d75d51e22a1eca843a84e945b031",
+      "statusFingerprint": "sha256:4a504170df3891db33a2c4b582025a3b61627fd3e13dbfd5d37377ca61f1b0e7",
+      "recordedAt": "2026-09-18T22:10:02.963Z"
+    }
+  },
+  "stateDigest": "sha256:7f87f8a17c9bfc461c8780eb5eb87e6839f9ec9d257eedb14876ebe50ed18d4b",
+  "eventHash": "sha256:b89d63f2315f86a634f61bc9ca6e0251a25df871d72bcf2e9516f199ac430b17"
+}

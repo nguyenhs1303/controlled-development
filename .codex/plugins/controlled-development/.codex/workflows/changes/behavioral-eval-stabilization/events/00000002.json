@@ -1,0 +1,22 @@
+{
+  "sequence": 2,
+  "previousHash": "sha256:972ed1c77870d43b4ae00617ad1059a6e11350b4f0b56b98eeb07c3bd860f6fb",
+  "type": "APPROVAL_RECORDED",
+  "at": "2026-09-21T02:51:10.512Z",
+  "expectedRevision": 1,
+  "resultingRevision": 2,
+  "patch": {
+    "approvals": {
+      "spec": {
+        "status": "approved",
+        "reference": "User request CHAY het muc 1 den 5 di - 2026-09-21",
+        "artifactPath": "spec.md",
+        "digestAlgorithm": "sha256-text-v1",
+        "artifactDigest": "sha256:5d69597d83d6a11d00f68b5de40df8008ce20403f115332c129458e4e44658d9",
+        "approvedAt": "2026-09-21T02:51:10.512Z"
+      }
+    }
+  },
+  "stateDigest": "sha256:67ec9a3dc186e03b411d8085cd4bd7db97f6db616887a1b4dea4474f968b5247",
+  "eventHash": "sha256:7604ded3d6538f52d8a7820d767cfc5164dd2fca232866203ae7891ad05ad11f"
+}

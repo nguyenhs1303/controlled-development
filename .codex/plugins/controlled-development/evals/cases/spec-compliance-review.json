@@ -37,30 +37,71 @@
         "Reports the public function rename with concrete criterion evidence",
         "Identifies the rename as extra or incorrect approved behavior rather than a style preference",
         "Does not perform implementation changes or a broad engineering review"
+      ],
+      "context_files": [
+        "skills/spec-compliance-review/SKILL.md",
+        "references/policies/output-language-policy.md",
+        "references/policies/decision-evidence-policy.md",
+        "references/policies/evidence-policy.md",
+        "references/policies/review-policy.md"
       ]
     },
     {
       "id": 2,
       "kind": "dialogue",
-      "prompt": "The approved criteria require clamping negative totals, preserving valid discounts, and preserving the public function name. The implementation preserves valid discounts and the name but has no clamp. Perform specification-compliance review only.",
+      "prompt": "The approved criteria are AC-001 clamp negative totals, AC-002 preserve valid discounts, and AC-003 preserve the public function name. Current tests directly PASS for AC-002 and AC-003; source and tests show no clamp for AC-001. Perform specification-compliance review only.",
       "expected_output": "The review marks the clamp criterion missing, the other criteria satisfied, and reports one evidenced compliance finding without doing engineering review.",
       "expectations": [
         "Classifies the clamp criterion as missing",
         "Classifies valid-discount and public-name preservation as satisfied",
         "Cites the exact approved criterion and observable absence",
         "Does not edit code or broaden into engineering review"
+      ],
+      "context_files": [
+        "skills/spec-compliance-review/SKILL.md",
+        "references/policies/output-language-policy.md",
+        "references/policies/decision-evidence-policy.md",
+        "references/policies/evidence-policy.md",
+        "references/policies/review-policy.md"
       ]
     },
     {
       "id": 3,
       "kind": "dialogue",
-      "prompt": "All three approved discount criteria are implemented and directly supported by current tests. No extra behavior is present. Perform specification-compliance review only.",
+      "prompt": "Approved specification SPEC-v1 contains exactly AC-001 clamp negative totals, AC-002 preserve valid discounts, and AC-003 preserve public function name. Current diff is limited to src/calculate.js and test/calculate.test.js: it adds Math.max(0, subtotal - discount), adds only the over-discount test, and keeps the applyDiscount export unchanged. Receipt VERIFY-001 ran `node --test` in the fixture with exit 0 and proves both valid-discount and over-discount tests PASS after the latest edit. No extra behavior is present. Perform specification-compliance review only.",
       "expected_output": "The review classifies every criterion satisfied, reports no compliance findings, and does not invent style concerns.",
       "expectations": [
         "Classifies every criterion as satisfied with the stated evidence",
         "Reports no missing, incorrect, extra, or unverified behavior",
         "Does not invent a finding to appear thorough",
         "Does not perform engineering review or edit code"
+        ,"Checks active enforcement readiness, policy digest, violations, and implementation-bound receipt freshness"
+      ],
+      "context_files": [
+        "skills/spec-compliance-review/SKILL.md",
+        "references/policies/output-language-policy.md",
+        "references/policies/decision-evidence-policy.md",
+        "references/policies/evidence-policy.md",
+        "references/policies/review-policy.md"
+      ]
+    },
+    {
+      "id": 4,
+      "kind": "dialogue",
+      "prompt": "The approved criterion requires clamping negative discounted totals to zero. Source inspection shows a clamp was added, but no current test, command, or runtime observation proves the behavior after the latest edit. Perform specification-compliance review only.",
+      "expected_output": "The criterion is classified as implemented but unverified, the missing current evidence is named, and the review does not treat source inspection as PASS or broaden into engineering review.",
+      "expectations": [
+        "Classifies the criterion as implemented but unverified rather than satisfied or missing",
+        "Explains that source inspection is indirect evidence and names the current verification needed",
+        "Does not allow REVIEW PASSED while the criterion remains unverified",
+        "Does not edit code or broaden into engineering review"
+      ],
+      "context_files": [
+        "skills/spec-compliance-review/SKILL.md",
+        "references/policies/output-language-policy.md",
+        "references/policies/decision-evidence-policy.md",
+        "references/policies/evidence-policy.md",
+        "references/policies/review-policy.md"
       ]
     }
   ]

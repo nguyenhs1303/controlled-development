@@ -40,6 +40,23 @@
         "Identifies BUG.md, src/calculate.js, and test/calculate.test.js as task-relevant",
         "Records UNRELATED.md as a file to preserve",
         "Does not change implementation or tests"
+      ],
+      "context_files": [
+        "skills/project-discovery/SKILL.md",
+        "references/policies/output-language-policy.md",
+        "references/policies/decision-evidence-policy.md",
+        "references/policies/evidence-policy.md",
+        "references/policies/permission-policy.md"
+      ],
+      "deterministic_checks": [
+        {
+          "expectation": 4,
+          "rules": [
+            {
+              "type": "workspace_unchanged"
+            }
+          ]
+        }
       ]
     },
     {
@@ -55,18 +72,43 @@
         "Identifies src/calculator.py and tests/test_calculator.py",
         "Does not assume mypy is installed or install it",
         "Does not modify fixture files"
+      ],
+      "context_files": [
+        "skills/project-discovery/SKILL.md",
+        "references/policies/output-language-policy.md",
+        "references/policies/decision-evidence-policy.md",
+        "references/policies/evidence-policy.md",
+        "references/policies/permission-policy.md"
+      ],
+      "deterministic_checks": [
+        {
+          "expectation": 4,
+          "rules": [
+            {
+              "type": "workspace_unchanged"
+            }
+          ]
+        }
       ]
     },
     {
       "id": 3,
       "kind": "dialogue",
-      "prompt": "The docs and code show an export path but never state whether archived records are included. Discover enough context to define the change.",
+      "prompt": "Observed evidence: docs/export.md documents GET /records/export; src/export-records.js calls repository.listRecords(filters); neither source mentions archived rows, and no test covers them. Discover enough context to define the change.",
       "expected_output": "The agent reports the observed export path, marks archived-record behavior as a material unknown, asks a focused question, and does not infer inclusion or exclusion from neighboring code.",
       "expectations": [
         "Separates observed facts from the missing product decision",
         "Treats archived-record behavior as material to scope and acceptance",
         "Asks the minimum focused question instead of choosing a likely default",
-        "Does not pass an inferred answer to specification or planning"
+        "Does not pass an inferred answer to specification or planning",
+        "Classifies unknown write paths and commands as deny-by-default execution-policy inputs"
+      ],
+      "context_files": [
+        "skills/project-discovery/SKILL.md",
+        "references/policies/output-language-policy.md",
+        "references/policies/decision-evidence-policy.md",
+        "references/policies/evidence-policy.md",
+        "references/policies/permission-policy.md"
       ]
     }
   ]

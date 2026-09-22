@@ -121,7 +121,7 @@ Dành cho những thay đổi liên quan đến bảo mật, ảnh hưởng xuy�
 xử lý đồng thời, tài chính hoặc khó hoàn tác. Deep yêu cầu phê duyệt đặc tả, `FULL SOLUTION` và plan, chia bước
 xây dựng nhỏ hơn và cung cấp bằng chứng xác minh chặt chẽ hơn.
 
-Xem [risk-matrix.md](references/risk-matrix.md) để biết các quy tắc định tuyến.
+Xem [risk-matrix.md](references/policies/risk-matrix.md) để biết các quy tắc định tuyến.
 
 ## Các cổng phê duyệt
 
@@ -179,7 +179,7 @@ Mỗi change tạo tối đa một `PLUGIN CANDIDATE`. Candidate luôn có trạ
 
 Để tiếp tục, hãy yêu cầu Codex resume một change ID cụ thể. BOOTSTRAP đọc chỉ dẫn của dự án, xác thực `state.json` đã lưu, kiểm tra Git baseline được ghi nhận và chỉ tiếp tục từ một bước chuyển trạng thái hợp lệ.
 
-Từ state schema 3, mọi approval và phase transition đi qua `scripts/workflow-controller.mjs`. Các lệnh đọc-only
+Từ state schema 3, mọi approval và phase transition đi qua `scripts/runtime/workflow-controller.mjs`. Các lệnh đọc-only
 gồm `status`, `validate-state`, `check-resume`, `hash-artifact`; các lệnh ghi gồm `approve`, `transition` và
 `record`, đều yêu cầu `--expected-revision`. Controller dùng lock file, atomic replace và immutable event hash
 chain; agent không tự sửa phase, approval, revision hoặc event anchor trong `state.json`.
@@ -201,7 +201,7 @@ Báo cáo cuối cùng kết thúc bằng chính xác một trong các trạng t
 - `REVIEW BLOCKED`
 - `IMPLEMENTATION BLOCKED`
 
-Xem [evidence-policy.md](references/evidence-policy.md), [review-policy.md](references/review-policy.md) và [definition-of-done.md](references/definition-of-done.md).
+Xem [evidence-policy.md](references/policies/evidence-policy.md), [review-policy.md](references/policies/review-policy.md) và [definition-of-done.md](references/policies/definition-of-done.md).
 
 ## Giới hạn phục hồi
 
@@ -218,32 +218,82 @@ V1 được chủ đích thiết kế độc lập với ngôn ngữ lập trìn
 - một agent chính duy trì đầy đủ ngữ cảnh ra quyết định;
 - các skill review riêng biệt cung cấp góc nhìn về đặc tả và kỹ thuật;
 - một skill retrospective riêng đánh giá learning sau review nhưng không tự sửa plugin;
-- không bao gồm custom agent, hook, MCP server, tích hợp app hoặc tự động hóa chạy nền;
+- không bao gồm custom agent, MCP server, tích hợp app hoặc tự động hóa chạy nền; hook đồng bộ chỉ thực thi
+  controller policy đã duyệt và không chạy nền;
 - nội dung workflow không yêu cầu dependency runtime bên ngoài.
+
+## Cấu trúc package
+
+Plugin dùng root `plugin.json` làm portable Agent Plugins manifest và giữ `.codex-plugin/plugin.json` làm compatibility overlay cho các Codex host cũ. Validator bắt buộc hai manifest có cùng identity, version và OpenAI interface metadata.
+
+```text
+controlled-development/
+├── plugin.json
+├── .codex-plugin/plugin.json
+├── hooks/
+│   ├── hooks.json
+│   └── run-hook.mjs
+├── skills/
+├── references/
+│   ├── policies/
+│   └── schemas/
+├── assets/workflow-templates/
+├── scripts/
+│   ├── runtime/
+│   └── validators/
+├── tests/
+│   ├── unit/
+│   └── fixtures/
+└── evals/
+    ├── cases/
+    └── runners/
+```
+
+`scripts/runtime/` chỉ chứa controller, state validation và các module cần khi workflow chạy. Package validation và retrospective validation nằm trong `scripts/validators/`; test và eval tooling không thuộc runtime boundary.
+
+## Hooks, cachebuster và trust
+
+`hooks/hooks.json` maps `SessionStart`, `PreToolUse`, `PostToolUse`, and `Stop` to the bundled synchronous
+adapter. The adapter is intentionally thin; authorization comes from the controller and schema-4
+`execution-policy.json`. The catch-all PreToolUse/PostToolUse mappings are required so an unknown local tool cannot
+silently bypass an active workflow. With no active binding, hooks emit a deterministic no-op.
+
+After changing a bundled hook or manifest, use the host's documented plugin reinstall/cachebuster flow and review
+the hook bundle before trusting it. Installing, reinstalling, or trusting a plugin in user scope is an explicit
+permission-gated action for this change; package validation does not prove live trust. If that action is not
+authorized or host execution is not observed, report live enforcement as `NOT RUN`/`UNVERIFIED`, never `PASS`.
 
 ## Kiểm tra trong quá trình phát triển
 
 Chạy bộ kiểm tra xác định và test cục bộ của plugin:
 
 ```text
-node scripts/validate.mjs
-node scripts/run-trigger-evals.mjs
-node --test scripts/validate.test.mjs
-node scripts/run-behavioral-evals.mjs --all --dry-run
-node scripts/validate-learning-retrospective.mjs <candidate-path>
+node scripts/validators/validate-plugin.mjs
+node evals/runners/run-trigger-evals.mjs
+node --test tests/unit/validate-plugin.test.mjs
+node --test tests/unit/workflow-rules.test.mjs
+node --test tests/unit/workflow-controller.test.mjs
+node evals/runners/run-behavioral-evals.mjs --all --dry-run
+node scripts/validators/validate-learning-retrospective.mjs <candidate-path>
 ```
 
-Việc thực thi behavioral eval là tùy chọn vì thao tác này gọi Codex và tiêu tốn token của mô hình:
+Việc thực thi behavioral eval là tùy chọn vì thao tác này gọi Codex và tiêu tốn token của mô hình. Runner bắt
+buộc chọn phạm vi rõ ràng; khi sửa plugin thông thường, ưu tiên impact-based selection:
 
 ```text
-node scripts/run-behavioral-evals.mjs <skill-name>
-node scripts/run-behavioral-evals.mjs --all
+node evals/runners/run-behavioral-evals.mjs --changed
+node evals/runners/run-behavioral-evals.mjs <skill-name>
+node evals/runners/run-behavioral-evals.mjs --all
 ```
+
+Chỉ dùng `--all` trước release, sau thay đổi runner/schema dùng chung, trong lượt chạy định kỳ hoặc khi được yêu
+cầu rõ ràng. Gọi runner mà không chọn phạm vi sẽ dừng trước khi gọi model.
 
 Đồng thời, hãy xác thực package bằng trình kiểm tra plugin của Codex khi có sẵn các dependency Python cần thiết:
 
 ```text
-python <plugin-creator>/scripts/validate_plugin.py controlled-development
+python <plugin-creator>/scripts/validate_plugin.py .
 ```
 
 Trình xác thực cục bộ kiểm tra các file JSON, frontmatter của skill, liên kết, độ bao phủ của eval case, ví dụ trạng thái và các khả năng tùy chọn bị cấm. Các baseline fixture vẫn chạy bằng lệnh gốc tương ứng. Behavioral runner tạo các workspace tạm thời độc lập, thực thi skill đã chọn thông qua Codex và sử dụng một lượt chấm điểm có cấu trúc riêng biệt. Bất kỳ bước xác thực nào không thể chạy đều phải được báo cáo là `NOT RUN`, không được suy diễn là đã vượt qua.
+

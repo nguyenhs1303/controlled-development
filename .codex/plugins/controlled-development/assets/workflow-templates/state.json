@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 4,
+  "revision": 0,
+  "lastEventSequence": 0,
+  "lastEventHash": null,
+  "pluginVersion": "0.1.0",
+  "changeId": "change-id",
+  "profile": "standard",
+  "riskLevel": "medium",
+  "triage": {
+    "highestFactors": [
+      "scope"
+    ],
+    "reason": "Replace with evidence-backed profile reasoning",
+    "solutionMode": "lite",
+    "solutionReason": "Standard changes require SOLUTION LITE",
+    "escalationTriggers": []
+  },
+  "phase": "DEFINE",
+  "terminalState": null,
+  "artifactRoot": ".codex/workflows/changes/change-id",
+  "artifactRootOverride": null,
+  "approvedScope": [],
+  "prohibitedOperations": [
+    "git-add",
+    "git-commit",
+    "git-push",
+    "pull-request",
+    "merge",
+    "release",
+    "deploy",
+    "production-access",
+    "real-data-mutation"
+  ],
+  "approvals": {
+    "spec": {
+      "status": "pending",
+      "reference": null,
+      "artifactPath": null,
+      "digestAlgorithm": null,
+      "artifactDigest": null,
+      "approvedAt": null
+    },
+    "solution": {
+      "required": true,
+      "mode": "lite",
+      "status": "pending",
+      "reference": null,
+      "artifactPath": null,
+      "digestAlgorithm": null,
+      "artifactDigest": null,
+      "approvedAt": null
+    },
+    "plan": {
+      "required": false,
+      "status": "pending",
+      "reference": null,
+      "artifactPath": null,
+      "digestAlgorithm": null,
+      "artifactDigest": null,
+      "approvedAt": null
+    }
+  },
+  "tasks": [],
+  "currentTaskId": null,
+  "blockers": {},
+  "reviewRemediationCycle": 0,
+  "evidenceReceipts": [],
+  "enforcement": {
+    "contractVersion": 1,
+    "status": "inactive",
+    "activeBinding": null,
+    "policy": {
+      "artifactPath": "execution-policy.json",
+      "digestAlgorithm": null,
+      "artifactDigest": null
+    },
+    "readiness": {
+      "required": true,
+      "nonce": null,
+      "proof": null
+    },
+    "implementation": {
+      "baselineDigest": null,
+      "snapshotDigest": null,
+      "changedPaths": []
+    },
+    "violations": []
+  },
+  "gitBaseline": {
+    "head": null,
+    "statusFingerprint": null,
+    "recordedAt": null
+  },
+  "lastCompletedPhase": "TRIAGE",
+  "updatedAt": null
+}

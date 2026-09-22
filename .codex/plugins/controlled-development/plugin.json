@@ -1,0 +1,37 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "controlled-development",
+  "version": "0.1.0+codex.20260918221727",
+  "description": "Workflow phát triển có triage, phê duyệt giải pháp, repository bootstrap và learning retrospective dựa trên bằng chứng.",
+  "author": {
+    "name": "Controlled Development Contributors"
+  },
+  "keywords": [
+    "software-development",
+    "approval-workflow",
+    "verification",
+    "code-review"
+  ],
+  "extensions": {
+    "com.openai": {
+      "hooks": "./hooks/hooks.json",
+      "interface": {
+        "displayName": "Controlled Development",
+        "shortDescription": "Phát triển thay đổi qua các cổng phê duyệt và bằng chứng rõ ràng.",
+        "longDescription": "Khởi tạo instruction repository khi được gọi, phân loại Quick/Standard/Deep, thiết kế và phê duyệt giải pháp kỹ thuật trước plan, sau đó triển khai, xác minh, review và retrospective dựa trên bằng chứng.",
+        "developerName": "Controlled Development Contributors",
+        "category": "Productivity",
+        "capabilities": [
+          "Interactive",
+          "Read",
+          "Write"
+        ],
+        "defaultPrompt": [
+          "Phát triển thay đổi này với các cổng phê duyệt được kiểm soát",
+          "So sánh giải pháp, đề xuất kiến trúc và dừng để tôi duyệt trước khi lên plan",
+          "Tiếp tục thay đổi controlled development đang hoạt động"
+        ]
+      }
+    }
+  }
+}

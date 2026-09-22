@@ -1,0 +1,105 @@
+{
+  "sequence": 14,
+  "previousHash": "sha256:28f69436df293666d201b385087ef4da3e440f5c38dd09d6e785e274c884020e",
+  "type": "STATE_METADATA_RECORDED",
+  "at": "2026-09-21T18:13:47.770Z",
+  "expectedRevision": 13,
+  "resultingRevision": 14,
+  "patch": {
+    "tasks": [
+      {
+        "id": "TASK-001",
+        "status": "done"
+      },
+      {
+        "id": "TASK-002",
+        "status": "done"
+      },
+      {
+        "id": "TASK-003",
+        "status": "done"
+      },
+      {
+        "id": "TASK-004",
+        "status": "done"
+      },
+      {
+        "id": "TASK-005",
+        "status": "in-progress"
+      },
+      {
+        "id": "TASK-006",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-007",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-008",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-009",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-010",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-011",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-012",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-013",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-014",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-015",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-016",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-017",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-018",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-019",
+        "status": "todo"
+      }
+    ],
+    "currentTaskId": "TASK-005",
+    "evidenceReceipts": [
+      "EVID-DISC-001",
+      "EVID-DISC-002",
+      "EVID-DISC-003",
+      "EVID-DISC-004",
+      "EVID-DISC-005",
+      "EVID-DISC-006",
+      "EVID-BUILD-001",
+      "EVID-BUILD-002",
+      "EVID-BUILD-003",
+      "EVID-BUILD-004",
+      "EVID-BUILD-005",
+      "EVID-BUILD-006"
+    ]
+  },
+  "stateDigest": "sha256:dbf1529ddef39dc337fc1a0a4a3b3239b579fc4c24a4a3cd0ddb70b5bad05867",
+  "eventHash": "sha256:c60ad67bcf5025e5531540a505ce087b33919b612593648dc6dfe83d046291bd"
+}

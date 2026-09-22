@@ -1,0 +1,14 @@
+{
+  "sequence": 1,
+  "previousHash": null,
+  "type": "PHASE_TRANSITIONED",
+  "at": "2026-09-21T17:30:17.220Z",
+  "expectedRevision": 0,
+  "resultingRevision": 1,
+  "patch": {
+    "phase": "SPEC APPROVAL",
+    "lastCompletedPhase": "DEFINE"
+  },
+  "stateDigest": "sha256:879183c12bf857a01980eb9ab459ed893554d09c121e24f9e166a4a142a88860",
+  "eventHash": "sha256:7d7178c1e0732f55a7e946bab15f0d6312f82c0639a8ad01c56c8226e70f7111"
+}

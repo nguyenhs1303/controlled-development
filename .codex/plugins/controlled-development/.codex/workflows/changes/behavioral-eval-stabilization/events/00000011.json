@@ -1,0 +1,62 @@
+{
+  "sequence": 11,
+  "previousHash": "sha256:69459b5d5946d92b503457ab9546ea1a791d5142d447222d3c1f2e81a1042bf4",
+  "type": "STATE_METADATA_RECORDED",
+  "at": "2026-09-21T10:27:44.693Z",
+  "expectedRevision": 10,
+  "resultingRevision": 11,
+  "patch": {
+    "approvedScope": [
+      "evals/runners/run-behavioral-evals.mjs",
+      "evals/cases/",
+      "evals/README.md",
+      "tests/unit/validate-plugin.test.mjs",
+      "tests/fixtures/verification-status/",
+      ".codex/docs/behavioral-eval-coverage-audit/",
+      ".codex/workflows/changes/behavioral-eval-stabilization/"
+    ],
+    "tasks": [
+      {
+        "id": "TASK-001",
+        "status": "done"
+      },
+      {
+        "id": "TASK-002",
+        "status": "done"
+      },
+      {
+        "id": "TASK-003",
+        "status": "done"
+      },
+      {
+        "id": "TASK-004",
+        "status": "done"
+      },
+      {
+        "id": "TASK-005",
+        "status": "done"
+      }
+    ],
+    "currentTaskId": null,
+    "evidenceReceipts": [
+      "PREFLIGHT-001",
+      "PREFLIGHT-002",
+      "RUNNER-001",
+      "UNIT-001",
+      "DRYRUN-001",
+      "EXECUTION-001",
+      "TRIAGE-001",
+      "TARGETED-001",
+      "GATES-001",
+      "FULL-001",
+      "BASELINE-001"
+    ],
+    "gitBaseline": {
+      "head": "f8d010d222c1d75d51e22a1eca843a84e945b031",
+      "statusFingerprint": "sha256:4a45f414693e35f8ef69a86b00218be21e335e8b161b98c2669c1624924a1ffd",
+      "recordedAt": "2026-09-21T17:27:06.4745816+07:00"
+    }
+  },
+  "stateDigest": "sha256:5fb045b435192a9940de918ddc0f339327d75ce2e21159d0ef5f423bdba40e3d",
+  "eventHash": "sha256:f32e78115935afa45a3a1f83f15b33ca1f8f2d9b72e4e42bbc33ef4003c3ec25"
+}

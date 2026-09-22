@@ -11,10 +11,10 @@ Turn an approved behavior contract into an approval-ready technical direction wi
 The solution explains why an approach should be chosen; implementation planning later explains how to execute
 the approved approach.
 
-Read [solution.md](../../templates/solution.md), the [solution design policy](../../references/solution-design-policy.md),
-the [output language policy](../../references/output-language-policy.md), the [decision evidence policy](../../references/decision-evidence-policy.md),
-the [risk matrix](../../references/risk-matrix.md), the [permission policy](../../references/permission-policy.md),
-and the [evidence policy](../../references/evidence-policy.md).
+Read [solution.md](../../assets/workflow-templates/solution.md), the [solution design policy](../../references/policies/solution-design-policy.md),
+the [output language policy](../../references/policies/output-language-policy.md), the [decision evidence policy](../../references/policies/decision-evidence-policy.md),
+the [risk matrix](../../references/policies/risk-matrix.md), the [permission policy](../../references/policies/permission-policy.md),
+and the [evidence policy](../../references/policies/evidence-policy.md).
 
 ## Preconditions
 

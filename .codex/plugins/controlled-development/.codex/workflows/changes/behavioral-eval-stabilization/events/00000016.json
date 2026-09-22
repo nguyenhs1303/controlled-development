@@ -1,0 +1,28 @@
+{
+  "sequence": 16,
+  "previousHash": "sha256:195e19989bf9d0f96a4c4074041bc2752db77d6b9c9ec989b57c38af7c22df26",
+  "type": "STATE_METADATA_RECORDED",
+  "at": "2026-09-21T10:32:25.793Z",
+  "expectedRevision": 15,
+  "resultingRevision": 16,
+  "patch": {
+    "evidenceReceipts": [
+      "PREFLIGHT-001",
+      "PREFLIGHT-002",
+      "RUNNER-001",
+      "UNIT-001",
+      "DRYRUN-001",
+      "EXECUTION-001",
+      "TRIAGE-001",
+      "TARGETED-001",
+      "GATES-001",
+      "FULL-001",
+      "BASELINE-001",
+      "SPEC-REVIEW-001",
+      "ENG-REVIEW-001",
+      "LEARNING-001"
+    ]
+  },
+  "stateDigest": "sha256:f4bf7ccc5749577ece441d2da29da1788df018c4ac749a557a971c12c249dc08",
+  "eventHash": "sha256:069b60da91ee8b8d8ea42692cf108b209ddf6f9982e8a3a34a98fc61bf683bbe"
+}

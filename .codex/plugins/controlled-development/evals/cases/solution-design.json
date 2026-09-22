@@ -31,17 +31,37 @@
       "id": 1,
       "kind": "execution",
       "prompt": "Inspect the provided approved validation fixture, then produce the solution stage. Do not edit files.",
-      "expected_output": "The agent produces a concise SOLUTION LITE using the existing extension point, does not invent alternatives or new patterns, defines proportional verification/revisit conditions, and stops for explicit solution approval.",
+      "expected_output": "The agent produces a concise SOLUTION LITE using the existing extension point as the sole viable option, does not present unsupported alternatives as co-equal options or introduce new patterns, defines proportional verification/revisit conditions, and stops for explicit solution approval.",
       "expectations": [
         "Uses SOLUTION LITE because the change is Standard",
         "States decision drivers before the recommended approach",
-        "Uses the evidenced existing extension point without inventing extra options",
+        "Uses the evidenced existing extension point as the sole viable option; any brief exclusions are not presented as co-equal options",
         "Explains that no new dependency or architecture pattern is needed",
         "Stops for explicit solution approval before planning",
         "Leaves the fixture workspace unchanged"
       ],
       "files": [
         "solution-design-standard"
+      ],
+      "context_files": [
+        "skills/solution-design/SKILL.md",
+        "references/policies/output-language-policy.md",
+        "references/policies/decision-evidence-policy.md",
+        "references/policies/evidence-policy.md",
+        "references/policies/permission-policy.md",
+        "references/policies/risk-matrix.md",
+        "references/policies/solution-design-policy.md",
+        "assets/workflow-templates/solution.md"
+      ],
+      "deterministic_checks": [
+        {
+          "expectation": 6,
+          "rules": [
+            {
+              "type": "workspace_unchanged"
+            }
+          ]
+        }
       ]
     },
     {
@@ -54,6 +74,16 @@
         "Does not claim either option is faster or more scalable without evidence",
         "Classifies unsupported performance claims as HYPOTHESIS or UNKNOWN",
         "Asks a focused question and stops before recommendation or solution approval"
+      ],
+      "context_files": [
+        "skills/solution-design/SKILL.md",
+        "references/policies/output-language-policy.md",
+        "references/policies/decision-evidence-policy.md",
+        "references/policies/evidence-policy.md",
+        "references/policies/permission-policy.md",
+        "references/policies/risk-matrix.md",
+        "references/policies/solution-design-policy.md",
+        "assets/workflow-templates/solution.md"
       ]
     },
     {
@@ -71,6 +101,26 @@
       ],
       "files": [
         "solution-design-patterns"
+      ],
+      "context_files": [
+        "skills/solution-design/SKILL.md",
+        "references/policies/output-language-policy.md",
+        "references/policies/decision-evidence-policy.md",
+        "references/policies/evidence-policy.md",
+        "references/policies/permission-policy.md",
+        "references/policies/risk-matrix.md",
+        "references/policies/solution-design-policy.md",
+        "assets/workflow-templates/solution.md"
+      ],
+      "deterministic_checks": [
+        {
+          "expectation": 6,
+          "rules": [
+            {
+              "type": "workspace_unchanged"
+            }
+          ]
+        }
       ]
     }
   ]

@@ -1,0 +1,22 @@
+{
+  "sequence": 8,
+  "previousHash": "sha256:1b72506b0dde75748cea28b40017763330b31b0191d9df91aa2af2736443d1c6",
+  "type": "APPROVAL_RECORDED",
+  "at": "2026-09-21T17:50:01.909Z",
+  "expectedRevision": 7,
+  "resultingRevision": 8,
+  "patch": {
+    "approvals": {
+      "plan": {
+        "status": "approved",
+        "reference": "User approved PLAN-001 current presented plan digest in task on 2026-09-22",
+        "artifactPath": "plan.md",
+        "digestAlgorithm": "sha256-text-v1",
+        "artifactDigest": "sha256:457f5d055aaee8ebf8eb93174d018d78aae3ab6595788c3e370c65094eaf975e",
+        "approvedAt": "2026-09-21T17:50:01.909Z"
+      }
+    }
+  },
+  "stateDigest": "sha256:04a72a04b0dfb1096a6c50b1c829029266cf47a1ac1981675edeba641785df50",
+  "eventHash": "sha256:568e9bdb5237aa03b791833cb78b4d99551c1c49b3a72294ddd92026d20681f5"
+}

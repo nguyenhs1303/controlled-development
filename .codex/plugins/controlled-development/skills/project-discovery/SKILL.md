@@ -9,7 +9,7 @@ description: Discovers the minimum project context needed for a controlled softw
 
 Establish trustworthy, task-relevant context before defining or editing a change. Read instructions first, discover native commands from project evidence, and avoid flooding the working context with unrelated files.
 
-Apply the [output language policy](../../references/output-language-policy.md), [permission policy](../../references/permission-policy.md), and [decision evidence policy](../../references/decision-evidence-policy.md), then record findings using the [evidence policy](../../references/evidence-policy.md).
+Apply the [output language policy](../../references/policies/output-language-policy.md), [permission policy](../../references/policies/permission-policy.md), and [decision evidence policy](../../references/policies/decision-evidence-policy.md), then record findings using the [evidence policy](../../references/policies/evidence-policy.md).
 
 ## When to Use
 
@@ -67,6 +67,9 @@ Expand only when a concrete question remains unanswered.
 
 Separate observed facts from interpretations. A nearby implementation may be evidence of an available pattern, but it is not evidence that the current change must use the same behavior or boundary.
 
+For enforcement-enabled changes, classify candidate write paths, protected controller paths, read-only commands,
+and command grants into the execution-policy contract. Unknown tools and commands remain deny-by-default.
+
 ### 5. Resolve material unknowns
 
 Classify missing or conflicting information with the decision evidence policy. If it could change behavior,
@@ -78,7 +81,7 @@ Non-material mechanical choices may remain for implementation when their impact 
 
 ### 6. Assess risk inputs
 
-Collect facts needed by the [risk matrix](../../references/risk-matrix.md): auth/data/schema impact, public interfaces, dependencies/configuration, concurrency/external effects, rollback, and test coverage.
+Collect facts needed by the [risk matrix](../../references/policies/risk-matrix.md): auth/data/schema impact, public interfaces, dependencies/configuration, concurrency/external effects, rollback, and test coverage.
 
 Do not decide risk from file count alone.
 

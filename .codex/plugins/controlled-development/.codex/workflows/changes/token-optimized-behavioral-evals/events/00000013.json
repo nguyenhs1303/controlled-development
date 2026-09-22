@@ -1,0 +1,21 @@
+{
+  "sequence": 13,
+  "previousHash": "sha256:0060d3f4f4ca756dbc4e25c15a77675edd949ed160785edc7e91ad36daba6df2",
+  "type": "STATE_METADATA_RECORDED",
+  "at": "2026-09-19T05:51:11.291Z",
+  "expectedRevision": 12,
+  "resultingRevision": 13,
+  "patch": {
+    "approvedScope": [
+      "evals/runners/run-behavioral-evals.mjs",
+      "evals/cases/",
+      "evals/README.md",
+      "evals/results/.gitignore",
+      "scripts/validators/validate-plugin.mjs",
+      "tests/unit/validate-plugin.test.mjs",
+      ".codex/workflows/changes/token-optimized-behavioral-evals/"
+    ]
+  },
+  "stateDigest": "sha256:71899f22aaa004e0f955b7dad9adf3ce850c06661b21f3991caf3175ff9a3ff3",
+  "eventHash": "sha256:5c7e8c006b489b74209fb85c9257d744691619e5eef3b51a4020fb4453a2fe0c"
+}

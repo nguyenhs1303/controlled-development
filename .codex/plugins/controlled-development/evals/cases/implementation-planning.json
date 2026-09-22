@@ -30,37 +30,65 @@
     {
       "id": 1,
       "kind": "dialogue",
-      "prompt": "The approved Standard spec and SOLUTION LITE require clamping discounted totals at zero using the existing pricing helper and preserving valid discounts. Produce the implementation plan.",
+      "prompt": "The approved Standard spec has AC-001 clamp over-discount totals to zero and AC-002 preserve valid discounts. Approved SOLUTION LITE uses src/pricing/applyDiscount.js and test/pricing/applyDiscount.test.js without new dependencies. Discovery established `node --test test/pricing/applyDiscount.test.js` for focused checks and `node --test` for regression. Execution is local and reversible with no sensitive operation. Produce the implementation plan.",
       "expected_output": "A small dependency-safe plan traced to the approved solution that adds a failing regression test, applies the minimal implementation, and runs focused and regression checks without inventing architecture work.",
       "expectations": [
         "Tasks trace to both the clamp and preservation criteria",
         "The failing regression test precedes the implementation change",
-        "Likely files and exact discovered commands are included",
-        "Records whether separate plan approval is needed from execution sensitivity rather than Medium risk alone"
+        "Includes the supplied likely files and exact discovery-established commands",
+        "Records whether separate plan approval is needed from execution sensitivity rather than Medium risk alone",
+        "Defines allowed write paths, allowed new files, protected paths, command grants, and required checks for each task"
+      ],
+      "context_files": [
+        "skills/implementation-planning/SKILL.md",
+        "references/policies/output-language-policy.md",
+        "references/policies/decision-evidence-policy.md",
+        "references/policies/evidence-policy.md",
+        "references/policies/risk-matrix.md",
+        "assets/workflow-templates/plan.md",
+        "assets/workflow-templates/tasks.md"
       ]
     },
     {
       "id": 2,
       "kind": "dialogue",
-      "prompt": "Plan an approved low-risk Standard refactor of one pure helper. The specification and SOLUTION LITE are approved, the solution preserves the existing boundary, and focused tests cover the behavior.",
+      "prompt": "Plan an approved low-risk Standard refactor. AC-001 preserves addTax behavior. Approved SOLUTION LITE keeps the pure helper in src/tax/addTax.js and its test in test/tax/addTax.test.js. Discovery established `node --test test/tax/addTax.test.js` and `node --test`; execution is local, reversible, non-sensitive. The approved risk policy explicitly makes separate plan approval optional for a Standard plan with these properties, and project policy adds no stricter gate.",
       "expected_output": "A small plan records that separate plan approval is optional under the approved low-risk policy while preserving all other gates and checks.",
       "expectations": [
         "Keeps the work Standard and low risk rather than silently changing profile",
         "Produces one or more small tasks with concrete verification",
         "Records why separate plan approval is optional",
         "Does not execute BUILD during planning"
+      ],
+      "context_files": [
+        "skills/implementation-planning/SKILL.md",
+        "references/policies/output-language-policy.md",
+        "references/policies/decision-evidence-policy.md",
+        "references/policies/evidence-policy.md",
+        "references/policies/risk-matrix.md",
+        "assets/workflow-templates/plan.md",
+        "assets/workflow-templates/tasks.md"
       ]
     },
     {
       "id": 3,
       "kind": "dialogue",
-      "prompt": "Plan an approved authorization-rule change whose FULL SOLUTION affects a public API and persistent permissions.",
+      "prompt": "Produce the implementation plan without requesting more detail; every statement below is exact approved contract. Begin by explicitly classifying authorization, persistent permissions, and the public API interface individually as High risk factors. AC-001 denies access when the requested permission is absent. AC-002 backfills stored permissions from the current effective permissions in one transaction and aborts on any mismatch. AC-003 returns both the old `permissions` field and new `effectivePermissions` field for one release. The approved FULL SOLUTION changes auth/policy.js first, then auth/permissions-repository.js, then api/permissions-route.js. Discovery established security tests via `node --test test/security` and full regression via `node --test`. Approved rollback disables the new rule, restores the pre-migration permission snapshot, and keeps the old field; verification must prove deny-by-default, migration integrity, old-client compatibility, and rollback restoration.",
       "expected_output": "The plan treats the change Deep/high risk, orders risk-first verification, and stops for explicit plan approval before BUILD.",
       "expectations": [
         "Classifies the authorization, persistence, and public-interface factors as High",
         "Uses narrower dependency-ordered tasks and security-focused verification",
         "Includes rollback and compatibility considerations",
         "Requires explicit plan approval before BUILD"
+      ],
+      "context_files": [
+        "skills/implementation-planning/SKILL.md",
+        "references/policies/output-language-policy.md",
+        "references/policies/decision-evidence-policy.md",
+        "references/policies/evidence-policy.md",
+        "references/policies/risk-matrix.md",
+        "assets/workflow-templates/plan.md",
+        "assets/workflow-templates/tasks.md"
       ]
     },
     {
@@ -73,6 +101,16 @@
         "Explains why transaction ownership materially affects architecture and data integrity",
         "Returns to SOLUTION DESIGN and asks a focused question or requests authoritative evidence",
         "Does not produce a settled task plan from the unsupported choice"
+      ],
+      "context_files": [
+        "skills/implementation-planning/SKILL.md",
+        "references/policies/output-language-policy.md",
+        "references/policies/decision-evidence-policy.md",
+        "references/policies/evidence-policy.md",
+        "references/policies/risk-matrix.md",
+        "assets/workflow-templates/plan.md",
+        "assets/workflow-templates/tasks.md",
+        "references/policies/solution-design-policy.md"
       ]
     }
   ]

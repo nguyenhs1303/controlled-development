@@ -1,0 +1,42 @@
+{
+  "sequence": 31,
+  "previousHash": "sha256:71432b547d6afde031cd130a3091fb31de15bb35c365e965cd68a6bf4f37afbd",
+  "type": "STATE_METADATA_RECORDED",
+  "at": "2026-09-21T19:27:49.244Z",
+  "expectedRevision": 30,
+  "resultingRevision": 31,
+  "patch": {
+    "evidenceReceipts": [
+      "EVID-DISC-001",
+      "EVID-DISC-002",
+      "EVID-DISC-003",
+      "EVID-DISC-004",
+      "EVID-DISC-005",
+      "EVID-DISC-006",
+      "EVID-BUILD-001",
+      "EVID-BUILD-002",
+      "EVID-BUILD-003",
+      "EVID-BUILD-004",
+      "EVID-BUILD-005",
+      "EVID-BUILD-006",
+      "EVID-BUILD-007",
+      "EVID-BUILD-008",
+      "EVID-BUILD-009",
+      "EVID-BUILD-010",
+      "EVID-BUILD-011",
+      "EVID-BUILD-012",
+      "EVID-BUILD-013",
+      "EVID-BUILD-014",
+      "EVID-BUILD-015",
+      "EVID-BUILD-016",
+      "EVID-BUILD-017",
+      "EVID-BUILD-018",
+      "EVID-BUILD-019",
+      "EVID-BUILD-020",
+      "EVID-VERIFY-001",
+      "EVID-VERIFY-002"
+    ]
+  },
+  "stateDigest": "sha256:a630f08402f71c0f251b08b11ee52ebd566c5989c9a095e0378239f61c7f856d",
+  "eventHash": "sha256:1c2b45f76e591df87d2dae0a8a11cfdc331a372f31b37f38e5d41a284fc253f7"
+}

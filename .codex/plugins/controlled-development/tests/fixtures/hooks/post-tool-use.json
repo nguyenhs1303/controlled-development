@@ -1,0 +1,7 @@
+{
+  "hook_event_name": "PostToolUse",
+  "tool_name": "Bash",
+  "tool_input": { "command": "node --version" },
+  "tool_response": { "output": "v18.20.8" },
+  "cwd": "."
+}

@@ -11,7 +11,7 @@ Define the behavior contract before choosing implementation details. First clari
 after explicit write consent is the output persisted as a specification the human can approve, correct, or
 reject.
 
-Use [spec.md](../../templates/spec.md), the [output language policy](../../references/output-language-policy.md), the [decision evidence policy](../../references/decision-evidence-policy.md), the [evidence policy](../../references/evidence-policy.md), the [risk matrix](../../references/risk-matrix.md), and the [permission policy](../../references/permission-policy.md).
+Use [spec.md](../../assets/workflow-templates/spec.md), the [output language policy](../../references/policies/output-language-policy.md), the [decision evidence policy](../../references/policies/decision-evidence-policy.md), the [evidence policy](../../references/policies/evidence-policy.md), the [risk matrix](../../references/policies/risk-matrix.md), and the [permission policy](../../references/policies/permission-policy.md).
 
 ## Artifact Write Gate
 

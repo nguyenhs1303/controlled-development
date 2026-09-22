@@ -9,7 +9,7 @@ description: Runs project-native verification commands and records evidence-back
 
 Run the right checks for the approved criteria and risk, then record exactly what the evidence proves. Verification is execution, not confidence.
 
-Read the [output language policy](../../references/output-language-policy.md), [decision evidence policy](../../references/decision-evidence-policy.md), [evidence policy](../../references/evidence-policy.md), [permission policy](../../references/permission-policy.md), and [Definition of Done](../../references/definition-of-done.md).
+Read the [output language policy](../../references/policies/output-language-policy.md), [decision evidence policy](../../references/policies/decision-evidence-policy.md), [evidence policy](../../references/policies/evidence-policy.md), [permission policy](../../references/policies/permission-policy.md), and [Definition of Done](../../references/policies/definition-of-done.md).
 
 ## Preconditions
 
@@ -66,6 +66,10 @@ Use only:
 - `UNVERIFIED`
 
 Update the evidence artifact and acceptance-criterion matrix. State the coverage boundary: focused package, full repository, build only, and so on.
+
+For schema 4, bind each current verification receipt to the controller-computed implementation snapshot with
+`bind-evidence`. If the diff changes, treat the prior receipt as stale and rerun the affected checks. A disabled,
+untrusted, or unobserved hook is never live `PASS` evidence.
 
 ### 7. Decide readiness for review
 

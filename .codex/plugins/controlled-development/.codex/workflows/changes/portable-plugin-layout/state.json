@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 3,
+  "revision": 16,
+  "lastEventSequence": 16,
+  "lastEventHash": "sha256:38cc166c78e1dc1cc13376c610c878e8a30dd6d3ffc3120f8cb807292beb2db0",
+  "pluginVersion": "0.1.0",
+  "changeId": "portable-plugin-layout",
+  "profile": "standard",
+  "riskLevel": "medium",
+  "triage": {
+    "highestFactors": [
+      "scope",
+      "interface"
+    ],
+    "reason": "Multi-directory structural migration affecting shared internal paths and compatibility manifests without new dependencies or external systems.",
+    "solutionMode": "lite",
+    "solutionReason": "Standard changes require SOLUTION LITE.",
+    "escalationTriggers": [
+      "state schema change",
+      "new dependency",
+      "marketplace mutation",
+      "hook or MCP addition"
+    ]
+  },
+  "phase": "STOP",
+  "terminalState": "REVIEW PASSED",
+  "artifactRoot": ".codex/workflows/changes/portable-plugin-layout",
+  "artifactRootOverride": null,
+  "approvedScope": [
+    "plugin.json",
+    ".codex-plugin/plugin.json",
+    "README.md",
+    "skills/",
+    "references/",
+    "assets/",
+    "scripts/",
+    "tests/",
+    "evals/",
+    ".codex/workflows/changes/portable-plugin-layout/"
+  ],
+  "prohibitedOperations": [
+    "git-add",
+    "git-commit",
+    "git-push",
+    "pull-request",
+    "merge",
+    "release",
+    "deploy",
+    "production-access",
+    "real-data-mutation"
+  ],
+  "approvals": {
+    "spec": {
+      "status": "approved",
+      "reference": "Người dùng phê duyệt toàn bộ phương án tám bước trong session 2026-09-19",
+      "artifactPath": "spec.md",
+      "digestAlgorithm": "sha256-text-v1",
+      "artifactDigest": "sha256:9cf28378231bc32d47422856dab0185003264dff490bfc7d2e19b400ab3772f7",
+      "approvedAt": "2026-09-18T22:10:02.785Z"
+    },
+    "solution": {
+      "required": true,
+      "mode": "lite",
+      "status": "approved",
+      "reference": "Người dùng phê duyệt toàn bộ phương án tám bước trong session 2026-09-19",
+      "artifactPath": "solution.md",
+      "digestAlgorithm": "sha256-text-v1",
+      "artifactDigest": "sha256:f019c940089d2d662c93fb0699b1b387b8e7af422127f771c5a2e0de54c27dda",
+      "approvedAt": "2026-09-18T22:10:02.829Z"
+    },
+    "plan": {
+      "required": false,
+      "status": "approved",
+      "reference": "Người dùng phê duyệt toàn bộ phương án tám bước trong session 2026-09-19",
+      "artifactPath": "plan.md",
+      "digestAlgorithm": "sha256-text-v1",
+      "artifactDigest": "sha256:fe3a4a70acc513f24d348a3f7f7be56b214936b76d587c2482b1a81899378990",
+      "approvedAt": "2026-09-18T22:10:02.859Z"
+    }
+  },
+  "tasks": [
+    {
+      "id": "TASK-001",
+      "status": "done"
+    },
+    {
+      "id": "TASK-002",
+      "status": "done"
+    },
+    {
+      "id": "TASK-003",
+      "status": "done"
+    },
+    {
+      "id": "TASK-004",
+      "status": "done"
+    },
+    {
+      "id": "TASK-005",
+      "status": "done"
+    },
+    {
+      "id": "TASK-006",
+      "status": "done"
+    },
+    {
+      "id": "TASK-007",
+      "status": "done"
+    },
+    {
+      "id": "TASK-008",
+      "status": "done"
+    }
+  ],
+  "currentTaskId": null,
+  "blockers": {},
+  "reviewRemediationCycle": 0,
+  "evidenceReceipts": [
+    "EVID-001",
+    "EVID-002",
+    "EVID-003",
+    "EVID-004",
+    "EVID-005",
+    "EVID-006",
+    "EVID-007",
+    "EVID-008"
+  ],
+  "gitBaseline": {
+    "head": "f8d010d222c1d75d51e22a1eca843a84e945b031",
+    "statusFingerprint": "sha256:3b062d58dd6ffd5adc26e1a87d5169c3b5d347eacc6cbcfcbaf3a2d5cf8a5365",
+    "recordedAt": "2026-09-18T22:24:14.719Z"
+  },
+  "lastCompletedPhase": "FINAL REPORT",
+  "updatedAt": "2026-09-18T22:24:14.740Z"
+}

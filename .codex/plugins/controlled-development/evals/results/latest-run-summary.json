@@ -1,0 +1,28 @@
+{
+  "completedAt": "2026-09-21T13:24:12.084Z",
+  "selectedCases": 3,
+  "passes": 3,
+  "failures": 0,
+  "executorCalls": 3,
+  "graderCalls": 3,
+  "tokenUsage": {
+    "executor": {
+      "inputTokens": 322393,
+      "cachedInputTokens": 173952,
+      "outputTokens": 5421,
+      "reasoningOutputTokens": 2811
+    },
+    "grader": {
+      "inputTokens": 57594,
+      "cachedInputTokens": 15744,
+      "outputTokens": 1065,
+      "reasoningOutputTokens": 281
+    },
+    "total": {
+      "inputTokens": 379987,
+      "cachedInputTokens": 189696,
+      "outputTokens": 6486,
+      "reasoningOutputTokens": 3092
+    }
+  }
+}

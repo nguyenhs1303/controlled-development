@@ -11,12 +11,12 @@ Evaluate a completed, verified, and reviewed change for one durable improvement 
 
 Before acting, read:
 
-- [output language policy](../../references/output-language-policy.md)
-- [decision evidence policy](../../references/decision-evidence-policy.md)
-- [learning policy](../../references/learning-policy.md)
-- [evidence policy](../../references/evidence-policy.md)
+- [output language policy](../../references/policies/output-language-policy.md)
+- [decision evidence policy](../../references/policies/decision-evidence-policy.md)
+- [learning policy](../../references/policies/learning-policy.md)
+- [evidence policy](../../references/policies/evidence-policy.md)
 
-Use [learning-retrospective.md](../../templates/learning-retrospective.md) only for a qualifying `PLUGIN CANDIDATE`.
+Use [learning-retrospective.md](../../assets/workflow-templates/learning-retrospective.md) only for a qualifying `PLUGIN CANDIDATE`.
 
 ## Preconditions
 
@@ -73,7 +73,7 @@ For `PLUGIN CANDIDATE` only:
 3. Cite concrete evidence for the observation and every proposed target.
 4. Propose the smallest existing owner update before proposing a new skill or subsystem.
 5. Include at least one regression eval with observable before/after behavior.
-6. Run `node ../../scripts/validate-learning-retrospective.mjs <artifact-path>` from the skill directory or resolve the equivalent installed-plugin path.
+6. Run `node ../../scripts/validators/validate-learning-retrospective.mjs <artifact-path>` from the skill directory or resolve the equivalent installed-plugin path.
 7. If validation fails, correct the artifact and rerun it. Do not call the candidate approval-ready until validation passes.
 
 The retrospective may write only its approved workflow artifact. It must not edit product files or plugin source.
@@ -129,4 +129,3 @@ Before returning:
 - [ ] The bundled candidate validator passed when an artifact was written.
 - [ ] No plugin or product file was modified.
 - [ ] Approval is deferred to a separate, explicitly authorized plugin change.
-

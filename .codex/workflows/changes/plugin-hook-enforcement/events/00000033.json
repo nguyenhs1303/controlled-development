@@ -1,0 +1,62 @@
+{
+  "sequence": 33,
+  "previousHash": "sha256:a888e89190e9331a77fbbd13d8533c260120d2e0882c91d41084568eabcbd188",
+  "type": "STATE_METADATA_RECORDED",
+  "at": "2026-09-21T19:31:35.721Z",
+  "expectedRevision": 32,
+  "resultingRevision": 33,
+  "patch": {
+    "blockers": {
+      "BLOCKER-HOOK-MATERIALIZATION": {
+        "attempts": [
+          {
+            "number": 1,
+            "hypothesis": "The plugin was stale or disabled; reinstall and cachebuster refresh would materialize the hook bundle. Result: plugin enabled and cache current, but live write was still allowed."
+          },
+          {
+            "number": 2,
+            "hypothesis": "Non-interactive host execution skipped only the trust prompt; an interactive TUI session would expose or run the hook. Result: undeclared write still succeeded."
+          },
+          {
+            "number": 3,
+            "hypothesis": "The hook existed but was merely inactive. Result: TUI /hooks reported Installed 0 and Active 0 for all required events."
+          }
+        ]
+      }
+    },
+    "reviewRemediationCycle": 0,
+    "evidenceReceipts": [
+      "EVID-DISC-001",
+      "EVID-DISC-002",
+      "EVID-DISC-003",
+      "EVID-DISC-004",
+      "EVID-DISC-005",
+      "EVID-DISC-006",
+      "EVID-BUILD-001",
+      "EVID-BUILD-002",
+      "EVID-BUILD-003",
+      "EVID-BUILD-004",
+      "EVID-BUILD-005",
+      "EVID-BUILD-006",
+      "EVID-BUILD-007",
+      "EVID-BUILD-008",
+      "EVID-BUILD-009",
+      "EVID-BUILD-010",
+      "EVID-BUILD-011",
+      "EVID-BUILD-012",
+      "EVID-BUILD-013",
+      "EVID-BUILD-014",
+      "EVID-BUILD-015",
+      "EVID-BUILD-016",
+      "EVID-BUILD-017",
+      "EVID-BUILD-018",
+      "EVID-BUILD-019",
+      "EVID-BUILD-020",
+      "EVID-VERIFY-001",
+      "EVID-VERIFY-002",
+      "EVID-REVIEW-001"
+    ]
+  },
+  "stateDigest": "sha256:4c65b69906901d2816d6ea59370c4575624fcc82a05798b2b6a90dbb1790b24d",
+  "eventHash": "sha256:d0ace01577add65726565fffd5f114f344ac029e18340fad91611ac7b619cd5e"
+}

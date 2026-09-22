@@ -11,16 +11,16 @@ Own the lifecycle and state of a software change while keeping product decisions
 
 Before acting, read:
 
-- [output language policy](../../references/output-language-policy.md)
-- [decision evidence policy](../../references/decision-evidence-policy.md)
-- [risk matrix](../../references/risk-matrix.md)
-- [solution design policy](../../references/solution-design-policy.md)
-- [permission policy](../../references/permission-policy.md)
-- [evidence policy](../../references/evidence-policy.md)
-- [review policy](../../references/review-policy.md)
-- [Definition of Done](../../references/definition-of-done.md)
-- [learning policy](../../references/learning-policy.md)
-- [workflow state schema](../../references/workflow-state-schema.md)
+- [output language policy](../../references/policies/output-language-policy.md)
+- [decision evidence policy](../../references/policies/decision-evidence-policy.md)
+- [risk matrix](../../references/policies/risk-matrix.md)
+- [solution design policy](../../references/policies/solution-design-policy.md)
+- [permission policy](../../references/policies/permission-policy.md)
+- [evidence policy](../../references/policies/evidence-policy.md)
+- [review policy](../../references/policies/review-policy.md)
+- [Definition of Done](../../references/policies/definition-of-done.md)
+- [learning policy](../../references/policies/learning-policy.md)
+- [workflow state schema](../../references/schemas/workflow-state-schema.md)
 
 ## When to Use
 
@@ -100,7 +100,7 @@ For Standard and Deep, create or resume:
 └── learning-retrospective.md  # only when a plugin candidate qualifies
 ```
 
-Use the files in `../../templates/` as starting contracts. Project instructions may redirect the path or designate an external tracker. Never edit `.gitignore` merely to hide artifacts.
+Use the files in `../../assets/workflow-templates/` as starting contracts. Project instructions may redirect the path or designate an external tracker. Never edit `.gitignore` merely to hide artifacts.
 
 New Standard/Deep changes use state schema version 3. Existing schema-version-1 and schema-version-2 changes may
 resume through their recorded semantics; do not silently migrate them or inject new phases into an approved
@@ -110,17 +110,22 @@ legacy change.
 
 ## Controller Ownership
 
-After the initial schema-3 `state.json` is copied from the template, the controller exclusively owns
+After the initial schema-3 compatibility state or schema-4 enforcement `state.json` is copied from the template, the controller exclusively owns
 `phase`, `lastCompletedPhase`, `terminalState`, `approvals`, `revision`, `lastEventSequence`, `lastEventHash`,
 and `updatedAt`. The agent must not edit them directly.
 
-Use `node ../../scripts/workflow-controller.mjs` from the plugin root, resolving the installed-plugin equivalent
+Use `node ../../scripts/runtime/workflow-controller.mjs` from the plugin root, resolving the installed-plugin equivalent
 when invoked elsewhere:
 
 - read-only inspection: `status`, `validate-state`, `check-resume`, `hash-artifact`;
 - approval: `approve --gate <spec|solution|plan> --expected-revision <n> --reference <text>`;
 - phase change: `transition --to <PHASE> --expected-revision <n>`;
 - allowlisted task/evidence/baseline metadata: `record --patch-file <json> --expected-revision <n>`.
+
+For schema 4, activate the one-change checkout binding and readiness proof before tool authorization:
+`activate --checkout <root> --policy <execution-policy.json> --expected-revision <n>`, then
+`ready --proof <proof>`. Use `authorize` for machine-readable decisions and `bind-evidence` after current
+implementation checks. Hooks are thin adapters; they do not duplicate task or phase policy.
 
 Use the revision returned by the latest controller receipt for every mutation and save the JSON receipt in
 `evidence.md`. Never compensate for a controller failure by editing `state.json`, event files, lock files, or
@@ -335,7 +340,7 @@ Exit: exactly one retrospective classification is available for the final report
 
 ### 17. FINAL REPORT
 
-Use `../../templates/final-review.md`. Map every criterion and required check to current evidence. List changed files, approvals, cycle counts, remaining Suggestions, unresolved findings, the retrospective result, and human action if blocked.
+Use `../../assets/workflow-templates/final-review.md`. Map every criterion and required check to current evidence. List changed files, approvals, cycle counts, remaining Suggestions, unresolved findings, the retrospective result, and human action if blocked.
 
 Select exactly one final state using the Definition of Done:
 

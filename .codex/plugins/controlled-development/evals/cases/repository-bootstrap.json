@@ -30,13 +30,20 @@
     {
       "id": 1,
       "kind": "dialogue",
-      "prompt": "I copied the starter .codex directory and AGENTS.md into a new repository. Use $repository-bootstrap. The manifests establish the language and test command, but nothing states which of two applications is the production entry point.",
-      "expected_output": "The agent initializes or resumes bootstrap state, records the supported facts, marks the production entry point as unresolved, asks one focused question, sets needs-input, and does not infer or edit product files.",
+      "prompt": "I copied the starter .codex directory and AGENTS.md into a new repository. Use $repository-bootstrap. Explicit invocation is authorized by this exact command and must be acknowledged; it would not run automatically during ordinary work. Treat these as supplied manifest-backed facts from repository-relative package.json: Node 20, test command `node --test`, and start scripts for apps/api and apps/worker. Nothing states which application is the production entry point. This is a dialogue-only intake check, so do not edit files or run commands; explicitly report bootstrap status needs-input.",
+      "expected_output": "The skill acknowledges explicit invocation and manifest-backed facts, asks one focused blocking question, reports needs-input, and does not guess, finalize dependent instructions, or claim persistence in dialogue mode.",
       "expectations": [
         "Requires explicit invocation and does not treat bootstrap as an automatic prerequisite",
-        "Records manifest-backed facts with project-relative evidence",
-        "Persists a focused production-entry-point question and reports needs-input",
+        "Records the supplied manifest-backed facts with project-relative evidence",
+        "Asks a focused production-entry-point question and reports needs-input without falsely claiming it was persisted",
         "Does not finalize dependent architecture instructions or edit product files"
+      ],
+      "context_files": [
+        "skills/repository-bootstrap/SKILL.md",
+        "references/policies/output-language-policy.md",
+        "references/policies/decision-evidence-policy.md",
+        "references/policies/evidence-policy.md",
+        "references/policies/repository-bootstrap-policy.md"
       ]
     },
     {
@@ -48,19 +55,33 @@
         "Does not invoke repository-bootstrap implicitly",
         "Does not rewrite repository instructions as a side effect of feature work",
         "Makes the explicit bootstrap option visible without treating it as authorized"
+      ],
+      "context_files": [
+        "skills/repository-bootstrap/SKILL.md",
+        "references/policies/output-language-policy.md",
+        "references/policies/decision-evidence-policy.md",
+        "references/policies/evidence-policy.md",
+        "references/policies/repository-bootstrap-policy.md"
       ]
     },
     {
       "id": 3,
       "kind": "dialogue",
-      "prompt": "Earlier in this same task I invoked $repository-bootstrap, and the agent paused with one question about the production entry point. I now answer only: apps/api is the production entry point. Continue.",
-      "expected_output": "The agent treats the answer as continuation of the already-authorized bootstrap, records it as user-confirmed evidence, resumes discovery and writing without requesting another invocation, runs the checked-in validators, and marks complete only from current passing receipts.",
+      "prompt": "Earlier in this same task I invoked $repository-bootstrap, and the agent paused with one question about the production entry point. I now answer only: apps/api is the production entry point. Continue this dialogue-only checkpoint without editing files or running validators.",
+      "expected_output": "The bootstrap continues without another invocation, preserves prior evidence conversationally, records the answer as user-confirmed, and reports persistence/validators NOT RUN rather than falsely claiming completion.",
       "expectations": [
         "Does not require or request another $repository-bootstrap invocation in the same task",
         "Preserves prior valid evidence and closes only the answered question",
         "Records the production entry point as user-confirmed rather than repository-confirmed",
-        "Updates only bootstrap-owned files",
-        "Requires executed validator receipts before complete"
+        "Does not claim bootstrap-owned files were updated in dialogue mode",
+        "Reports validators NOT RUN and does not claim complete"
+      ],
+      "context_files": [
+        "skills/repository-bootstrap/SKILL.md",
+        "references/policies/output-language-policy.md",
+        "references/policies/decision-evidence-policy.md",
+        "references/policies/evidence-policy.md",
+        "references/policies/repository-bootstrap-policy.md"
       ]
     },
     {
@@ -72,6 +93,13 @@
         "Distinguishes same-task continuation from a new-task resume",
         "Does not mutate bootstrap state or repository instructions without a new explicit invocation",
         "Requests one explicit resume invocation rather than discarding the saved state"
+      ],
+      "context_files": [
+        "skills/repository-bootstrap/SKILL.md",
+        "references/policies/output-language-policy.md",
+        "references/policies/decision-evidence-policy.md",
+        "references/policies/evidence-policy.md",
+        "references/policies/repository-bootstrap-policy.md"
       ]
     }
   ]

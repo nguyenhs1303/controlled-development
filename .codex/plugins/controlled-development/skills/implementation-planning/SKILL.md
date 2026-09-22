@@ -9,7 +9,7 @@ description: Turns an approved specification and technical solution into depende
 
 Translate the approved behavior contract and technical solution into small, dependency-safe implementation increments. Planning is read-only with respect to product code and does not reopen approved architecture.
 
-Use [plan.md](../../templates/plan.md), [tasks.md](../../templates/tasks.md), the [output language policy](../../references/output-language-policy.md), the [decision evidence policy](../../references/decision-evidence-policy.md), the [evidence policy](../../references/evidence-policy.md), and the [risk matrix](../../references/risk-matrix.md).
+Use [plan.md](../../assets/workflow-templates/plan.md), [tasks.md](../../assets/workflow-templates/tasks.md), the [output language policy](../../references/policies/output-language-policy.md), the [decision evidence policy](../../references/policies/decision-evidence-policy.md), the [evidence policy](../../references/policies/evidence-policy.md), and the [risk matrix](../../references/policies/risk-matrix.md).
 
 ## Preconditions
 
@@ -54,6 +54,7 @@ Each stable task ID records:
 - RED/GREEN or non-behavioral verification steps;
 - regression checks;
 - risk/permission notes.
+- enforcement contract: allowed write paths, allowed new files, protected paths, command grants, and required checks.
 
 Do not prescribe fake test commands. Use commands established by discovery.
 

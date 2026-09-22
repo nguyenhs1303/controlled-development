@@ -1,0 +1,15 @@
+{
+  "sequence": 17,
+  "previousHash": "sha256:069b60da91ee8b8d8ea42692cf108b209ddf6f9982e8a3a34a98fc61bf683bbe",
+  "type": "PHASE_TRANSITIONED",
+  "at": "2026-09-21T10:32:40.880Z",
+  "expectedRevision": 16,
+  "resultingRevision": 17,
+  "patch": {
+    "phase": "FINAL REPORT",
+    "lastCompletedPhase": "LEARNING RETROSPECTIVE",
+    "terminalState": "REVIEW PASSED"
+  },
+  "stateDigest": "sha256:32b57904236b26e257c0c8b601e0e35d3eb1ca9a3efea8d7cb1036ff1fae22bd",
+  "eventHash": "sha256:53cb70a8b3ccd0fb481008fe9d80ad871b0faa7e7bdd0ec254186068cba6bc16"
+}

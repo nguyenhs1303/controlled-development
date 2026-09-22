@@ -1,0 +1,22 @@
+{
+  "sequence": 5,
+  "previousHash": "sha256:7b22f338d3b6d36bf67c284ac649c911237c31cbad21881dc69aaa331fa0cc14",
+  "type": "APPROVAL_RECORDED",
+  "at": "2026-09-18T22:10:02.829Z",
+  "expectedRevision": 4,
+  "resultingRevision": 5,
+  "patch": {
+    "approvals": {
+      "solution": {
+        "status": "approved",
+        "reference": "Người dùng phê duyệt toàn bộ phương án tám bước trong session 2026-09-19",
+        "artifactPath": "solution.md",
+        "digestAlgorithm": "sha256-text-v1",
+        "artifactDigest": "sha256:f019c940089d2d662c93fb0699b1b387b8e7af422127f771c5a2e0de54c27dda",
+        "approvedAt": "2026-09-18T22:10:02.829Z"
+      }
+    }
+  },
+  "stateDigest": "sha256:450fa4140886215ca97e37e79443cef4da31fec9b73b1dfacc987d291debebf9",
+  "eventHash": "sha256:5aae0146bc74766ab85189fca97afb0c43d7159f790b4c236fe68b3a995c47b7"
+}

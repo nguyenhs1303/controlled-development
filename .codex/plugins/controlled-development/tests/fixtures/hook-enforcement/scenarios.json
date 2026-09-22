@@ -1,0 +1,11 @@
+{
+  "scenarios": [
+    { "id": "inactive-noop", "expected": "allow-noop" },
+    { "id": "undeclared-path-deny", "expected": "CD-E204-PATH-NOT-ALLOWED" },
+    { "id": "unknown-tool-deny", "expected": "CD-E900-UNCLASSIFIED-DENY" },
+    { "id": "stale-receipt", "expected": "non-pass" },
+    { "id": "untrusted-hook", "expected": "NOT RUN or UNVERIFIED" },
+    { "id": "post-tool-bypass-detected", "expected": "violation-recorded-no-revert" },
+    { "id": "stop-loop-recovery", "expected": "CD-E402-STOP-LOOP-BYPASS" }
+  ]
+}

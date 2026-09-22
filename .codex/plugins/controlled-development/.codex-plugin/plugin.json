@@ -1,10 +1,11 @@
 {
   "name": "controlled-development",
-  "version": "0.1.0+codex.20260917160239",
+  "version": "0.1.0+codex.20260918221727",
   "description": "Workflow ph\u00e1t tri\u1ec3n c\u00f3 triage, ph\u00ea duy\u1ec7t gi\u1ea3i ph\u00e1p, repository bootstrap v\u00e0 learning retrospective d\u1ef1a tr\u00ean b\u1eb1ng ch\u1ee9ng.",
   "author": {
     "name": "Controlled Development Contributors"
   },
+  "hooks": "./hooks/hooks.json",
   "skills": "./skills/",
   "interface": {
     "displayName": "Controlled Development",
@@ -20,10 +21,7 @@
     "defaultPrompt": [
       "Ph\u00e1t tri\u1ec3n thay \u0111\u1ed5i n\u00e0y v\u1edbi c\u00e1c c\u1ed5ng ph\u00ea duy\u1ec7t \u0111\u01b0\u1ee3c ki\u1ec3m so\u00e1t",
       "So s\u00e1nh gi\u1ea3i ph\u00e1p, \u0111\u1ec1 xu\u1ea5t ki\u1ebfn tr\u00fac v\u00e0 d\u1eebng \u0111\u1ec3 t\u00f4i duy\u1ec7t tr\u01b0\u1edbc khi l\u00ean plan",
-      "Ti\u1ebfp t\u1ee5c thay \u0111\u1ed5i controlled development \u0111ang ho\u1ea1t \u0111\u1ed9ng",
-      "Review ph\u1ea7n tri\u1ec3n khai n\u00e0y theo \u0111\u1eb7c t\u1ea3 \u0111\u00e3 \u0111\u01b0\u1ee3c ph\u00ea duy\u1ec7t",
-      "Ch\u1ea1y learning retrospective cho thay \u0111\u1ed5i \u0111\u00e3 x\u00e1c minh v\u00e0 review",
-      "D\u00f9ng repository bootstrap \u0111\u1ec3 kh\u1edfi t\u1ea1o instruction cho repository m\u1edbi"
+      "Ti\u1ebfp t\u1ee5c thay \u0111\u1ed5i controlled development \u0111ang ho\u1ea1t \u0111\u1ed9ng"
     ]
   }
 }

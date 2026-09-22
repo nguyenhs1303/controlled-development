@@ -1,0 +1,22 @@
+{
+  "sequence": 7,
+  "previousHash": "sha256:9ccb19db7f50864bd85a6b726b684023c21470d7fd19b8326e7ee0e4ada8ace2",
+  "type": "APPROVAL_RECORDED",
+  "at": "2026-09-19T00:03:23.870Z",
+  "expectedRevision": 6,
+  "resultingRevision": 7,
+  "patch": {
+    "approvals": {
+      "plan": {
+        "status": "approved",
+        "reference": "user-approved-full-scope-2026-09-19",
+        "artifactPath": "plan.md",
+        "digestAlgorithm": "sha256-text-v1",
+        "artifactDigest": "sha256:6bc00f39e8ee59e5832ad258ee1224d67c3bf3498070dfad588722967dfb1bda",
+        "approvedAt": "2026-09-19T00:03:23.870Z"
+      }
+    }
+  },
+  "stateDigest": "sha256:a209993fd20a97c5dd94146dece6501b53e665296f17a5d840a50b9ad95dc864",
+  "eventHash": "sha256:966013d92991e85177ac5cda4bfe14e90d261dc253c9a73c272ee9d9900eb058"
+}

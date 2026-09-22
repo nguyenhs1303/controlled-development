@@ -10,8 +10,8 @@ description: Reviews an implementation against its approved change contract befo
 Determine whether the implementation is the approved change. Review criteria and tests before judging code style or architecture.
 
 Read the Quick triage/request contract or approved Standard/Deep spec, approved solution when present, current
-plan/tasks, evidence artifact, changed-file diff, the [output language policy](../../references/output-language-policy.md),
-[decision evidence policy](../../references/decision-evidence-policy.md), and the [review policy](../../references/review-policy.md).
+plan/tasks, evidence artifact, changed-file diff, the [output language policy](../../references/policies/output-language-policy.md),
+[decision evidence policy](../../references/policies/decision-evidence-policy.md), and the [review policy](../../references/policies/review-policy.md).
 
 ## Preconditions
 
@@ -39,6 +39,10 @@ Classify it as satisfied, missing, incorrectly implemented, or implemented but u
 ### 2. Check failure and boundary behavior
 
 Compare specified error paths, edge cases, compatibility, and unchanged behavior requirements against the implementation and tests. Happy-path evidence cannot satisfy a failure-path criterion.
+
+For schema 4, also inspect the current active binding, policy digest, readiness proof, central rule IDs,
+violations, and implementation snapshot binding. Mark criteria unverified when receipts are stale or hook trust
+was not observed.
 
 ### 3. Check scope additions
 

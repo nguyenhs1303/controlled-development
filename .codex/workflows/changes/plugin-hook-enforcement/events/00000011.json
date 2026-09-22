@@ -1,0 +1,102 @@
+{
+  "sequence": 11,
+  "previousHash": "sha256:d4d905c9ee990fa24b093bb524b5edab36e40bf1cc49e74c37477e2651337709",
+  "type": "STATE_METADATA_RECORDED",
+  "at": "2026-09-21T17:57:31.169Z",
+  "expectedRevision": 10,
+  "resultingRevision": 11,
+  "patch": {
+    "tasks": [
+      {
+        "id": "TASK-001",
+        "status": "done"
+      },
+      {
+        "id": "TASK-002",
+        "status": "in-progress"
+      },
+      {
+        "id": "TASK-003",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-004",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-005",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-006",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-007",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-008",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-009",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-010",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-011",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-012",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-013",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-014",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-015",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-016",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-017",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-018",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-019",
+        "status": "todo"
+      }
+    ],
+    "currentTaskId": "TASK-002",
+    "evidenceReceipts": [
+      "EVID-DISC-001",
+      "EVID-DISC-002",
+      "EVID-DISC-003",
+      "EVID-DISC-004",
+      "EVID-DISC-005",
+      "EVID-DISC-006",
+      "EVID-BUILD-001",
+      "EVID-BUILD-002",
+      "EVID-BUILD-003"
+    ]
+  },
+  "stateDigest": "sha256:2e811ce4fb93c5f4eec9a13938f8ef1f0883e76c15fac18ddb5a532a734e8629",
+  "eventHash": "sha256:6cae9ea6b5ada6d0b608261a152a36456116ebbaa2609d41d895fbcebba2c12f"
+}

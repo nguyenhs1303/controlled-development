@@ -9,7 +9,7 @@ description: Implements an approved feature or bug fix one small test-first incr
 
 Execute one approved task at a time and leave the working tree in a verifiable state after every increment. Preserve unrelated changes and record progress durably.
 
-Read the [output language policy](../../references/output-language-policy.md), [permission policy](../../references/permission-policy.md), [decision evidence policy](../../references/decision-evidence-policy.md), [evidence policy](../../references/evidence-policy.md), and active `tasks.md`/`state.json` before writing.
+Read the [output language policy](../../references/policies/output-language-policy.md), [permission policy](../../references/policies/permission-policy.md), [decision evidence policy](../../references/policies/decision-evidence-policy.md), [evidence policy](../../references/policies/evidence-policy.md), and active `tasks.md`/`state.json` before writing.
 
 ## Preconditions
 
@@ -29,6 +29,10 @@ If a precondition fails, return to the orchestrator; do not edit product code.
 Set exactly one task to `IN_PROGRESS` using controller `record --expected-revision ...` and save the receipt in
 `evidence.md`. Re-read its acceptance criteria, file boundary, dependencies, and permission notes. Never edit
 `state.json` directly.
+
+For schema 4, make the claimed task the exact `execution-policy.json` task/phase contract and ensure the active
+binding is `ready` before writes. Treat any controller deny rule or recorded PostToolUse violation as blocking
+until reconciled; never bypass it by changing the adapter or editing controller-owned files directly.
 
 ### 2. Establish RED when behavior changes
 

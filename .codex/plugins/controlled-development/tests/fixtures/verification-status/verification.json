@@ -1,0 +1,4 @@
+{
+  "test-command": "node --test",
+  "optional-check-command": "missing-type-checker --version"
+}

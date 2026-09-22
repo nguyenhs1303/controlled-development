@@ -9,7 +9,7 @@ description: Finds evidenced engineering risks in a verified controlled change a
 
 Evaluate whether the approved implementation is safe and healthy engineering. Keep the review independent from implementation: report findings first, then let the orchestrator decide remediation.
 
-Read the spec-compliance result, diff, relevant surrounding code/tests, verification receipts, project instructions, the [output language policy](../../references/output-language-policy.md), [decision evidence policy](../../references/decision-evidence-policy.md), and the [review policy](../../references/review-policy.md).
+Read the spec-compliance result, diff, relevant surrounding code/tests, verification receipts, project instructions, the [output language policy](../../references/policies/output-language-policy.md), [decision evidence policy](../../references/policies/decision-evidence-policy.md), and the [review policy](../../references/policies/review-policy.md).
 
 ## Preconditions
 
@@ -54,6 +54,10 @@ Read the spec-compliance result, diff, relevant surrounding code/tests, verifica
 - missing limits, pagination, caching, or cleanup where impact is real.
 
 ### Tests and evidence
+
+Confirm schema-4 enforcement uses the controller as sole authority, adapters remain thin, unknown operations
+fail closed, protected paths cannot be granted by task policy, and evidence receipts match the current diff.
+Disabled or untrusted live hooks are a non-pass status rather than a package-test success.
 
 - tests would fail for a meaningful regression;
 - failure paths and invariants are covered;

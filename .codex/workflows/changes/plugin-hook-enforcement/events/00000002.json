@@ -1,0 +1,22 @@
+{
+  "sequence": 2,
+  "previousHash": "sha256:7d7178c1e0732f55a7e946bab15f0d6312f82c0639a8ad01c56c8226e70f7111",
+  "type": "APPROVAL_RECORDED",
+  "at": "2026-09-21T17:37:13.932Z",
+  "expectedRevision": 1,
+  "resultingRevision": 2,
+  "patch": {
+    "approvals": {
+      "spec": {
+        "status": "approved",
+        "reference": "User approved current presented specification digest in task on 2026-09-22",
+        "artifactPath": "spec.md",
+        "digestAlgorithm": "sha256-text-v1",
+        "artifactDigest": "sha256:345150151c808717c7df9db3594ee3bcd5384857692739444dd36f137dc71156",
+        "approvedAt": "2026-09-21T17:37:13.932Z"
+      }
+    }
+  },
+  "stateDigest": "sha256:3fae5708a4b1f0a1ff83d71703dd38679a3584ddba014f32e3aa79f0601d0501",
+  "eventHash": "sha256:7d17e8c8735efed1feb7462f6bb13015be85f0b60a2fcfbdbfad4dc3fe0043e5"
+}

@@ -1,0 +1,127 @@
+{
+  "schemaVersion": 3,
+  "revision": 18,
+  "lastEventSequence": 18,
+  "lastEventHash": "sha256:dd31763e74bc9129fb0bacf6ba597a2bc642b266e7f970c61c4049f092e6e7d7",
+  "pluginVersion": "0.1.0",
+  "changeId": "behavioral-eval-stabilization",
+  "profile": "deep",
+  "riskLevel": "high",
+  "triage": {
+    "highestFactors": [
+      "scope",
+      "interface",
+      "verification"
+    ],
+    "reason": "Thay doi runner dung chung, hop dong lua chon case, nhieu behavioral case va chay full live suite co chi phi model.",
+    "solutionMode": "full",
+    "solutionReason": "Ha tang eval dung chung va triage mismatch cheo 11 skill can FULL SOLUTION.",
+    "escalationTriggers": [
+      "new dependency",
+      "external system other than the approved Codex live eval calls",
+      "public plugin runtime contract change",
+      "shipping operation"
+    ]
+  },
+  "phase": "STOP",
+  "terminalState": "REVIEW PASSED",
+  "artifactRoot": ".codex/workflows/changes/behavioral-eval-stabilization",
+  "artifactRootOverride": null,
+  "approvedScope": [
+    "evals/runners/run-behavioral-evals.mjs",
+    "evals/cases/",
+    "evals/README.md",
+    "tests/unit/validate-plugin.test.mjs",
+    "tests/fixtures/verification-status/",
+    ".codex/docs/behavioral-eval-coverage-audit/",
+    ".codex/workflows/changes/behavioral-eval-stabilization/"
+  ],
+  "prohibitedOperations": [
+    "git-add",
+    "git-commit",
+    "git-push",
+    "pull-request",
+    "merge",
+    "release",
+    "deploy",
+    "production-access",
+    "real-data-mutation"
+  ],
+  "approvals": {
+    "spec": {
+      "status": "approved",
+      "reference": "User request CHAY het muc 1 den 5 di - 2026-09-21",
+      "artifactPath": "spec.md",
+      "digestAlgorithm": "sha256-text-v1",
+      "artifactDigest": "sha256:5d69597d83d6a11d00f68b5de40df8008ce20403f115332c129458e4e44658d9",
+      "approvedAt": "2026-09-21T02:51:10.512Z"
+    },
+    "solution": {
+      "required": true,
+      "mode": "full",
+      "status": "approved",
+      "reference": "User request CHAY het muc 1 den 5 di - 2026-09-21",
+      "artifactPath": "solution.md",
+      "digestAlgorithm": "sha256-text-v1",
+      "artifactDigest": "sha256:73cdffb85b28e1984cf0065a872be427a47051b08ff0a51e78c9eeb5dc395dad",
+      "approvedAt": "2026-09-21T02:51:50.620Z"
+    },
+    "plan": {
+      "required": true,
+      "status": "approved",
+      "reference": "User request CHAY het muc 1 den 5 di - 2026-09-21",
+      "artifactPath": "plan.md",
+      "digestAlgorithm": "sha256-text-v1",
+      "artifactDigest": "sha256:c63b35c759e1eeac69a37b51b91e495ad2ea9731a3308f1810e5140688cd27d1",
+      "approvedAt": "2026-09-21T02:52:27.561Z"
+    }
+  },
+  "tasks": [
+    {
+      "id": "TASK-001",
+      "status": "done"
+    },
+    {
+      "id": "TASK-002",
+      "status": "done"
+    },
+    {
+      "id": "TASK-003",
+      "status": "done"
+    },
+    {
+      "id": "TASK-004",
+      "status": "done"
+    },
+    {
+      "id": "TASK-005",
+      "status": "done"
+    }
+  ],
+  "currentTaskId": null,
+  "blockers": {},
+  "reviewRemediationCycle": 0,
+  "evidenceReceipts": [
+    "PREFLIGHT-001",
+    "PREFLIGHT-002",
+    "RUNNER-001",
+    "UNIT-001",
+    "DRYRUN-001",
+    "EXECUTION-001",
+    "TRIAGE-001",
+    "TARGETED-001",
+    "GATES-001",
+    "FULL-001",
+    "BASELINE-001",
+    "SPEC-REVIEW-001",
+    "ENG-REVIEW-001",
+    "LEARNING-001"
+  ],
+  "gitBaseline": {
+    "head": "f8d010d222c1d75d51e22a1eca843a84e945b031",
+    "statusFingerprint": "sha256:4a45f414693e35f8ef69a86b00218be21e335e8b161b98c2669c1624924a1ffd",
+    "recordedAt": "2026-09-21T17:27:06.4745816+07:00"
+  },
+  "lastCompletedPhase": "FINAL REPORT",
+  "updatedAt": "2026-09-21T10:34:01.859Z"
+}

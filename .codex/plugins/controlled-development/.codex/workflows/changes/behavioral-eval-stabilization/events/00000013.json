@@ -1,0 +1,14 @@
+{
+  "sequence": 13,
+  "previousHash": "sha256:4eb8efb4ce70fdfba5275cbed48a8adfd5b42a69515c0fc31fb8e42e2bd49680",
+  "type": "PHASE_TRANSITIONED",
+  "at": "2026-09-21T10:29:49.301Z",
+  "expectedRevision": 12,
+  "resultingRevision": 13,
+  "patch": {
+    "phase": "REVIEW",
+    "lastCompletedPhase": "VERIFY"
+  },
+  "stateDigest": "sha256:43cc37c0a6f8e66be7e2be9f04ef969c452786f01aee10ea20d1083a0427c89f",
+  "eventHash": "sha256:058f8adbfdb419dbf26f89d1b75c587b8132b33943f442c656c48d759d7fdbc9"
+}

@@ -1,0 +1,236 @@
+{
+  "schemaVersion": 3,
+  "revision": 35,
+  "lastEventSequence": 35,
+  "lastEventHash": "sha256:4dd90e9bd8fcc962cdafe8ce005e3e537f7dba24c7fe5cdd3fb5370e699f6f1a",
+  "pluginVersion": "0.1.0",
+  "changeId": "plugin-hook-enforcement",
+  "profile": "deep",
+  "riskLevel": "high",
+  "triage": {
+    "highestFactors": [
+      "scope",
+      "security/data",
+      "interface",
+      "runtime",
+      "dependencies/config",
+      "verification"
+    ],
+    "reason": "Cross-cutting runtime enforcement changes authorization, schema, manifests, skills, policies, tests, evals, compatibility, and live trust behavior.",
+    "solutionMode": "full",
+    "solutionReason": "Deep changes require FULL SOLUTION and explicit specification, solution, and plan approvals.",
+    "escalationTriggers": [
+      "new dependency or build-system contract",
+      "official hook behavior or tool coverage cannot satisfy an acceptance criterion",
+      "public interface, CI, infrastructure, credential, or external-system change",
+      "bootstrap enforcement exception is insufficient for safe implementation"
+    ]
+  },
+  "phase": "STOP",
+  "terminalState": "REVIEW BLOCKED",
+  "artifactRoot": ".codex/workflows/changes/plugin-hook-enforcement",
+  "artifactRootOverride": null,
+  "approvedScope": [
+    ".codex/plugins/controlled-development/plugin.json",
+    ".codex/plugins/controlled-development/.codex-plugin/plugin.json",
+    ".codex/plugins/controlled-development/hooks/**",
+    ".codex/plugins/controlled-development/scripts/runtime/**",
+    ".codex/plugins/controlled-development/scripts/validators/validate-plugin.mjs",
+    ".codex/plugins/controlled-development/assets/workflow-templates/**",
+    ".codex/plugins/controlled-development/references/policies/**",
+    ".codex/plugins/controlled-development/references/schemas/workflow-state-schema.md",
+    ".codex/plugins/controlled-development/skills/controlled-development/SKILL.md",
+    ".codex/plugins/controlled-development/skills/project-discovery/SKILL.md",
+    ".codex/plugins/controlled-development/skills/implementation-planning/SKILL.md",
+    ".codex/plugins/controlled-development/skills/incremental-build/SKILL.md",
+    ".codex/plugins/controlled-development/skills/change-verification/SKILL.md",
+    ".codex/plugins/controlled-development/skills/spec-compliance-review/SKILL.md",
+    ".codex/plugins/controlled-development/skills/engineering-review/SKILL.md",
+    ".codex/plugins/controlled-development/tests/helpers/**",
+    ".codex/plugins/controlled-development/tests/fixtures/hooks/**",
+    ".codex/plugins/controlled-development/tests/fixtures/hook-enforcement/**",
+    ".codex/plugins/controlled-development/tests/fixtures/workflow-state/**",
+    ".codex/plugins/controlled-development/tests/unit/**",
+    ".codex/plugins/controlled-development/evals/cases/**",
+    ".codex/plugins/controlled-development/evals/runners/run-behavioral-evals.mjs",
+    ".codex/plugins/controlled-development/README.md",
+    ".codex/plugins/controlled-development/evals/README.md",
+    ".codex/workflows/changes/plugin-hook-enforcement/**"
+  ],
+  "prohibitedOperations": [
+    "git-add",
+    "git-commit",
+    "git-push",
+    "pull-request",
+    "merge",
+    "release",
+    "deploy",
+    "production-access",
+    "real-data-mutation"
+  ],
+  "approvals": {
+    "spec": {
+      "status": "approved",
+      "reference": "User approved current presented specification digest in task on 2026-09-22",
+      "artifactPath": "spec.md",
+      "digestAlgorithm": "sha256-text-v1",
+      "artifactDigest": "sha256:345150151c808717c7df9db3594ee3bcd5384857692739444dd36f137dc71156",
+      "approvedAt": "2026-09-21T17:37:13.932Z"
+    },
+    "solution": {
+      "required": true,
+      "mode": "full",
+      "status": "approved",
+      "reference": "User approved SOLUTION-001 current presented solution digest in task on 2026-09-22",
+      "artifactPath": "solution.md",
+      "digestAlgorithm": "sha256-text-v1",
+      "artifactDigest": "sha256:9d15a325db86f452dc15bf920f472a902849374971ac9c262a124c47ec4c47c1",
+      "approvedAt": "2026-09-21T17:43:42.310Z"
+    },
+    "plan": {
+      "required": true,
+      "status": "approved",
+      "reference": "User approved PLAN-001 current presented plan digest in task on 2026-09-22",
+      "artifactPath": "plan.md",
+      "digestAlgorithm": "sha256-text-v1",
+      "artifactDigest": "sha256:457f5d055aaee8ebf8eb93174d018d78aae3ab6595788c3e370c65094eaf975e",
+      "approvedAt": "2026-09-21T17:50:01.909Z"
+    }
+  },
+  "tasks": [
+    {
+      "id": "TASK-001",
+      "status": "done"
+    },
+    {
+      "id": "TASK-002",
+      "status": "done"
+    },
+    {
+      "id": "TASK-003",
+      "status": "done"
+    },
+    {
+      "id": "TASK-004",
+      "status": "done"
+    },
+    {
+      "id": "TASK-005",
+      "status": "done"
+    },
+    {
+      "id": "TASK-006",
+      "status": "done"
+    },
+    {
+      "id": "TASK-007",
+      "status": "done"
+    },
+    {
+      "id": "TASK-008",
+      "status": "done"
+    },
+    {
+      "id": "TASK-009",
+      "status": "done"
+    },
+    {
+      "id": "TASK-010",
+      "status": "done"
+    },
+    {
+      "id": "TASK-011",
+      "status": "done"
+    },
+    {
+      "id": "TASK-012",
+      "status": "done"
+    },
+    {
+      "id": "TASK-013",
+      "status": "done"
+    },
+    {
+      "id": "TASK-014",
+      "status": "done"
+    },
+    {
+      "id": "TASK-015",
+      "status": "done"
+    },
+    {
+      "id": "TASK-016",
+      "status": "done"
+    },
+    {
+      "id": "TASK-017",
+      "status": "done"
+    },
+    {
+      "id": "TASK-018",
+      "status": "done"
+    },
+    {
+      "id": "TASK-019",
+      "status": "done"
+    }
+  ],
+  "currentTaskId": null,
+  "blockers": {
+    "BLOCKER-HOOK-MATERIALIZATION": {
+      "attempts": [
+        {
+          "number": 1,
+          "hypothesis": "The plugin was stale or disabled; reinstall and cachebuster refresh would materialize the hook bundle. Result: plugin enabled and cache current, but live write was still allowed."
+        },
+        {
+          "number": 2,
+          "hypothesis": "Non-interactive host execution skipped only the trust prompt; an interactive TUI session would expose or run the hook. Result: undeclared write still succeeded."
+        },
+        {
+          "number": 3,
+          "hypothesis": "The hook existed but was merely inactive. Result: TUI /hooks reported Installed 0 and Active 0 for all required events."
+        }
+      ]
+    }
+  },
+  "reviewRemediationCycle": 0,
+  "evidenceReceipts": [
+    "EVID-DISC-001",
+    "EVID-DISC-002",
+    "EVID-DISC-003",
+    "EVID-DISC-004",
+    "EVID-DISC-005",
+    "EVID-DISC-006",
+    "EVID-BUILD-001",
+    "EVID-BUILD-002",
+    "EVID-BUILD-003",
+    "EVID-BUILD-004",
+    "EVID-BUILD-005",
+    "EVID-BUILD-006",
+    "EVID-BUILD-007",
+    "EVID-BUILD-008",
+    "EVID-BUILD-009",
+    "EVID-BUILD-010",
+    "EVID-BUILD-011",
+    "EVID-BUILD-012",
+    "EVID-BUILD-013",
+    "EVID-BUILD-014",
+    "EVID-BUILD-015",
+    "EVID-BUILD-016",
+    "EVID-BUILD-017",
+    "EVID-BUILD-018",
+    "EVID-BUILD-019",
+    "EVID-BUILD-020",
+    "EVID-VERIFY-001",
+    "EVID-VERIFY-002",
+    "EVID-REVIEW-001"
+  ],
+  "gitBaseline": {
+    "head": "f8d010d222c1d75d51e22a1eca843a84e945b031",
+    "statusFingerprint": "sha256:37f4a9164576386ce134654ab93755da35eafabe963d7fa5179116a87b6b3793",
+    "recordedAt": "2026-09-21T17:51:08.9163144Z"
+  },
+  "lastCompletedPhase": "FINAL REPORT",
+  "updatedAt": "2026-09-21T19:31:35.959Z"
+}

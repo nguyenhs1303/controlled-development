@@ -30,13 +30,21 @@
     {
       "id": 1,
       "kind": "dialogue",
-      "prompt": "Verification passed and both reviews are clean. During the change the user explicitly corrected an unsupported workflow assumption, and current plugin search shows no rule covering it. Run the learning retrospective.",
+      "prompt": "Verification passed and both reviews are clean. Evidence CORR-001 records the user's correction that dialogue behavioral evals explicitly prohibit commands and file writes, so their expectations must not require controller receipts or persisted mutations. Current search of evals/README.md, the case validator, and runner tests finds no rule validating that alignment. Run the learning retrospective and propose the smallest candidate with a before/after regression eval.",
       "expected_output": "The agent produces at most one proposed plugin candidate with evidence, overlap findings, applicability limits, overgeneralization risk, and a regression eval; it does not modify the plugin.",
       "expectations": [
         "Checks the completed-change evidence and current plugin coverage",
         "Applies the durability counterfactual before selecting PLUGIN CANDIDATE",
         "Keeps status proposed and includes a concrete before-and-after eval",
         "States Plugin mutation: none and defers implementation to a separate approved change"
+      ],
+      "context_files": [
+        "skills/learning-retrospective/SKILL.md",
+        "references/policies/output-language-policy.md",
+        "references/policies/decision-evidence-policy.md",
+        "references/policies/evidence-policy.md",
+        "references/policies/learning-policy.md",
+        "assets/workflow-templates/learning-retrospective.md"
       ]
     },
     {
@@ -48,6 +56,13 @@
         "Does not generalize project-domain evidence into plugin-wide policy",
         "Does not create a PLUGIN CANDIDATE without demonstrated reusable workflow applicability",
         "Does not edit plugin skills, references, templates, evals, or installed state"
+      ],
+      "context_files": [
+        "skills/learning-retrospective/SKILL.md",
+        "references/policies/output-language-policy.md",
+        "references/policies/decision-evidence-policy.md",
+        "references/policies/evidence-policy.md",
+        "references/policies/learning-policy.md"
       ]
     },
     {
@@ -59,6 +74,13 @@
         "Reports Retrospective: SKIPPED with the unresolved review blocker",
         "Does not describe an unverified attempt as a solved lesson",
         "Does not set candidate status to approved or mutate the plugin"
+      ],
+      "context_files": [
+        "skills/learning-retrospective/SKILL.md",
+        "references/policies/output-language-policy.md",
+        "references/policies/decision-evidence-policy.md",
+        "references/policies/evidence-policy.md",
+        "references/policies/learning-policy.md"
       ]
     },
     {
@@ -70,8 +92,14 @@
         "Does not choose between missing and ineffective guidance without evidence",
         "Reports the minimum evidence or focused question needed",
         "Creates no approval-ready candidate and performs no plugin mutation"
+      ],
+      "context_files": [
+        "skills/learning-retrospective/SKILL.md",
+        "references/policies/output-language-policy.md",
+        "references/policies/decision-evidence-policy.md",
+        "references/policies/evidence-policy.md",
+        "references/policies/learning-policy.md"
       ]
     }
   ]
 }
-

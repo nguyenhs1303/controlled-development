@@ -30,13 +30,21 @@
     {
       "id": 1,
       "kind": "dialogue",
-      "prompt": "Review these findings using the policy: an Important finding proves supported input produces a negative total; a Suggestion proposes a preferred function name. Decide severity and remediation eligibility.",
+      "prompt": "Review these findings using the policy. ENG-001 proves the supported input subtotal 50 and discount 70 returns -20, so discount greater than subtotal is the concrete negative-total trigger; its one-line clamp fix is inside approved scope, permitted, unambiguous, and the remediation cycle limit is available. ENG-002 proposes only a preferred function name. Decide severity and remediation eligibility.",
       "expected_output": "The negative-total defect remains Important and eligible; the naming preference remains a Suggestion and is not eligible for automatic remediation.",
       "expectations": [
         "Keeps the supported negative-total defect Important with evidence and trigger",
         "Keeps the naming preference a Suggestion",
         "Marks only the Important finding eligible for automatic remediation",
         "Does not edit code during review"
+        ,"Reviews controller authority, thin adapters, protected paths, unknown-operation denial, and hook trust status"
+      ],
+      "context_files": [
+        "skills/engineering-review/SKILL.md",
+        "references/policies/output-language-policy.md",
+        "references/policies/decision-evidence-policy.md",
+        "references/policies/evidence-policy.md",
+        "references/policies/review-policy.md"
       ]
     },
     {
@@ -49,18 +57,51 @@
         "States the missing trigger and evidence needed",
         "Does not make the concern automatically remediation-eligible",
         "Does not edit code during review"
+      ],
+      "context_files": [
+        "skills/engineering-review/SKILL.md",
+        "references/policies/output-language-policy.md",
+        "references/policies/decision-evidence-policy.md",
+        "references/policies/evidence-policy.md",
+        "references/policies/review-policy.md"
       ]
     },
     {
       "id": 3,
       "kind": "dialogue",
-      "prompt": "The verified discount-floor change is minimal, handles its supported boundaries, follows project conventions, has focused regression coverage, and changes no interface. Perform engineering review.",
+      "prompt": "Treat these as the supplied current review artifacts: specification compliance is clean; the diff only replaces subtotal - discount with Math.max(0, subtotal - discount); tests prove valid and over-discount boundaries; syntax and focused regression receipts PASS; the helper remains private, synchronous, constant-time, and changes no interface or dependency. Perform engineering review.",
       "expected_output": "The review reports no engineering findings and does not fabricate a nit or duplicate the already-clean specification review.",
       "expectations": [
         "Evaluates correctness, security, maintainability, performance, tests, and compatibility",
         "Reports no Critical or Important findings",
         "Does not duplicate specification-compliance findings",
         "Does not invent Suggestions or edit code"
+      ],
+      "context_files": [
+        "skills/engineering-review/SKILL.md",
+        "references/policies/output-language-policy.md",
+        "references/policies/decision-evidence-policy.md",
+        "references/policies/evidence-policy.md",
+        "references/policies/review-policy.md"
+      ]
+    },
+    {
+      "id": 4,
+      "kind": "dialogue",
+      "prompt": "Review an export change where a user-controlled filename is joined directly to the export directory. A focused test proves that ../secrets.txt writes outside the intended directory. The fix is inside the approved file scope and requires normalizing and rejecting paths that escape the export directory. Classify remediation eligibility separately from execution: an eligible finding must still be marked eligible even though review itself must not edit code.",
+      "expected_output": "The review raises an evidenced blocking security finding with the concrete traversal trigger and consequence, marks the unambiguous in-scope fix remediation-eligible, and does not edit code during review.",
+      "expectations": [
+        "Raises a Critical or Important security finding backed by the reproduced path-traversal trigger",
+        "Names the trust-boundary failure and outside-directory write consequence",
+        "Marks remediation eligible because the fix is evidenced, unambiguous, permitted, and in approved scope",
+        "Does not edit code during the review phase"
+      ],
+      "context_files": [
+        "skills/engineering-review/SKILL.md",
+        "references/policies/output-language-policy.md",
+        "references/policies/decision-evidence-policy.md",
+        "references/policies/evidence-policy.md",
+        "references/policies/review-policy.md"
       ]
     }
   ]

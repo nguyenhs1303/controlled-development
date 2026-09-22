@@ -11,10 +11,10 @@ Turn the copied Codex starter kit into repository-specific instructions through 
 
 Before acting, read:
 
-- [output language policy](../../references/output-language-policy.md)
-- [decision evidence policy](../../references/decision-evidence-policy.md)
-- [repository bootstrap policy](../../references/repository-bootstrap-policy.md)
-- [evidence policy](../../references/evidence-policy.md)
+- [output language policy](../../references/policies/output-language-policy.md)
+- [decision evidence policy](../../references/policies/decision-evidence-policy.md)
+- [repository bootstrap policy](../../references/policies/repository-bootstrap-policy.md)
+- [evidence policy](../../references/policies/evidence-policy.md)
 
 ## Invocation Gate
 

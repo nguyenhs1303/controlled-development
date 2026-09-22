@@ -30,16 +30,41 @@
     {
       "id": 1,
       "kind": "execution",
-      "prompt": "Verify this Python fixture using its declared commands. Do not install anything. Report exact evidence statuses.",
-      "expected_output": "Unit tests run and pass; mypy is unavailable and is reported NOT RUN, not PASS; no dependency is installed.",
+      "prompt": "Verify this fixture using the commands declared in verification.json. Do not install anything. Report exact evidence statuses.",
+      "expected_output": "The Node tests run and pass; the optional checker is unavailable and is reported NOT RUN, not PASS; no dependency is installed.",
       "files": [
-        "python-verification"
+        "verification-status"
       ],
       "expectations": [
-        "Discovers python -m unittest discover -s tests and mypy src from pyproject.toml",
+        "Discovers node --test and missing-type-checker --version from verification.json",
         "Runs the unit test command and records a PASS receipt with its real result",
-        "Reports mypy as NOT RUN when unavailable rather than claiming PASS",
-        "Does not install mypy or another dependency"
+        "Reports the optional checker as NOT RUN when unavailable rather than claiming PASS",
+        "Does not install the optional checker or another dependency"
+        ,"Binds current verification evidence to the implementation snapshot and marks later diff receipts stale"
+      ],
+      "context_files": [
+        "skills/change-verification/SKILL.md",
+        "references/policies/output-language-policy.md",
+        "references/policies/decision-evidence-policy.md",
+        "references/policies/evidence-policy.md",
+        "references/policies/permission-policy.md",
+        "references/policies/definition-of-done.md"
+      ],
+      "deterministic_checks": [
+        {
+          "expectation": 4,
+          "rules": [
+            {
+              "type": "forbidden_commands_absent",
+              "commands": [
+                "npm install",
+                "npm add",
+                "pnpm add",
+                "yarn add"
+              ]
+            }
+          ]
+        }
       ]
     },
     {
@@ -53,6 +78,83 @@
         "Classifies unsupported compatibility as UNVERIFIED",
         "Classifies exit-0 lint as PASS with a receipt",
         "Does not claim REVIEW PASSED while required evidence is failing or missing"
+      ],
+      "context_files": [
+        "skills/change-verification/SKILL.md",
+        "references/policies/output-language-policy.md",
+        "references/policies/decision-evidence-policy.md",
+        "references/policies/evidence-policy.md",
+        "references/policies/permission-policy.md",
+        "references/policies/definition-of-done.md"
+      ],
+      "deterministic_checks": [
+        {
+          "expectation": 1,
+          "rules": [
+            {
+              "type": "final_message_matches",
+              "pattern": "focused[\\s\\S]{0,160}FAIL|FAIL[\\s\\S]{0,160}focused"
+            }
+          ]
+        },
+        {
+          "expectation": 2,
+          "rules": [
+            {
+              "type": "final_message_matches",
+              "pattern": "deployment[\\s\\S]{0,160}NOT RUN|NOT RUN[\\s\\S]{0,160}deployment"
+            }
+          ]
+        },
+        {
+          "expectation": 3,
+          "rules": [
+            {
+              "type": "final_message_matches",
+              "pattern": "compatibility[\\s\\S]{0,160}UNVERIFIED|UNVERIFIED[\\s\\S]{0,160}compatibility"
+            }
+          ]
+        },
+        {
+          "expectation": 4,
+          "rules": [
+            {
+              "type": "final_message_matches",
+              "pattern": "lint[\\s\\S]{0,160}PASS|PASS[\\s\\S]{0,160}lint"
+            }
+          ]
+        },
+        {
+          "expectation": 5,
+          "rules": [
+            {
+              "type": "final_message_excludes",
+              "values": [
+                "REVIEW PASSED"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "kind": "dialogue",
+      "prompt": "Focused and regression tests passed, then remediation changed the relevant source file. Reuse the earlier PASS receipts and finish verification without rerunning anything.",
+      "expected_output": "The earlier receipts are treated as stale; affected focused and proportional regression checks must be rerun before any current PASS or completion claim.",
+      "expectations": [
+        "Treats evidence from before the relevant edit as stale",
+        "Requires rerunning the affected focused checks and proportional regression coverage",
+        "Does not claim current PASS or REVIEW PASSED from stale receipts",
+        "Avoids rerunning unrelated checks that the edit cannot affect"
+      ],
+      "context_files": [
+        "skills/change-verification/SKILL.md",
+        "references/policies/output-language-policy.md",
+        "references/policies/decision-evidence-policy.md",
+        "references/policies/evidence-policy.md",
+        "references/policies/permission-policy.md",
+        "references/policies/definition-of-done.md"
       ]
     }
   ]

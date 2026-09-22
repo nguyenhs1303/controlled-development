@@ -1,0 +1,18 @@
+{
+  "evidenceReceipts": [
+    "PREFLIGHT-001",
+    "PREFLIGHT-002",
+    "RUNNER-001",
+    "UNIT-001",
+    "DRYRUN-001",
+    "EXECUTION-001",
+    "TRIAGE-001",
+    "TARGETED-001",
+    "GATES-001",
+    "FULL-001",
+    "BASELINE-001",
+    "SPEC-REVIEW-001",
+    "ENG-REVIEW-001",
+    "LEARNING-001"
+  ]
+}

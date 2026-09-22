@@ -1,0 +1,52 @@
+{
+  "blockers": {
+    "BLOCKER-HOOK-MATERIALIZATION": {
+      "attempts": [
+        {
+          "number": 1,
+          "hypothesis": "The plugin was stale or disabled; reinstall and cachebuster refresh would materialize the hook bundle. Result: plugin enabled and cache current, but live write was still allowed."
+        },
+        {
+          "number": 2,
+          "hypothesis": "Non-interactive host execution skipped only the trust prompt; an interactive TUI session would expose or run the hook. Result: undeclared write still succeeded."
+        },
+        {
+          "number": 3,
+          "hypothesis": "The hook existed but was merely inactive. Result: TUI /hooks reported Installed 0 and Active 0 for all required events."
+        }
+      ]
+    }
+  },
+  "reviewRemediationCycle": 0,
+  "evidenceReceipts": [
+    "EVID-DISC-001",
+    "EVID-DISC-002",
+    "EVID-DISC-003",
+    "EVID-DISC-004",
+    "EVID-DISC-005",
+    "EVID-DISC-006",
+    "EVID-BUILD-001",
+    "EVID-BUILD-002",
+    "EVID-BUILD-003",
+    "EVID-BUILD-004",
+    "EVID-BUILD-005",
+    "EVID-BUILD-006",
+    "EVID-BUILD-007",
+    "EVID-BUILD-008",
+    "EVID-BUILD-009",
+    "EVID-BUILD-010",
+    "EVID-BUILD-011",
+    "EVID-BUILD-012",
+    "EVID-BUILD-013",
+    "EVID-BUILD-014",
+    "EVID-BUILD-015",
+    "EVID-BUILD-016",
+    "EVID-BUILD-017",
+    "EVID-BUILD-018",
+    "EVID-BUILD-019",
+    "EVID-BUILD-020",
+    "EVID-VERIFY-001",
+    "EVID-VERIFY-002",
+    "EVID-REVIEW-001"
+  ]
+}

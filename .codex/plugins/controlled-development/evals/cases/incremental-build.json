@@ -30,7 +30,7 @@
     {
       "id": 1,
       "kind": "execution",
-      "prompt": "BUG.md is approved. Implement only the discount-floor behavior using test-first development. Preserve UNRELATED.md and do not commit.",
+      "prompt": "This is an approved Quick change with all risk factors Low; Quick triage explicitly authorizes BUG.md as the scope and TASK-001 is next-ready. Quick requires no workflow state artifacts. Implement only the discount-floor behavior using test-first development. Preserve UNRELATED.md and do not commit. If npm is unavailable, explicitly report both `npm test` and `npm run check` as NOT RUN after running their exact Node commands directly.",
       "expected_output": "A new regression test fails before src/calculate.js changes, the minimal clamp makes all tests pass, syntax validation passes, and UNRELATED.md is untouched.",
       "files": [
         "node-change"
@@ -38,8 +38,34 @@
       "expectations": [
         "Adds a regression test for applyDiscount(50, 70) returning zero and shows it failing before implementation changes",
         "Changes applyDiscount minimally so the new case and existing valid-discount test pass",
-        "Runs npm test and npm run check after the change",
+        "Runs the declared test and syntax-check logic after the change; if npm is unavailable, reports the npm wrappers NOT RUN and runs their exact package.json commands directly",
         "Does not modify UNRELATED.md and does not stage or commit files"
+        ,"Uses the active schema-4 task contract and fails closed on a path or command outside it"
+      ],
+      "context_files": [
+        "skills/incremental-build/SKILL.md",
+        "references/policies/output-language-policy.md",
+        "references/policies/decision-evidence-policy.md",
+        "references/policies/evidence-policy.md",
+        "references/policies/permission-policy.md"
+      ],
+      "deterministic_checks": [
+        {
+          "expectation": 4,
+          "rules": [
+            {
+              "type": "file_unchanged",
+              "path": "node-change/UNRELATED.md"
+            },
+            {
+              "type": "forbidden_commands_absent",
+              "commands": [
+                "git add",
+                "git commit"
+              ]
+            }
+          ]
+        }
       ]
     },
     {
@@ -52,6 +78,13 @@
         "Does not choose 400 or 422 from convention or likelihood",
         "Returns the ambiguity to the relevant approval gate",
         "Makes no product-code change for the unresolved decision"
+      ],
+      "context_files": [
+        "skills/incremental-build/SKILL.md",
+        "references/policies/output-language-policy.md",
+        "references/policies/decision-evidence-policy.md",
+        "references/policies/evidence-policy.md",
+        "references/policies/permission-policy.md"
       ]
     }
   ]

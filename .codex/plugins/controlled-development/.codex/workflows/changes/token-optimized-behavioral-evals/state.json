@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 3,
+  "revision": 22,
+  "lastEventSequence": 22,
+  "lastEventHash": "sha256:ae9ae66a543b0780ffa253e0040a02d996a41c595381ef67ab33b53c12957a1b",
+  "pluginVersion": "0.1.0",
+  "changeId": "token-optimized-behavioral-evals",
+  "profile": "deep",
+  "riskLevel": "high",
+  "triage": {
+    "highestFactors": [
+      "scope",
+      "interface",
+      "verification"
+    ],
+    "reason": "The shared behavioral runner, case schema, and suite selection behavior all change.",
+    "solutionMode": "full",
+    "solutionReason": "Cross-cutting eval infrastructure requires FULL SOLUTION.",
+    "escalationTriggers": [
+      "new dependency",
+      "external service",
+      "public plugin contract beyond eval tooling"
+    ]
+  },
+  "phase": "STOP",
+  "terminalState": "REVIEW PASSED",
+  "artifactRoot": ".codex/workflows/changes/token-optimized-behavioral-evals",
+  "artifactRootOverride": null,
+  "approvedScope": [
+    "evals/runners/run-behavioral-evals.mjs",
+    "evals/cases/",
+    "evals/README.md",
+    "evals/results/.gitignore",
+    "scripts/validators/validate-plugin.mjs",
+    "tests/unit/validate-plugin.test.mjs",
+    ".codex/workflows/changes/token-optimized-behavioral-evals/"
+  ],
+  "prohibitedOperations": [
+    "git-add",
+    "git-commit",
+    "git-push",
+    "pull-request",
+    "merge",
+    "release",
+    "deploy",
+    "production-access",
+    "real-data-mutation"
+  ],
+  "approvals": {
+    "spec": {
+      "status": "approved",
+      "reference": "user-approved-full-scope-2026-09-19",
+      "artifactPath": "spec.md",
+      "digestAlgorithm": "sha256-text-v1",
+      "artifactDigest": "sha256:f64ceadb473a8fc0d2fafae853c8bec98ca1181e9faa04c0f42c2872f758790a",
+      "approvedAt": "2026-09-18T23:58:56.396Z"
+    },
+    "solution": {
+      "required": true,
+      "mode": "full",
+      "status": "approved",
+      "reference": "user-approved-full-scope-2026-09-19",
+      "artifactPath": "solution.md",
+      "digestAlgorithm": "sha256-text-v1",
+      "artifactDigest": "sha256:79fb32647beb627f2e06e6fe72758b4a726445f8d3ebb4488968dac6eccdd115",
+      "approvedAt": "2026-09-19T00:01:29.739Z"
+    },
+    "plan": {
+      "required": true,
+      "status": "approved",
+      "reference": "user-approved-full-scope-2026-09-19",
+      "artifactPath": "plan.md",
+      "digestAlgorithm": "sha256-text-v1",
+      "artifactDigest": "sha256:6bc00f39e8ee59e5832ad258ee1224d67c3bf3498070dfad588722967dfb1bda",
+      "approvedAt": "2026-09-19T00:03:23.870Z"
+    }
+  },
+  "tasks": [
+    {
+      "id": "TASK-001",
+      "status": "done"
+    },
+    {
+      "id": "TASK-002",
+      "status": "done"
+    },
+    {
+      "id": "TASK-003",
+      "status": "done"
+    },
+    {
+      "id": "TASK-004",
+      "status": "done"
+    },
+    {
+      "id": "TASK-005",
+      "status": "done"
+    }
+  ],
+  "currentTaskId": null,
+  "blockers": {},
+  "reviewRemediationCycle": 1,
+  "evidenceReceipts": [
+    "SPEC-APPROVAL-001",
+    "SOLUTION-APPROVAL-001",
+    "PLAN-APPROVAL-001",
+    "EVID-001",
+    "EVID-002",
+    "EVID-003",
+    "EVID-004",
+    "EVID-005",
+    "EVID-006",
+    "EVID-007",
+    "EVID-008",
+    "EVID-009"
+  ],
+  "gitBaseline": {
+    "head": "f8d010d222c1d75d51e22a1eca843a84e945b031",
+    "statusFingerprint": "sha256:f445ac307cc12cb6a486aa8caf72c339ed09012f2678334366a51e4e01f24197",
+    "recordedAt": "2026-09-19T13:00:00+07:00"
+  },
+  "lastCompletedPhase": "FINAL REPORT",
+  "updatedAt": "2026-09-19T06:44:13.387Z"
+}

@@ -1,0 +1,39 @@
+{
+  "sequence": 8,
+  "previousHash": "sha256:966013d92991e85177ac5cda4bfe14e90d261dc253c9a73c272ee9d9900eb058",
+  "type": "STATE_METADATA_RECORDED",
+  "at": "2026-09-19T00:04:44.479Z",
+  "expectedRevision": 7,
+  "resultingRevision": 8,
+  "patch": {
+    "tasks": [
+      {
+        "id": "TASK-001",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-002",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-003",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-004",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-005",
+        "status": "todo"
+      }
+    ],
+    "evidenceReceipts": [
+      "SPEC-APPROVAL-001",
+      "SOLUTION-APPROVAL-001",
+      "PLAN-APPROVAL-001"
+    ]
+  },
+  "stateDigest": "sha256:8596be5e8e59068d039d8b2f3a9ebb843107acba719c577a2c43550452714e48",
+  "eventHash": "sha256:ce2781ca2dfc50e6a49725dc3146014157dfb0602090aed7d85ba2199128957e"
+}

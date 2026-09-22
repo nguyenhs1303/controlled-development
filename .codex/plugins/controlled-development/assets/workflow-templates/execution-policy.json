@@ -1,0 +1,15 @@
+{
+  "contractVersion": 1,
+  "changeId": "change-id",
+  "taskId": null,
+  "phase": "DEFINE",
+  "allowedWritePaths": [],
+  "allowedNewFiles": [],
+  "protectedPaths": [
+    ".codex/workflows/active-change.json",
+    ".codex/workflows/changes/change-id/state.json",
+    ".codex/workflows/changes/change-id/events/**"
+  ],
+  "commandGrants": [],
+  "requiredChecks": []
+}

@@ -1,0 +1,19 @@
+{
+  "tasks": [
+    { "id": "TASK-001", "status": "done" }, { "id": "TASK-002", "status": "done" }, { "id": "TASK-003", "status": "done" },
+    { "id": "TASK-004", "status": "done" }, { "id": "TASK-005", "status": "done" }, { "id": "TASK-006", "status": "done" },
+    { "id": "TASK-007", "status": "done" }, { "id": "TASK-008", "status": "done" }, { "id": "TASK-009", "status": "done" },
+    { "id": "TASK-010", "status": "done" }, { "id": "TASK-011", "status": "done" }, { "id": "TASK-012", "status": "done" },
+    { "id": "TASK-013", "status": "done" }, { "id": "TASK-014", "status": "done" }, { "id": "TASK-015", "status": "done" },
+    { "id": "TASK-016", "status": "done" }, { "id": "TASK-017", "status": "done" }, { "id": "TASK-018", "status": "done" },
+    { "id": "TASK-019", "status": "done" }
+  ],
+  "currentTaskId": null,
+  "evidenceReceipts": [
+    "EVID-DISC-001", "EVID-DISC-002", "EVID-DISC-003", "EVID-DISC-004", "EVID-DISC-005", "EVID-DISC-006",
+    "EVID-BUILD-001", "EVID-BUILD-002", "EVID-BUILD-003", "EVID-BUILD-004", "EVID-BUILD-005", "EVID-BUILD-006",
+    "EVID-BUILD-007", "EVID-BUILD-008", "EVID-BUILD-009", "EVID-BUILD-010", "EVID-BUILD-011", "EVID-BUILD-012",
+    "EVID-BUILD-013", "EVID-BUILD-014", "EVID-BUILD-015", "EVID-BUILD-016", "EVID-BUILD-017", "EVID-BUILD-018",
+    "EVID-BUILD-019", "EVID-BUILD-020", "EVID-VERIFY-001"
+  ]
+}

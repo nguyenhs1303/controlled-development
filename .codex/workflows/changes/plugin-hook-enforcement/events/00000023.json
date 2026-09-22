@@ -1,0 +1,114 @@
+{
+  "sequence": 23,
+  "previousHash": "sha256:cf5fa83bc1bbe0164cc5890fef87d717555ba9b7d685de15e748d48a67961096",
+  "type": "STATE_METADATA_RECORDED",
+  "at": "2026-09-21T18:46:26.802Z",
+  "expectedRevision": 22,
+  "resultingRevision": 23,
+  "patch": {
+    "tasks": [
+      {
+        "id": "TASK-001",
+        "status": "done"
+      },
+      {
+        "id": "TASK-002",
+        "status": "done"
+      },
+      {
+        "id": "TASK-003",
+        "status": "done"
+      },
+      {
+        "id": "TASK-004",
+        "status": "done"
+      },
+      {
+        "id": "TASK-005",
+        "status": "done"
+      },
+      {
+        "id": "TASK-006",
+        "status": "done"
+      },
+      {
+        "id": "TASK-007",
+        "status": "done"
+      },
+      {
+        "id": "TASK-008",
+        "status": "done"
+      },
+      {
+        "id": "TASK-009",
+        "status": "done"
+      },
+      {
+        "id": "TASK-010",
+        "status": "done"
+      },
+      {
+        "id": "TASK-011",
+        "status": "done"
+      },
+      {
+        "id": "TASK-012",
+        "status": "done"
+      },
+      {
+        "id": "TASK-013",
+        "status": "done"
+      },
+      {
+        "id": "TASK-014",
+        "status": "in-progress"
+      },
+      {
+        "id": "TASK-015",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-016",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-017",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-018",
+        "status": "todo"
+      },
+      {
+        "id": "TASK-019",
+        "status": "todo"
+      }
+    ],
+    "currentTaskId": "TASK-014",
+    "evidenceReceipts": [
+      "EVID-DISC-001",
+      "EVID-DISC-002",
+      "EVID-DISC-003",
+      "EVID-DISC-004",
+      "EVID-DISC-005",
+      "EVID-DISC-006",
+      "EVID-BUILD-001",
+      "EVID-BUILD-002",
+      "EVID-BUILD-003",
+      "EVID-BUILD-004",
+      "EVID-BUILD-005",
+      "EVID-BUILD-006",
+      "EVID-BUILD-007",
+      "EVID-BUILD-008",
+      "EVID-BUILD-009",
+      "EVID-BUILD-010",
+      "EVID-BUILD-011",
+      "EVID-BUILD-012",
+      "EVID-BUILD-013",
+      "EVID-BUILD-014",
+      "EVID-BUILD-015"
+    ]
+  },
+  "stateDigest": "sha256:289d9f6656d413a4a94ae1a64a9ffef4a2904cdca60260a3903150fddd6aea01",
+  "eventHash": "sha256:96de056b9056dd1f3a60827ae29768df5fda7b9798c5982ee45e27cb535129aa"
+}
